@@ -30,7 +30,7 @@ public abstract class ServiceErrorChecker {
   protected ServiceErrorChecker(AuthenticationService authenticationService) {
     this.authenticationService = authenticationService;
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   public InteractorResponse checkErrors(BusinessError businessError) {
 
     if (businessError.getBusinessContentType() == BusinessContentType.BUSINESS_ERROR_CONTENT) {
@@ -54,11 +54,11 @@ public abstract class ServiceErrorChecker {
       return checkConcreteException(businessError);
     }
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   private InteractorResponse checkExceptions(BusinessError businessError) {
     return new InteractorResponse(new GenericError(businessError));
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   private InteractorResponse checkBusinessErrors(BusinessError businessError) {
     OrchextraBusinessErrors error =
         OrchextraBusinessErrors.getEnumTypeFromInt(businessError.getCode());
@@ -77,8 +77,8 @@ public abstract class ServiceErrorChecker {
       return new InteractorResponse(new GenericError(businessError));
     }
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   protected abstract InteractorResponse checkConcreteException(BusinessError businessError);
-
+  //TODO LIB_CRUNCH gggJavaLib
   protected abstract InteractorResponse checkConcreteBusinessErrors(BusinessError businessError);
 }

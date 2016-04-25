@@ -44,7 +44,7 @@ public class GetActionService implements DomaninService {
 
   private InteractorResponse getActions(List<Trigger> triggers, int numRetries) {
     List<BasicAction> actions = new ArrayList<>();
-
+    //TODO LIB_CRUNCH gggJavaLib
     BusinessObject<BasicAction> bo = null;
 
     for (Trigger actionCriteria : triggers) {
@@ -73,6 +73,7 @@ public class GetActionService implements DomaninService {
     return getActions(triggers, 0);
   }
 
+  //TODO LIB_CRUNCH gggJavaLib
   private boolean manageError(BusinessError businessError) {
     InteractorResponse response = serviceErrorChecker.checkErrors(businessError);
     return !response.hasError();

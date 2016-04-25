@@ -35,7 +35,7 @@ public class ObtainRegionsService implements DomaninService {
   }
 
   public InteractorResponse obtainRegionsFromLocalStorage() throws Exception {
-
+//TODO LIB_CRUNCH gggJavaLib
     BusinessObject<List<OrchextraRegion>> bo = proximityLocalDataProvider.getBeaconRegionsForScan();
 
     if (bo.isSuccess()) {

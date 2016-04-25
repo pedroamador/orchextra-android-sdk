@@ -34,70 +34,71 @@ import com.gigigo.orchextra.domain.services.DomaninService;
 
 public class ConfigService implements DomaninService {
 
-  private final ConfigDataProvider configDataProvider;
-  private final AuthenticationDataProvider authenticationDataProvider;
-  private final ServiceErrorChecker serviceErrorChecker;
+    private final ConfigDataProvider configDataProvider;
+    private final AuthenticationDataProvider authenticationDataProvider;
+    private final ServiceErrorChecker serviceErrorChecker;
 
-  private final App app;
-  private final Device device;
-  private final ObtainGeoLocationTask obtainGeoLocationTask;
+    private final App app;
+    private final Device device;
+    private final ObtainGeoLocationTask obtainGeoLocationTask;
 
-  public ConfigService(ConfigDataProvider configDataProvider,
-                       AuthenticationDataProvider authenticationDataProvider,
-                       ServiceErrorChecker serviceErrorChecker, App app, Device device,
-                       ObtainGeoLocationTask obtainGeoLocationTask) {
+    public ConfigService(ConfigDataProvider configDataProvider,
+                         AuthenticationDataProvider authenticationDataProvider,
+                         ServiceErrorChecker serviceErrorChecker, App app, Device device,
+                         ObtainGeoLocationTask obtainGeoLocationTask) {
 
-    this.configDataProvider = configDataProvider;
-    this.authenticationDataProvider = authenticationDataProvider;
-    this.serviceErrorChecker = serviceErrorChecker;
+        this.configDataProvider = configDataProvider;
+        this.authenticationDataProvider = authenticationDataProvider;
+        this.serviceErrorChecker = serviceErrorChecker;
 
 
-    this.device = device;
-    this.app = app;
-    this.obtainGeoLocationTask = obtainGeoLocationTask;
-  }
-
-  public InteractorResponse<OrchextraUpdates> refreshConfig() {
-    Crm crm = getCrm();
-
-    GeoLocation geolocation = obtainGeoLocationTask.getGeolocation();
-
-    Config config = generateConfig(geolocation, crm);
-
-    BusinessObject<OrchextraUpdates> boOrchextraUpdates = configDataProvider.sendConfigInfo(config);
-
-    if (boOrchextraUpdates.isSuccess()) {
-      return new InteractorResponse<>(boOrchextraUpdates.getData());
-    } else {
-      return processError(boOrchextraUpdates.getBusinessError());
+        this.device = device;
+        this.app = app;
+        this.obtainGeoLocationTask = obtainGeoLocationTask;
     }
-  }
 
-  private Crm getCrm() {
-    BusinessObject<Crm> boCrm = authenticationDataProvider.retrieveCrm();
-    if (boCrm.isSuccess()) {
-      return boCrm.getData();
-    } else {
-      return null;
+    public InteractorResponse<OrchextraUpdates> refreshConfig() {
+        Crm crm = getCrm();
+
+        GeoLocation geolocation = obtainGeoLocationTask.getGeolocation();
+
+        Config config = generateConfig(geolocation, crm);
+//TODO LIB_CRUNCH gggJavaLib
+        BusinessObject<OrchextraUpdates> boOrchextraUpdates = configDataProvider.sendConfigInfo(config);
+
+        if (boOrchextraUpdates.isSuccess()) {
+            return new InteractorResponse<>(boOrchextraUpdates.getData());
+        } else {
+            return processError(boOrchextraUpdates.getBusinessError());
+        }
     }
-  }
 
-  public InteractorResponse<OrchextraUpdates> processError(BusinessError businessError) {
-    InteractorResponse interactorResponse = serviceErrorChecker.checkErrors(businessError);
-    if (interactorResponse.hasError()) {
-      return interactorResponse;
-    } else {
-      return refreshConfig();
+    private Crm getCrm() {
+        //TODO LIB_CRUNCH gggJavaLib
+        BusinessObject<Crm> boCrm = authenticationDataProvider.retrieveCrm();
+        if (boCrm.isSuccess()) {
+            return boCrm.getData();
+        } else {
+            return null;
+        }
     }
-  }
+    //TODO LIB_CRUNCH gggJavaLib
+    public InteractorResponse<OrchextraUpdates> processError(BusinessError businessError) {
+        InteractorResponse interactorResponse = serviceErrorChecker.checkErrors(businessError);
+        if (interactorResponse.hasError()) {
+            return interactorResponse;
+        } else {
+            return refreshConfig();
+        }
+    }
 
-  private Config generateConfig(GeoLocation geoLocation, Crm crm) {
-    Config config = new Config();
-    config.setApp(app);
-    config.setDevice(device);
-    config.setGeoLocation(geoLocation);
-    config.setCrm(crm);
+    private Config generateConfig(GeoLocation geoLocation, Crm crm) {
+        Config config = new Config();
+        config.setApp(app);
+        config.setDevice(device);
+        config.setGeoLocation(geoLocation);
+        config.setCrm(crm);
 
-    return config;
-  }
+        return config;
+    }
 }

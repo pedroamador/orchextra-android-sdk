@@ -25,15 +25,15 @@ import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
 import com.gigigo.orchextra.domain.model.entities.credentials.Credentials;
 
 public interface AuthenticationDataProvider {
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<SdkAuthData> authenticateSdk(Credentials credentials);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<ClientAuthData> authenticateUser(Credentials credentials, String crmId);
 
   void clearAuthenticatedUser();
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<ClientAuthData> getCredentials();
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<Crm> retrieveCrm();
 
   boolean storeCrmId(Crm crm);

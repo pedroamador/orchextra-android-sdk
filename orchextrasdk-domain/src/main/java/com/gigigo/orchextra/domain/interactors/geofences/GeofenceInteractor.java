@@ -71,6 +71,7 @@ public class GeofenceInteractor
   }
 
   @Override public void updateEventWithAction(BasicAction basicAction) {
+    //TODO LIB_CRUNCH gggJavaLib
     BusinessObject<OrchextraGeofence> boGeofence =
         geofenceCheckerService.obtainCheckedGeofence(basicAction.getEventCode());
     if (boGeofence.isSuccess() && boGeofence.getData()

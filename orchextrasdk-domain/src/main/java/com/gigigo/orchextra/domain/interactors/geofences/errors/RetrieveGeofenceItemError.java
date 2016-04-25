@@ -22,13 +22,13 @@ import com.gigigo.gggjavalib.business.model.BusinessError;
 import com.gigigo.orchextra.domain.interactors.base.InteractorError;
 
 public class RetrieveGeofenceItemError implements InteractorError {
-
+  //TODO LIB_CRUNCH gggJavaLib
   private final BusinessError error;
-
+  //TODO LIB_CRUNCH gggJavaLib
   public RetrieveGeofenceItemError(BusinessError businessError) {
     this.error = businessError;
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   public BusinessError getError() {
     return error;
   }

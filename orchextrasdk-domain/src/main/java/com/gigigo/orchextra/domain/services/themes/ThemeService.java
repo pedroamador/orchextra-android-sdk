@@ -30,7 +30,7 @@ public class ThemeService implements DomaninService {
     public ThemeService(ConfigDataProvider configDataProvider) {
         this.configDataProvider = configDataProvider;
     }
-
+    //TODO LIB_CRUNCH gggJavaLib
     public BusinessObject<Theme> obtainTheme() {
         return configDataProvider.obtainTheme();
     }

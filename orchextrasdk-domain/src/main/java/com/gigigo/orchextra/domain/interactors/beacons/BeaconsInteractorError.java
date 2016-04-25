@@ -36,7 +36,7 @@ public class BeaconsInteractorError implements InteractorError {
   public void setBeaconBusinessErrorType(BeaconBusinessErrorType beaconBusinessErrorType) {
     this.beaconBusinessErrorType = beaconBusinessErrorType;
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   @Override public BusinessError getError() {
     return BusinessError.createKoInstance(
         "Beacon exception produced : " + beaconBusinessErrorType.getStringValue());

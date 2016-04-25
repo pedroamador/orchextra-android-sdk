@@ -64,6 +64,7 @@ public class GeofenceCheckerService implements DomaninService {
   }
 
   private InteractorResponse<OrchextraGeofence> storeGeofence(String triggeringGeofenceId) {
+    //TODO LIB_CRUNCH gggJavaLib
     BusinessObject<OrchextraGeofence> boSavedGeofence =
         proximityLocalDataProvider.obtainSavedGeofenceInDatabase(triggeringGeofenceId);
 
@@ -76,6 +77,7 @@ public class GeofenceCheckerService implements DomaninService {
   }
 
   private InteractorResponse<OrchextraGeofence> storeGeofenceEvent(OrchextraGeofence geofence) {
+    //TODO LIB_CRUNCH gggJavaLib
     BusinessObject<OrchextraGeofence> boEventGeofence =
         proximityLocalDataProvider.obtainGeofenceEvent(geofence);
 
@@ -113,7 +115,7 @@ public class GeofenceCheckerService implements DomaninService {
       return new InteractorResponse(bo.getData());
     }
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   public BusinessObject<OrchextraGeofence> obtainCheckedGeofence(String eventCode) {
     return proximityLocalDataProvider.obtainSavedGeofenceInDatabase(eventCode);
   }

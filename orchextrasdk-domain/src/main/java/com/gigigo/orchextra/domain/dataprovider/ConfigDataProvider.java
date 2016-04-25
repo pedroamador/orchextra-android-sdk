@@ -23,10 +23,10 @@ import com.gigigo.orchextra.domain.model.config.Config;
 import com.gigigo.orchextra.domain.model.vo.Theme;
 
 public interface ConfigDataProvider {
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject sendConfigInfo(Config config);
 
   int obtainRequestTime();
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<Theme> obtainTheme();
 }

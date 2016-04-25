@@ -22,13 +22,13 @@ import com.gigigo.gggjavalib.business.model.BusinessError;
 import com.gigigo.orchextra.domain.interactors.base.InteractorError;
 
 public class AuthenticationError implements InteractorError {
-
+  //TODO LIB_CRUNCH gggJavaLib
   private final BusinessError businessError;
-
+  //TODO LIB_CRUNCH gggJavaLib
   public AuthenticationError(BusinessError businessError) {
     this.businessError = businessError;
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   @Override public BusinessError getError() {
     return businessError;
   }

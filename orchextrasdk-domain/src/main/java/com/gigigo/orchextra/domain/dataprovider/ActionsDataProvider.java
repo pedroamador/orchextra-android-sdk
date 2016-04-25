@@ -23,6 +23,6 @@ import com.gigigo.orchextra.domain.model.actions.strategy.BasicAction;
 import com.gigigo.orchextra.domain.model.triggers.strategy.types.Trigger;
 
 public interface ActionsDataProvider {
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<BasicAction> obtainAction(Trigger actionCriteria);
 }

@@ -48,6 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @Override public InteractorResponse authenticate() {
+    //TODO LIB_CRUNCH gggJavaLib
     BusinessObject<Crm> boCrm = authDataProvider.retrieveCrm();
 
     String crmId = null;
@@ -60,7 +61,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   @Override public InteractorResponse authenticateUserWithCrmId(String crmId) {
     return authenticate(crmId);
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   @Override public BusinessObject<Crm> saveUser(Crm crm) {
     BusinessObject<Crm> boCrm = authDataProvider.retrieveCrm();
 

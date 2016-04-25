@@ -34,7 +34,7 @@ public class EventUpdaterService implements DomaninService {
   }
 
   public InteractorResponse associateActionToRegionEvent(OrchextraRegion orchextraRegion) {
-
+//TODO LIB_CRUNCH gggJavaLib
     BusinessObject<OrchextraRegion> bo =
         proximityLocalDataProvider.updateRegionWithActionId(orchextraRegion);
 
@@ -46,6 +46,7 @@ public class EventUpdaterService implements DomaninService {
   }
 
   public InteractorResponse associateActionToGeofenceEvent(OrchextraGeofence geofence) {
+    //TODO LIB_CRUNCH gggJavaLib
     BusinessObject<OrchextraGeofence> bo =
         proximityLocalDataProvider.updateGeofenceWithActionId(geofence);
 

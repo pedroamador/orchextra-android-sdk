@@ -25,32 +25,33 @@ import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraRegion;
 import java.util.List;
 
 public interface ProximityLocalDataProvider {
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraRegion> obtainRegion(OrchextraRegion orchextraRegion);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraRegion> storeRegion(OrchextraRegion orchextraRegion);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraRegion> deleteRegion(OrchextraRegion orchextraRegion);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraBeacon> storeBeaconEvent(OrchextraBeacon beacon);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<List<OrchextraRegion>> getBeaconRegionsForScan();
 
   void purgeOldBeaconEventsWithRequestTime(int requestTime);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraRegion> updateRegionWithActionId(OrchextraRegion orchextraRegion);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraGeofence> storeGeofenceEvent(OrchextraGeofence geofence);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraGeofence> deleteGeofenceEvent(String geofenceId);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraGeofence> obtainSavedGeofenceInDatabase(String geofenceId);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraGeofence> obtainGeofenceEvent(OrchextraGeofence geofence);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraGeofence> updateGeofenceWithActionId(OrchextraGeofence geofence);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<List<OrchextraBeacon>> getNotStoredBeaconEvents(
       List<OrchextraBeacon> orchextraBeacons);
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<List<OrchextraGeofence>> obtainGeofencesForRegister();
 }

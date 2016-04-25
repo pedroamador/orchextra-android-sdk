@@ -22,7 +22,7 @@ public class ObtainGeofencesService implements DomaninService {
   }
 
   public InteractorResponse obtainGeofencesFromLocalStorage() throws Exception {
-
+  //TODO LIB_CRUNCH gggJavaLib
     BusinessObject<List<OrchextraGeofence>> bo = proximityLocalDataProvider.obtainGeofencesForRegister();
 
     if (bo.isSuccess()) {

@@ -22,17 +22,17 @@ import com.gigigo.gggjavalib.business.model.BusinessError;
 import com.gigigo.orchextra.domain.interactors.base.InteractorError;
 
 public class GenericError implements InteractorError {
-
+  //TODO LIB_CRUNCH gggJavaLib
   private BusinessError error;
-
+  //TODO LIB_CRUNCH gggJavaLib
   public GenericError(BusinessError error) {
     this.error = error;
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   public BusinessError getError() {
     return error;
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   public void setError(BusinessError error) {
     this.error = error;
   }

@@ -22,8 +22,8 @@ import com.gigigo.gggjavalib.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.model.vo.OrchextraStatus;
 
 public interface OrchextraStatusDataProvider {
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraStatus> loadOrchextraStatus();
-
+  //TODO LIB_CRUNCH gggJavaLib
   BusinessObject<OrchextraStatus> updateOrchextraStatus(OrchextraStatus orchextraStatus);
 }

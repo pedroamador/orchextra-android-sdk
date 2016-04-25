@@ -19,6 +19,7 @@
 package com.gigigo.orchextra.domain.abstractions.error;
 
 import com.gigigo.gggjavalib.business.model.BusinessError;
+//TODO LIB_CRUNCH gggJavaLib
 
 public interface ErrorLogger {
   void log(BusinessError businessError);

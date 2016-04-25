@@ -29,11 +29,11 @@ public class ConfigServiceErrorChecker extends ServiceErrorChecker {
   public ConfigServiceErrorChecker(AuthenticationService authenticationService) {
     super(authenticationService);
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   @Override protected InteractorResponse checkConcreteException(BusinessError businessError) {
     return new InteractorResponse(new GenericError(businessError));
   }
-
+  //TODO LIB_CRUNCH gggJavaLib
   @Override protected InteractorResponse checkConcreteBusinessErrors(BusinessError businessError) {
     return new InteractorResponse(new GenericError(businessError));
   }
