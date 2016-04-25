@@ -27,24 +27,24 @@ import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
 
 
 public interface SessionDBDataSource {
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   boolean saveSdkAuthCredentials(SdkAuthCredentials sdkAuthCredentials);
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   boolean saveSdkAuthResponse(SdkAuthData sdkAuthData);
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   boolean saveClientAuthCredentials(ClientAuthCredentials clientAuthCredentials);
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   boolean saveClientAuthResponse(ClientAuthData clientAuthData);
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   boolean saveUser(Crm crm);
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   BusinessObject<ClientAuthData> getSessionToken();
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   BusinessObject<SdkAuthData> getDeviceToken();
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   BusinessObject<Crm> getCrm();
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   boolean storeCrm(Crm crm);
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   void clearAuthenticatedUser();
 }

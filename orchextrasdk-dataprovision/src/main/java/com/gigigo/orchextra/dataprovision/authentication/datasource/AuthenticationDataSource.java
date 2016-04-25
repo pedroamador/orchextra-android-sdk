@@ -25,8 +25,8 @@ import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
 
 
 public interface AuthenticationDataSource {
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   BusinessObject<SdkAuthData> authenticateSdk(Credentials credentials);
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   BusinessObject<ClientAuthData> authenticateUser(Credentials credentials);
 }

@@ -27,7 +27,7 @@ import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
 import com.gigigo.orchextra.domain.model.entities.authentication.ClientAuthData;
 import com.gigigo.orchextra.domain.dataprovider.AuthenticationDataProvider;
 
-
+//TODO LIB_CRUNCH orchextrasdk-domain
 public class AuthenticationDataProviderImpl implements AuthenticationDataProvider {
 
   private final AuthenticationDataSource authenticationDataSource;
@@ -38,7 +38,7 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
     this.authenticationDataSource = authenticationDataSource;
     this.sessionDBDataSource = sessionDBDataSource;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public BusinessObject<SdkAuthData> authenticateSdk(Credentials credentials) {
     BusinessObject<SdkAuthData> deviceToken = sessionDBDataSource.getDeviceToken();
 
@@ -52,7 +52,7 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 
     return deviceToken;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override
   public BusinessObject<ClientAuthData> authenticateUser(Credentials credentials, String crmId) {
     BusinessObject<ClientAuthData> sessionToken = sessionDBDataSource.getSessionToken();
@@ -85,11 +85,11 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
     crm.setCrmId(crmId);
     sessionDBDataSource.saveUser(crm);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public BusinessObject<ClientAuthData> getCredentials() {
     return sessionDBDataSource.getSessionToken();
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public BusinessObject<Crm> retrieveCrm() {
     return sessionDBDataSource.getCrm();
   }

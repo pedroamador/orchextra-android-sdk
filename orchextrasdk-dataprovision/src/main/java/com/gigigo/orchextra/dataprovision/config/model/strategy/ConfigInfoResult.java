@@ -23,7 +23,7 @@ import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraRegion;
 import com.gigigo.orchextra.domain.model.vo.Theme;
 import java.util.List;
 
-
+//TODO LIB_CRUNCH orchextrasdk-domain
 public class ConfigInfoResult {
 
   private RegionList regions;

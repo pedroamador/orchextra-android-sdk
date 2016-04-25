@@ -22,7 +22,7 @@ apply plugin: 'maven'
 
 dependencies {
 
-    compile project(':orchextrasdk-domain')
+    //compile project(':orchextrasdk-domain')
 
     testCompile parent.ext.testDependencies.junit
     testCompile parent.ext.testDependencies.mockito

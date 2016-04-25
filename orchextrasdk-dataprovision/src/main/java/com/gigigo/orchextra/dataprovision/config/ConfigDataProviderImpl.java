@@ -34,15 +34,15 @@ import com.gigigo.orchextra.domain.model.entities.authentication.Session;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraUpdates;
 import com.gigigo.orchextra.domain.model.vo.Theme;
 
-
+//TODO LIB_CRUNCH orchextrasdk-domain
 public class ConfigDataProviderImpl implements ConfigDataProvider {
 
   private static final int DEFAULT_REQUEST_TIME = 100000;
   private final ConfigDataSource configDataSource;
   private final ConfigDBDataSource configDBDataSource;
   private final SessionDBDataSource sessionDBDataSource;
-  private final Session session;
-
+  private final Session session; //TODO LIB_CRUNCH orchextrasdk-domain
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public ConfigDataProviderImpl(ConfigDataSource configDataSource,
       ConfigDBDataSource configDBDataSource, SessionDBDataSource sessionDBDataSource,
       Session session) {
@@ -52,7 +52,7 @@ public class ConfigDataProviderImpl implements ConfigDataProvider {
     this.sessionDBDataSource = sessionDBDataSource;
     this.session = session;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public BusinessObject<OrchextraUpdates> sendConfigInfo(Config config) {
 
     boolean isAuthenticated = checkAuthenticationToken();
@@ -82,6 +82,7 @@ public class ConfigDataProviderImpl implements ConfigDataProvider {
     }
   }
 
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override
   public BusinessObject<Theme> obtainTheme() {
     return configDBDataSource.obtainTheme();

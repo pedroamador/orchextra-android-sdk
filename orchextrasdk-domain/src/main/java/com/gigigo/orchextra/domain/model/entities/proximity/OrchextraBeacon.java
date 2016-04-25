@@ -40,7 +40,7 @@ public class OrchextraBeacon {
     this.minor = minor;
     this.beaconDistance = beaconDistance;
     try {
-      com.gigigo.gggjavalib.general.utils.Hashing;
+
       this.code = Hashing.generateMd5(
           (uuid + BEACON_CODE_CONCAT_CHAR + String.valueOf(mayor) + BEACON_CODE_CONCAT_CHAR + String
               .valueOf(minor)).toUpperCase());
