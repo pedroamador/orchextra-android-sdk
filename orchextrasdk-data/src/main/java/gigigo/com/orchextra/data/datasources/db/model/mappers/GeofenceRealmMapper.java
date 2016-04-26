@@ -28,12 +28,12 @@ import com.gigigo.orchextra.domain.model.vo.OrchextraPoint;
 import gigigo.com.orchextra.data.datasources.db.model.GeofenceRealm;
 import gigigo.com.orchextra.data.datasources.db.model.RealmPoint;
 
-
+//TODO LIB_CRUNCH gggLib
 public class GeofenceRealmMapper implements Mapper<OrchextraGeofence, GeofenceRealm> {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraPoint, RealmPoint> realmPointMapper;
   private final KeyWordRealmMapper keyWordRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public GeofenceRealmMapper(Mapper realmPointMapper, KeyWordRealmMapper keyWordRealmMapper) {
     this.realmPointMapper = realmPointMapper;
     this.keyWordRealmMapper = keyWordRealmMapper;
@@ -43,6 +43,7 @@ public class GeofenceRealmMapper implements Mapper<OrchextraGeofence, GeofenceRe
     GeofenceRealm geofenceRealm = new GeofenceRealm();
 
     geofenceRealm.setRadius(geofence.getRadius());
+    //TODO LIB_CRUNCH gggLib
     geofenceRealm.setPoint(MapperUtils.checkNullDataRequest(realmPointMapper, geofence.getPoint()));
 
     geofenceRealm.setCode(geofence.getCode());
@@ -55,10 +56,10 @@ public class GeofenceRealmMapper implements Mapper<OrchextraGeofence, GeofenceRe
     if (geofence.getType() != null) {
       geofenceRealm.setType(geofence.getType().getStringValue());
     }
-
+//TODO LIB_CRUNCH gggLib
     geofenceRealm.setCreatedAt(
         DateUtils.dateToStringWithFormat(geofence.getCreatedAt(), DateFormatConstants.DATE_FORMAT));
-
+//TODO LIB_CRUNCH gggLib
     geofenceRealm.setUpdatedAt(
         DateUtils.dateToStringWithFormat(geofence.getUpdatedAt(), DateFormatConstants.DATE_FORMAT));
 
@@ -69,6 +70,7 @@ public class GeofenceRealmMapper implements Mapper<OrchextraGeofence, GeofenceRe
     OrchextraGeofence geofence = new OrchextraGeofence();
 
     geofence.setRadius(geofenceRealm.getRadius());
+    //TODO LIB_CRUNCH gggLib
     geofence.setPoint(
         MapperUtils.checkNullDataResponse(realmPointMapper, geofenceRealm.getPoint()));
 
@@ -80,9 +82,10 @@ public class GeofenceRealmMapper implements Mapper<OrchextraGeofence, GeofenceRe
     geofence.setStayTime(geofenceRealm.getStayTime());
     geofence.setTags(keyWordRealmMapper.realmKeyWordsToStringList(geofenceRealm.getTags()));
     geofence.setType(ProximityPointType.getProximityPointTypeValue(geofenceRealm.getType()));
-
+//TODO LIB_CRUNCH gggLib
     geofence.setCreatedAt(DateUtils.stringToDateWithFormat(geofenceRealm.getCreatedAt(),
         DateFormatConstants.DATE_FORMAT));
+    //TODO LIB_CRUNCH gggLib
     geofence.setUpdatedAt(DateUtils.stringToDateWithFormat(geofenceRealm.getUpdatedAt(),
         DateFormatConstants.DATE_FORMAT));
 

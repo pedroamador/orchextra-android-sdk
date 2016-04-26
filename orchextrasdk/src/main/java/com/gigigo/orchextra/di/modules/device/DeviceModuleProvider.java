@@ -35,6 +35,7 @@ public interface DeviceModuleProvider extends
     AndroidApp provideAndroidApp();
     AndroidDevice provideAndroidDevice();
     GoogleApiClientConnector provideGoogleApiClientConnector();
+    //TODO LIB_CRUNCH gggLib
     PermissionChecker providePermissionChecker();
     PermissionLocationImp providePermissionLocationImp();
     PermissionCameraImp providePermissionCameraImp();

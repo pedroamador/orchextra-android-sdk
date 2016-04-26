@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigGeofenceUpdater {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraGeofence, GeofenceRealm> geofencesRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public ConfigGeofenceUpdater(Mapper<OrchextraGeofence, GeofenceRealm> geofencesRealmMapper) {
     this.geofencesRealmMapper = geofencesRealmMapper;
   }

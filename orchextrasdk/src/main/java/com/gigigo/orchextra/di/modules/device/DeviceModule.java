@@ -47,7 +47,7 @@ import orchextra.dagger.Provides;
 
 @Module(includes = {BluetoothModule.class, ActionsModule.class, NotificationsModule.class, GeolocationModule.class})
 public class DeviceModule {
-
+//TODO LIB_CRUNCH gggLib
   @Singleton @Provides
   ForegroundTasksManager provideBackgroundTasksManager(OrchextraTasksManager orchextraTasksManager,
       PermissionChecker permissionChecker, ContextProvider contextProvider){
@@ -59,14 +59,14 @@ public class DeviceModule {
       ConfigDelegateImp configDelegateImp, GeofenceRegister geofenceRegister){
     return  new OrchextraTasksManagerImpl(beaconScanner, configDelegateImp, geofenceRegister);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides
   GoogleApiPermissionChecker provideGoogleApiPermissionChecker(ContextProvider contextProvider,
                                                                FeatureListener featureListener) {
     return new GoogleApiPermissionChecker(contextProvider.getApplicationContext(), featureListener);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides PermissionChecker providePermissionChecker(ContextProvider contextProvider) {
     return new AndroidPermissionCheckerImpl(contextProvider.getApplicationContext(), contextProvider);
   }
@@ -81,7 +81,7 @@ public class DeviceModule {
   PermissionCameraImp providePermissionCameraImp() {
     return new PermissionCameraImp();
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides GoogleApiClientConnector provideGoogleApiClientConnector(ContextProvider contextProvider,
                                                                      GoogleApiPermissionChecker googleApiPermissionChecker) {
@@ -92,7 +92,7 @@ public class DeviceModule {
   @Provides AndroidApp provideAndroidApp() {
     return new AndroidApp();
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides AndroidDevice provideAndroidDevice(ContextProvider contextProvider) {
     return new AndroidDevice(contextProvider.getApplicationContext());

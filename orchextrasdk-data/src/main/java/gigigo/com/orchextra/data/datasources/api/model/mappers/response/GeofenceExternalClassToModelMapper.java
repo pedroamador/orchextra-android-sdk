@@ -27,7 +27,7 @@ import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraGeofence;
 import gigigo.com.orchextra.data.datasources.api.model.mappers.PointMapper;
 import gigigo.com.orchextra.data.datasources.api.model.responses.ApiGeofence;
 
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision //TODO LIB_CRUNCH gggLib
 public class GeofenceExternalClassToModelMapper
     implements ExternalClassToModelMapper<ApiGeofence, OrchextraGeofence> {
 
@@ -36,7 +36,7 @@ public class GeofenceExternalClassToModelMapper
   public GeofenceExternalClassToModelMapper(PointMapper pointMapper) {
     this.pointMapper = pointMapper;
   }
-
+  //TODO LIB_CRUNCH  orchextrasdk-dataprovision
   @Override public OrchextraGeofence externalClassToModel(ApiGeofence apiGeofence) {
     OrchextraGeofence geofence = new OrchextraGeofence();
     geofence.setRadius(apiGeofence.getRadius());
@@ -47,12 +47,13 @@ public class GeofenceExternalClassToModelMapper
     geofence.setStayTime(apiGeofence.getStayTime());
     geofence.setTags(apiGeofence.getTags());
     geofence.setType(ProximityPointType.getProximityPointTypeValue(apiGeofence.getType()));
-
+//TODO LIB_CRUNCH gggLib
     geofence.setCreatedAt(DateUtils.stringToDateWithFormat(apiGeofence.getCreatedAt(),
         DateFormatConstants.DATE_FORMAT));
+    //TODO LIB_CRUNCH gggLib
     geofence.setUpdatedAt(DateUtils.stringToDateWithFormat(apiGeofence.getUpdatedAt(),
         DateFormatConstants.DATE_FORMAT));
-
+//TODO LIB_CRUNCH gggLib
     geofence.setPoint(MapperUtils.checkNullDataResponse(pointMapper, apiGeofence.getPoint()));
 
     return geofence;

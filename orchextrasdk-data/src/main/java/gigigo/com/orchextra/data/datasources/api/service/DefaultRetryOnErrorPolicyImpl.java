@@ -23,7 +23,7 @@ import com.gigigo.ggglib.network.responses.HttpResponse;
 import com.gigigo.orchextra.domain.interactors.error.OrchextraBusinessErrors;
 import gigigo.com.orchextra.data.datasources.api.model.responses.base.OrchextraApiErrorResponse;
 
-
+//TODO LIB_CRUNCH gggLib
 public class DefaultRetryOnErrorPolicyImpl
     implements RetryOnErrorPolicy<OrchextraApiErrorResponse> {
 
@@ -36,6 +36,7 @@ public class DefaultRetryOnErrorPolicyImpl
    * @param error error description
    * @param httpResponse full http response of error
    */
+  //TODO LIB_CRUNCH gggLib
   @Override public boolean shouldRetryWithErrorAndTries(int tries, OrchextraApiErrorResponse error,
       HttpResponse httpResponse) {
     return retryPolicy(tries, error.getCode());

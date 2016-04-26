@@ -27,9 +27,11 @@ import com.gigigo.orchextra.sdk.OrchextraTasksManager;
 public class BackgroundTasksManagerImpl implements BackgroundTasksManager {
 
   private final OrchextraTasksManager orchextraTasksManager;
+  //TODO LIB_CRUNCH gggLib
   private final PermissionChecker permissionChecker;
+  //TODO LIB_CRUNCH gggLib
   private final Permission permission;
-
+  //TODO LIB_CRUNCH gggLib
   public BackgroundTasksManagerImpl(OrchextraTasksManager orchextraTasksManager,
       PermissionChecker permissionChecker) {
     this.orchextraTasksManager = orchextraTasksManager;

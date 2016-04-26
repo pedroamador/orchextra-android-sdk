@@ -24,7 +24,7 @@ import com.gigigo.orchextra.domain.model.vo.GeoLocation;
 import gigigo.com.orchextra.data.datasources.api.model.mappers.PointMapper;
 import gigigo.com.orchextra.data.datasources.api.model.requests.ApiGeoLocation;
 
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision //TODO LIB_CRUNCH gggLib
 public class GeoLocationModelToExternalClassMapper
     implements ModelToExternalClassMapper<GeoLocation, ApiGeoLocation> {
 
@@ -33,7 +33,7 @@ public class GeoLocationModelToExternalClassMapper
   public GeoLocationModelToExternalClassMapper(PointMapper pointRequestMapper) {
     this.pointRequestMapper = pointRequestMapper;
   }
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision
   @Override public ApiGeoLocation modelToExternalClass(GeoLocation geoLocation) {
     ApiGeoLocation apiGeoLocation = new ApiGeoLocation();
 
@@ -43,6 +43,7 @@ public class GeoLocationModelToExternalClassMapper
     apiGeoLocation.setStreet(geoLocation.getStreet());
     apiGeoLocation.setZip(geoLocation.getZip());
 
+    //TODO LIB_CRUNCH gggLib
     apiGeoLocation.setPoint(
         MapperUtils.checkNullDataRequest(pointRequestMapper, geoLocation.getPoint()));
 

@@ -22,6 +22,7 @@ import com.gigigo.ggglib.network.converters.ErrorConverter;
 import com.gigigo.ggglib.network.defaultelements.RetryOnErrorPolicy;
 import com.gigigo.ggglib.network.executors.ApiServiceExecutor;
 import com.gigigo.ggglib.network.executors.RetrofitApiServiceExcecutor;
+
 import com.gigigo.orchextra.di.modules.data.qualifiers.AcceptLanguage;
 import com.gigigo.orchextra.di.modules.data.qualifiers.ApiVersion;
 import com.gigigo.orchextra.di.modules.data.qualifiers.Endpoint;
@@ -31,6 +32,7 @@ import com.gigigo.orchextra.di.modules.data.qualifiers.XAppSdk;
 import com.gigigo.orchextra.domain.model.entities.authentication.Session;
 
 import gigigo.com.orchextra.data.datasources.api.model.responses.base.BaseOrchextraApiResponse;
+
 import java.util.Locale;
 
 import orchextra.javax.inject.Singleton;
@@ -43,6 +45,7 @@ import gigigo.com.orchextra.data.datasources.api.service.DefaultRetryOnErrorPoli
 import gigigo.com.orchextra.data.datasources.api.service.OrchextraApiService;
 
 import com.gigigo.orchextra.BuildConfig;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -88,7 +91,8 @@ public class ApiModule {
     }
 
     @Provides
-    @Singleton Retrofit provideOrchextraRetrofitObject(
+    @Singleton
+    Retrofit provideOrchextraRetrofitObject(
             @Endpoint String enpoint, @ApiVersion String version,
             GsonConverterFactory gsonConverterFactory, OkHttpClient okClient) {
 
@@ -108,7 +112,8 @@ public class ApiModule {
     }
 
     @Provides
-    @Singleton HttpLoggingInterceptor provideLoggingInterceptor() {
+    @Singleton
+    HttpLoggingInterceptor provideLoggingInterceptor() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return interceptor;
@@ -117,7 +122,8 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    @HeadersInterceptor Interceptor provideHeadersInterceptor(@XAppSdk String xAppSdk, @AcceptLanguage String acceptLanguage, Session session) {
+    @HeadersInterceptor
+    Interceptor provideHeadersInterceptor(@XAppSdk String xAppSdk, @AcceptLanguage String acceptLanguage, Session session) {
         return new Headers(xAppSdk, acceptLanguage, session);
     }
 
@@ -125,12 +131,12 @@ public class ApiModule {
     @Singleton
     OkHttpClient provideOkClient(@RetrofitLog boolean retrofitLog,
                                  @HeadersInterceptor Interceptor headersInterceptor,
-                                    HttpLoggingInterceptor loggingInterceptor) {
+                                 HttpLoggingInterceptor loggingInterceptor) {
 
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder.addInterceptor(headersInterceptor);
 
-        if (retrofitLog){
+        if (retrofitLog) {
             okHttpClientBuilder.addInterceptor(loggingInterceptor);
         }
 
@@ -142,6 +148,7 @@ public class ApiModule {
     GsonConverterFactory provideGsonConverterFactory() {
         return GsonConverterFactory.create();
     }
+//TODO LIB_CRUNCH gggLib
 
     @Provides
     ApiServiceExecutor provideApiServiceExecutor(ErrorConverter errorConverter,
@@ -150,12 +157,14 @@ public class ApiModule {
                 .errorConverter(errorConverter)
                 .retryOnErrorPolicy(retryOnErrorPolicy).build();
     }
+//TODO LIB_CRUNCH gggLib
 
     @Provides
     @Singleton
     ErrorConverter provideErrorConverter(Retrofit retrofit) {
         return new DefatultErrorConverterImpl(retrofit, BaseOrchextraApiResponse.class);
     }
+//TODO LIB_CRUNCH gggLib
 
     @Provides
     @Singleton

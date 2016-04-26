@@ -25,10 +25,10 @@ import com.gigigo.ggglib.network.mappers.ApiGenericResponseMapper;
 import com.gigigo.ggglib.network.responses.ApiGenericExceptionResponse;
 import gigigo.com.orchextra.data.datasources.api.model.responses.base.OrchextraApiErrorResponse;
 
-
+//TODO LIB_CRUNCH gggLib
 public class OrchextraGenericResponseMapper<Model, Data>
     extends ApiGenericResponseMapper<Model, Data, OrchextraApiErrorResponse> {
-
+  //TODO LIB_CRUNCH gggLib
   public OrchextraGenericResponseMapper(ExternalClassToModelMapper<Model, Data> mapper) {
     super(mapper);
   }
@@ -44,7 +44,7 @@ public class OrchextraGenericResponseMapper<Model, Data>
 
     return BusinessError.createKoInstance("Empty error message");
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Override protected BusinessError onException(ApiGenericExceptionResponse exceptionResponse) {
     int code = BusinessError.EXCEPTION_BUSINESS_ERROR_CODE;
     String message = exceptionResponse.getBusinessError().getMessage();

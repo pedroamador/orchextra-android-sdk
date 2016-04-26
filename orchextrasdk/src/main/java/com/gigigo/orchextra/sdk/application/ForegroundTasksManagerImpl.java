@@ -30,10 +30,14 @@ import com.gigigo.orchextra.sdk.OrchextraTasksManager;
 public class ForegroundTasksManagerImpl implements ForegroundTasksManager {
 
   private final OrchextraTasksManager orchextraTasksManager;
+  //TODO LIB_CRUNCH gggLib
   private final PermissionChecker permissionChecker;
+  //TODO LIB_CRUNCH gggLib
   private final ContextProvider contextProvider;
+  //TODO LIB_CRUNCH gggLib
   private final Permission permission;
 
+  //TODO LIB_CRUNCH gggLib
   public ForegroundTasksManagerImpl(OrchextraTasksManager orchextraTasksManager,
       PermissionChecker permissionChecker, ContextProvider contextProvider) {
     this.orchextraTasksManager = orchextraTasksManager;

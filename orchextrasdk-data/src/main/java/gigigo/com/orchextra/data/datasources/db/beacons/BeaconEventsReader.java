@@ -29,9 +29,9 @@ import io.realm.RealmResults;
 
 
 public class BeaconEventsReader {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraRegion, BeaconRegionEventRealm> regionEventRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public BeaconEventsReader(
       Mapper<OrchextraRegion, BeaconRegionEventRealm> regionEventRealmMapper) {
     this.regionEventRealmMapper = regionEventRealmMapper;

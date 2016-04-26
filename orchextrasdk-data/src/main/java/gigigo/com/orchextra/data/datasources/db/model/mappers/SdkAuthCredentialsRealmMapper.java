@@ -22,7 +22,7 @@ import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.orchextra.domain.model.entities.credentials.SdkAuthCredentials;
 import gigigo.com.orchextra.data.datasources.db.model.SdkAuthCredentialsRealm;
 
-
+//TODO LIB_CRUNCH gggLib
 public class SdkAuthCredentialsRealmMapper
     implements Mapper<SdkAuthCredentials, SdkAuthCredentialsRealm> {
 

@@ -20,49 +20,53 @@ package gigigo.com.orchextra.data.datasources.api.model.mappers.request;
 
 import com.gigigo.ggglib.mappers.MapperUtils;
 import com.gigigo.ggglib.mappers.ModelToExternalClassMapper;
+
 import com.gigigo.orchextra.domain.model.config.Config;
+
 import gigigo.com.orchextra.data.datasources.api.model.requests.OrchextraApiConfigRequest;
 
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision //TODO LIB_CRUNCH gggLib
 public class ConfigModelToExternalClassMapper
-    implements ModelToExternalClassMapper<Config, OrchextraApiConfigRequest> {
+        implements ModelToExternalClassMapper<Config, OrchextraApiConfigRequest> {
 
-  private final AppModelToExternalClassMapper appRequestMapper;
-  private final CrmModelToExternalClassMapper crmRequestMapper;
-  private final DeviceModelToExternalClassMapper deviceRequestMapper;
-  private final GeoLocationModelToExternalClassMapper geoLocationRequestMapper;
-  private final PushNotificationModelToExternalClassMapper pushNotificationRequestMapper;
+    private final AppModelToExternalClassMapper appRequestMapper;
+    private final CrmModelToExternalClassMapper crmRequestMapper;
+    private final DeviceModelToExternalClassMapper deviceRequestMapper;
+    private final GeoLocationModelToExternalClassMapper geoLocationRequestMapper;
+    private final PushNotificationModelToExternalClassMapper pushNotificationRequestMapper;
 
-  public ConfigModelToExternalClassMapper(
-      PushNotificationModelToExternalClassMapper pushNotificationRequestMapper,
-      GeoLocationModelToExternalClassMapper geoLocationRequestMapper,
-      DeviceModelToExternalClassMapper deviceRequestMapper,
-      CrmModelToExternalClassMapper crmRequestMapper,
-      AppModelToExternalClassMapper appRequestMapper) {
-    this.pushNotificationRequestMapper = pushNotificationRequestMapper;
-    this.geoLocationRequestMapper = geoLocationRequestMapper;
-    this.deviceRequestMapper = deviceRequestMapper;
-    this.crmRequestMapper = crmRequestMapper;
-    this.appRequestMapper = appRequestMapper;
-  }
+    public ConfigModelToExternalClassMapper(
+            PushNotificationModelToExternalClassMapper pushNotificationRequestMapper,
+            GeoLocationModelToExternalClassMapper geoLocationRequestMapper,
+            DeviceModelToExternalClassMapper deviceRequestMapper,
+            CrmModelToExternalClassMapper crmRequestMapper,
+            AppModelToExternalClassMapper appRequestMapper) {
+        this.pushNotificationRequestMapper = pushNotificationRequestMapper;
+        this.geoLocationRequestMapper = geoLocationRequestMapper;
+        this.deviceRequestMapper = deviceRequestMapper;
+        this.crmRequestMapper = crmRequestMapper;
+        this.appRequestMapper = appRequestMapper;
+    }
 
-  @Override public OrchextraApiConfigRequest modelToExternalClass(Config config) {
+    //TODO LIB_CRUNCH  orchextrasdk-dataprovision
+    @Override
+    public OrchextraApiConfigRequest modelToExternalClass(Config config) {
 
-    OrchextraApiConfigRequest configRequest = new OrchextraApiConfigRequest();
+        OrchextraApiConfigRequest configRequest = new OrchextraApiConfigRequest();
+//TODO LIB_CRUNCH gggLib
+        configRequest.setApp(MapperUtils.checkNullDataRequest(appRequestMapper, config.getApp()));
+        configRequest.setCrm(MapperUtils.checkNullDataRequest(crmRequestMapper, config.getCrm()));
+//TODO LIB_CRUNCH gggLib
+        configRequest.setDevice(
+                MapperUtils.checkNullDataRequest(deviceRequestMapper, config.getDevice()));
+//TODO LIB_CRUNCH gggLib
+        configRequest.setGeoLocation(
+                MapperUtils.checkNullDataRequest(geoLocationRequestMapper, config.getGeoLocation()));
+//TODO LIB_CRUNCH gggLib
+        configRequest.setNotificationPush(
+                MapperUtils.checkNullDataRequest(pushNotificationRequestMapper,
+                        config.getNotificationPush()));
 
-    configRequest.setApp(MapperUtils.checkNullDataRequest(appRequestMapper, config.getApp()));
-    configRequest.setCrm(MapperUtils.checkNullDataRequest(crmRequestMapper, config.getCrm()));
-
-    configRequest.setDevice(
-        MapperUtils.checkNullDataRequest(deviceRequestMapper, config.getDevice()));
-
-    configRequest.setGeoLocation(
-        MapperUtils.checkNullDataRequest(geoLocationRequestMapper, config.getGeoLocation()));
-
-    configRequest.setNotificationPush(
-        MapperUtils.checkNullDataRequest(pushNotificationRequestMapper,
-            config.getNotificationPush()));
-
-    return configRequest;
-  }
+        return configRequest;
+    }
 }

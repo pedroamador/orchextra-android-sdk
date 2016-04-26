@@ -33,11 +33,12 @@ import io.realm.RealmResults;
 
 
 public class SessionReader {
-
+  //TODO LIB_CRUNCH gggLib
   private final ExternalClassToModelMapper<SdkAuthRealm, SdkAuthData> sdkAuthRealmMapper;
+  //TODO LIB_CRUNCH gggLib
   private final ExternalClassToModelMapper<ClientAuthRealm, ClientAuthData> clientAuthRealmMapper;
   private final CrmRealmMapper crmRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public SessionReader(ExternalClassToModelMapper sdkAuthRealmMapper,
       ExternalClassToModelMapper clientAuthRealmMapper, CrmRealmMapper crmRealmMapper) {
 

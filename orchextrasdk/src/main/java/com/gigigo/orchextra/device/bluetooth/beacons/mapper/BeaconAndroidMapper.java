@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.altbeacon.beacon.Beacon;
 
-
+//TODO LIB_CRUNCH gggLib
 public class BeaconAndroidMapper implements
     ExternalClassListToModelListMapper<Beacon, OrchextraBeacon>,
     ExternalClassToModelMapper<Beacon, OrchextraBeacon> {

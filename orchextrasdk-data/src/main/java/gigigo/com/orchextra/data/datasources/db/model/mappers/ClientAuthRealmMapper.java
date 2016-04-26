@@ -19,14 +19,15 @@
 package gigigo.com.orchextra.data.datasources.db.model.mappers;
 
 import com.gigigo.gggjavalib.general.utils.DateUtils;
+
 import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.ggglib.network.mappers.DateFormatConstants;
 import com.gigigo.orchextra.domain.model.entities.authentication.ClientAuthData;
 import gigigo.com.orchextra.data.datasources.db.model.ClientAuthRealm;
 
-
+//TODO LIB_CRUNCH gggLib
 public class ClientAuthRealmMapper implements Mapper<ClientAuthData, ClientAuthRealm> {
-
+  //TODO LIB_CRUNCH gggLib
   @Override public ClientAuthRealm modelToExternalClass(ClientAuthData clientAuthData) {
     ClientAuthRealm clientAuthRealm = new ClientAuthRealm();
     clientAuthRealm.setExpiresAt(DateUtils.dateToStringWithFormat(clientAuthData.getExpiresAt(),
@@ -37,7 +38,7 @@ public class ClientAuthRealmMapper implements Mapper<ClientAuthData, ClientAuthR
     clientAuthRealm.setValue(clientAuthData.getValue());
     return clientAuthRealm;
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Override public ClientAuthData externalClassToModel(ClientAuthRealm clientAuthRealm) {
 
     ClientAuthData clientAuthData =

@@ -69,7 +69,7 @@ import gigigo.com.orchextra.data.datasources.device.DeviceDetailsProviderImpl;
 
 @Module(includes = {ApiModule.class, ApiMappersModule.class, DBModule.class})
 public class DataModule {
-
+//TODO LIB_CRUNCH gggLib
   @Provides @Singleton AuthenticationDataSource provideAuthenticationDataSource(
       OrchextraApiService orchextraApiService,
       Provider<ApiServiceExecutor> serviceExecutorProvider,
@@ -79,7 +79,7 @@ public class DataModule {
     return new AuthenticationDataSourceImpl(orchextraApiService, serviceExecutorProvider,
         sdkResponseMapper, clientResponseMapper);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton ConfigDataSource provideConfigDataSource(
       OrchextraApiService orchextraApiService,
       Provider<ApiServiceExecutor> serviceExecutorProvider,
@@ -89,7 +89,7 @@ public class DataModule {
     return new ConfigDataSourceImpl(orchextraApiService, serviceExecutorProvider,
         configResponseMapper, configRequest);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton ActionsDataSource provideActionsDataSource(
       OrchextraApiService orchextraApiService,
       Provider<ApiServiceExecutor> serviceExecutorProvider,
@@ -99,21 +99,21 @@ public class DataModule {
     return new ActionsDataSourceImpl(orchextraApiService, serviceExecutorProvider,
         queryModelToExternalClassMapper, actionsResponseMapper);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton StatsDataSourceImp provideStatsDataSource(OrchextraApiService orchextraApiService,
                                                                  Provider<ApiServiceExecutor> serviceExecutorProvider) {
       return new StatsDataSourceImp(orchextraApiService, serviceExecutorProvider);
   }
 
 
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton SessionDBDataSource provideSessionDBDataSource(
       ContextProvider contextProvider, SessionUpdater sessionUpdater, SessionReader sessionReader,
       RealmDefaultInstance realmDefaultInstance){
     return new SessionDBDataSourceImpl(contextProvider.getApplicationContext(),
         sessionUpdater, sessionReader, realmDefaultInstance);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton ConfigDBDataSource provideConfigDBDataSource(ContextProvider contextProvider,
       ConfigInfoResultUpdater configInfoResultUpdater,
       ConfigInfoResultReader configInfoResultReader,
@@ -121,7 +121,7 @@ public class DataModule {
     return new ConfigDBDataSourceImpl(contextProvider.getApplicationContext(),
         configInfoResultUpdater, configInfoResultReader, realmDefaultInstance);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton BeaconsDBDataSource provideBeaconsDBDataSource(ContextProvider contextProvider,
       BeaconEventsUpdater beaconEventsUpdater,
       BeaconEventsReader beaconEventsReader,
@@ -129,7 +129,7 @@ public class DataModule {
     return new BeaconsDBDataSourceImpl(contextProvider.getApplicationContext(),
         beaconEventsUpdater, beaconEventsReader, realmDefaultInstance);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides
   @Singleton
   GeofenceDBDataSource provideGeofenceDBDataSource(ContextProvider contextProvider,
@@ -139,7 +139,7 @@ public class DataModule {
     return new GeofenceDBDataSourceImp(contextProvider.getApplicationContext(),
             geofenceEventsReader, geofenceEventsUpdater, realmDefaultInstance);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides
   @Singleton OrchextraStatusDBDataSource provideOrchextraStatusDBDataSource(ContextProvider contextProvider,
       OrchextraStatusUpdater orchextraStatusUpdater,
@@ -148,7 +148,7 @@ public class DataModule {
     return new OrchextraStatusDBDataSourceImpl(contextProvider.getApplicationContext(),
         orchextraStatusUpdater, orchextraStatusReader, realmDefaultInstance);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton DeviceDetailsProvider provideDeviceDetailsProvider(ContextProvider contextProvider){
     return new DeviceDetailsProviderImpl(contextProvider.getApplicationContext());
   }

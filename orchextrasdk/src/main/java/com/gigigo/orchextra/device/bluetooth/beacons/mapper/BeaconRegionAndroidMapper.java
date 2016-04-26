@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.device.bluetooth.beacons.mapper;
 
-import com.gigigo.ggglib.mappers.ExternalClassListToModelListMapper;
+ import com.gigigo.ggglib.mappers.ExternalClassListToModelListMapper;
 import com.gigigo.ggglib.mappers.ExternalClassToModelMapper;
 import com.gigigo.ggglib.mappers.ModelListToExternalClassListMapper;
 import com.gigigo.ggglib.mappers.ModelToExternalClassMapper;
@@ -28,7 +28,7 @@ import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraRegion;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//TODO LIB_CRUNCH gggLib
 public class BeaconRegionAndroidMapper implements
     ExternalClassToModelMapper<Region, OrchextraRegion>,
     ModelToExternalClassMapper<OrchextraRegion, Region>,

@@ -23,13 +23,14 @@ import com.gigigo.ggglib.network.converters.RetrofitErrorConverter;
 import java.io.IOException;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
-
+//TODO LIB_CRUNCH gggLib
 public class DefatultErrorConverterImpl<ErrorResponse>
     implements ErrorConverter<ErrorResponse, ResponseBody> {
-
+  //TODO LIB_CRUNCH gggLib
   RetrofitErrorConverter retrofitErrorConverter;
 
   public DefatultErrorConverterImpl(Retrofit retrofit, Class<ErrorResponse> errorResponse) {
+    //TODO LIB_CRUNCH gggLib
     this.retrofitErrorConverter = new RetrofitErrorConverter(retrofit, errorResponse);
   }
 

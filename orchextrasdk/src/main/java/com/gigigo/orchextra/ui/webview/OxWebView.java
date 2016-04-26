@@ -96,7 +96,7 @@ public class OxWebView extends LinearLayout {
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-
+//TODO LIB_CRUNCH gggLib
         if (AndroidSdkVersion.hasJellyBean16()) {
             webView.getSettings().setAllowFileAccessFromFileURLs(true);
             webView.getSettings().setAllowUniversalAccessFromFileURLs(true);

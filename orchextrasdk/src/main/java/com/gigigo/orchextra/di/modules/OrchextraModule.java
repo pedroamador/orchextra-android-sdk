@@ -75,13 +75,13 @@ public class OrchextraModule {
     appRunningMode.setOrchextraActivityLifecycle(orchextraActivityLifecycle);
     return orchextraActivityLifecycle;
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides
   @Singleton
   ContextProvider provideContextProvider() {
     return new ContextProviderImpl(context.getApplicationContext());
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides
   @Singleton
   OrchextraContextProvider provideOrchextraContextProvider(

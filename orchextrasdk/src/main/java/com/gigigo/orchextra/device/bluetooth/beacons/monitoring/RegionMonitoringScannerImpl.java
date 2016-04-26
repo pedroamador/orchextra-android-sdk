@@ -50,7 +50,7 @@ public class RegionMonitoringScannerImpl implements RegionMonitoringScanner,
   private List<Region> regionsInEnter = (List<Region>) Collections.synchronizedList(new ArrayList<Region>());
 
   private boolean monitoring = false;
-
+//TODO LIB_CRUNCH gggLib
   public RegionMonitoringScannerImpl(ContextProvider contextProvider, BeaconManager beaconManager,
       MonitoringListener monitoringListener, BeaconsController beaconsController,
       BeaconRegionAndroidMapper regionMapper) {

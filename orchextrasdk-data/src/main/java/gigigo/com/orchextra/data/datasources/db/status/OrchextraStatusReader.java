@@ -13,9 +13,9 @@ import io.realm.RealmResults;
  * Date 4/3/16.
  */
 public class OrchextraStatusReader {
-
+  //TODO LIB_CRUNCH gggLib
   private final ExternalClassToModelMapper<OrchextraStatusRealm, OrchextraStatus> statusRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public OrchextraStatusReader(ExternalClassToModelMapper<OrchextraStatusRealm, OrchextraStatus> statusRealmMapper) {
     this.statusRealmMapper = statusRealmMapper;
   }

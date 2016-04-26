@@ -37,6 +37,7 @@ public class AndroidDevice {
     public Device getAndroidDeviceInfo() {
         Device device = new Device();
 
+        //TODO LIB_CRUNCH gggLib ini
         device.setHandset(DeviceInfoProvider.getHandset());
         device.setOsVersion(DeviceInfoProvider.getOsVersion());
         device.setInstanceId(DeviceInfoProvider.getAndroidInstanceId(context));
@@ -44,10 +45,8 @@ public class AndroidDevice {
         device.setSerialNumber(DeviceInfoProvider.getAndroidSerialNumber());
         device.setBluetoothMacAddress(DeviceInfoProvider.getBluetoothMac());
         device.setWifiMacAddress(DeviceInfoProvider.getWifiMac(context));
-
+        //TODO LIB_CRUNCH gggLib end
         device.setLanguage(Locale.getDefault().toString());
-
-
         device.setTimeZone(getTimeZone());
 
         return device;

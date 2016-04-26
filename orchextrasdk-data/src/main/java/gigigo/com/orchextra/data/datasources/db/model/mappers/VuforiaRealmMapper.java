@@ -22,7 +22,7 @@ import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.orchextra.domain.model.entities.Vuforia;
 import gigigo.com.orchextra.data.datasources.db.model.VuforiaRealm;
 
-
+//TODO LIB_CRUNCH gggLib
 public class VuforiaRealmMapper implements Mapper<Vuforia, VuforiaRealm> {
 
   @Override public VuforiaRealm modelToExternalClass(Vuforia vuforia) {

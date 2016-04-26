@@ -29,9 +29,9 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class GeofenceEventsReader {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraGeofence, GeofenceEventRealm> geofenceEventRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public GeofenceEventsReader(
       Mapper<OrchextraGeofence, GeofenceEventRealm> geofenceEventRealmMapper) {
     this.geofenceEventRealmMapper = geofenceEventRealmMapper;

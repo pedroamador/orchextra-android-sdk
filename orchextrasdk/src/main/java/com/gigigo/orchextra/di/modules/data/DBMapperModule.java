@@ -96,58 +96,58 @@ public class DBMapperModule {
     ClientAuthCredentialsRealmMapper provideClientCredentialsRealmMapper() {
         return new ClientAuthCredentialsRealmMapper();
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @RealmMapperBeaconRegion
     @Provides
     Mapper<OrchextraRegion, BeaconRegionRealm> provideRealmMapperBeaconRegion() {
         return new BeaconRegionRealmMapper();
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     Mapper<OrchextraRegion, BeaconRegionEventRealm> provideRealmMapperBeaconRegionEvent(
         @RealmMapperBeaconRegion Mapper<OrchextraRegion, BeaconRegionRealm> realmMapperBeaconRegion) {
         return new BeaconRegionEventRealmMapper(realmMapperBeaconRegion);
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     Mapper<OrchextraBeacon, BeaconEventRealm> provideBeaconEventRealmMapper() {
         return new BeaconEventRealmMapper();
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     Mapper<OrchextraPoint, RealmPoint> provideRealmMapperRealmPoint() {
         return new RealmPointMapper();
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     Mapper<OrchextraGeofence, GeofenceRealm> provideRealmMapperGeofenceRealm(Mapper<OrchextraPoint, RealmPoint> realmPointRealmMapper,
                                                                          KeyWordRealmMapper keyWordRealmMapper) {
         return new GeofenceRealmMapper(realmPointRealmMapper, keyWordRealmMapper);
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     Mapper<Vuforia, VuforiaRealm> provideRealmMapperVuforiaRealm() {
         return new VuforiaRealmMapper();
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     Mapper<Theme, ThemeRealm> provideRealmMapperThemeRealm() {
         return new ThemeRealmMapper();
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     Mapper<OrchextraGeofence, GeofenceEventRealm> provideGeofenceEventRealmMapper(Mapper<OrchextraPoint, RealmPoint> realmPointMapper) {
         return new GeofenceEventRealmMapper(realmPointMapper);
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     Mapper<OrchextraStatus, OrchextraStatusRealm> provideOrchextraStatusRealm() {

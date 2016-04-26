@@ -22,10 +22,10 @@ import com.gigigo.ggglib.mappers.ExternalClassToModelMapper;
 import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
 import gigigo.com.orchextra.data.datasources.api.model.responses.ApiSdkAuthData;
 
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision //TODO LIB_CRUNCH gggLib
 public class SdkApiExternalClassToModelMapper
     implements ExternalClassToModelMapper<ApiSdkAuthData, SdkAuthData> {
-
+  //TODO LIB_CRUNCH  orchextrasdk-dataprovision
   @Override public SdkAuthData externalClassToModel(ApiSdkAuthData apiSdkAuthData) {
 
     SdkAuthData sdkAuthData =

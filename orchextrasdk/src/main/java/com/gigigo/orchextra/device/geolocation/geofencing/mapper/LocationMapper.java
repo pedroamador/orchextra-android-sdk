@@ -22,7 +22,7 @@ import android.location.Location;
 
 import com.gigigo.ggglib.mappers.ExternalClassToModelMapper;
 import com.gigigo.orchextra.domain.model.vo.OrchextraPoint;
-
+//TODO LIB_CRUNCH gggLib
 public class LocationMapper implements ExternalClassToModelMapper<Location, OrchextraPoint> {
 
     @Override public OrchextraPoint externalClassToModel(Location location) {

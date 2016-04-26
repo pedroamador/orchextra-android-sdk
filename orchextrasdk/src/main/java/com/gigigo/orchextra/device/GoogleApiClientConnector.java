@@ -31,13 +31,13 @@ import com.google.android.gms.location.LocationServices;
 
 public class GoogleApiClientConnector
     implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
+  //TODO LIB_CRUNCH gggLib
   private final ContextProvider contextProvider;
   private final GoogleApiPermissionChecker googleApiPermissionChecker;
 
   private GoogleApiClient client;
   private OnConnectedListener onConnectedListener;
-
+  //TODO LIB_CRUNCH gggLib
   public GoogleApiClientConnector(ContextProvider contextProvider,
       GoogleApiPermissionChecker googleApiPermissionChecker) {
     this.contextProvider = contextProvider;

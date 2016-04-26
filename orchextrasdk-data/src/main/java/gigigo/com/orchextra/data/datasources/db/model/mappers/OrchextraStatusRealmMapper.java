@@ -8,6 +8,7 @@ import gigigo.com.orchextra.data.datasources.db.model.OrchextraStatusRealm;
  * Created by Sergio Martinez Rodriguez
  * Date 4/3/16.
  */
+//TODO LIB_CRUNCH gggLib
 public class OrchextraStatusRealmMapper implements Mapper<OrchextraStatus, OrchextraStatusRealm> {
 
   @Override public OrchextraStatus externalClassToModel(OrchextraStatusRealm data) {

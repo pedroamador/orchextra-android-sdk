@@ -25,9 +25,9 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class ConfigVuforiaUpdater {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<Vuforia, VuforiaRealm> vuforiaRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public ConfigVuforiaUpdater(Mapper<Vuforia, VuforiaRealm> vuforiaRealmMapper) {
     this.vuforiaRealmMapper = vuforiaRealmMapper;
   }

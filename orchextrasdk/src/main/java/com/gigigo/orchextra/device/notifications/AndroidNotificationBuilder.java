@@ -46,6 +46,7 @@ public class AndroidNotificationBuilder {
     public void createNotification(OrchextraNotification orchextraNotification, PendingIntent pendingIntent) {
 
         Notification notification;
+        //TODO LIB_CRUNCH gggLib
         if (AndroidSdkVersion.hasJellyBean16()) {
             notification = createBigNotification(orchextraNotification, pendingIntent);
         } else {
@@ -104,6 +105,7 @@ public class AndroidNotificationBuilder {
         return PendingIntent.getActivity(context, 1, intent, 0);
     }
 
+    //TODO LIB_CRUNCH gggLib
     private int getSmallIconResourceId() {
         return AndroidSdkVersion.hasLollipop21() ? R.drawable.ox_notification_alpha_small_icon : R.drawable.ox_notification_color_small_icon;
     }

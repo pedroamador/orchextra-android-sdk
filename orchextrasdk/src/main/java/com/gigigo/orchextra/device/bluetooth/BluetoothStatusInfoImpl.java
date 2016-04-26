@@ -34,15 +34,16 @@ import com.gigigo.orchextra.sdk.features.BeaconFeature;
 
 
 public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
-
+  //TODO LIB_CRUNCH gggLib
   private final PermissionChecker permissionChecker;
   private final BluetoothAvailability bluetoothAvailability;
+  //TODO LIB_CRUNCH gggLib
   private final ContextProvider contextProvider;
   private final AppRunningMode appRunningMode;
   private final FeatureListener featureListener;
   private BluetoothStatusListener bluetoothStatusListener;
 
-
+  //TODO LIB_CRUNCH gggLib
   public BluetoothStatusInfoImpl(PermissionChecker permissionChecker,
       BluetoothAvailability bluetoothAvailability, ContextProvider contextProvider,
       AppRunningMode appRunningMode, FeatureListener featureListener) {
@@ -75,6 +76,7 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
   }
 
   private void hasBltePermissions() {
+    //TODO LIB_CRUNCH gggLib
     final Permission permission = new CoarseLocationPermission();
 
     boolean allowed = permissionChecker.isGranted(permission);

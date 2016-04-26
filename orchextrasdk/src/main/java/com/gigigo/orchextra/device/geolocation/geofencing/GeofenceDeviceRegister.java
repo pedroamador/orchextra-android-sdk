@@ -47,12 +47,13 @@ public class GeofenceDeviceRegister implements ResultCallback<Status> {
     private final ContextProvider contextProvider;
     private final GeofencePendingIntentCreator geofencePendingIntentCreator;
     private final GoogleApiClientConnector googleApiClientConnector;
+    //TODO LIB_CRUNCH gggLib
     private final PermissionChecker permissionChecker;
     private final PermissionLocationImp accessFineLocationPermissionImp;
     private final AndroidGeofenceConverter androidGeofenceConverter;
 
     private OrchextraGeofenceUpdates geofenceUpdates;
-
+    //TODO LIB_CRUNCH gggLib
     public GeofenceDeviceRegister(ContextProvider contextProvider,
                                   GoogleApiClientConnector googleApiClientConnector,
                                   GeofencePendingIntentCreator geofencePendingIntentCreator,
@@ -123,7 +124,7 @@ public class GeofenceDeviceRegister implements ResultCallback<Status> {
                     GGGLogImpl.log("No se ha podido conectar GoogleApiClientConnector en las peticion de las geofences");
                 }
             };
-
+    //TODO LIB_CRUNCH gggLib
     private UserPermissionRequestResponseListener userPermissionResponseListener = new UserPermissionRequestResponseListener() {
         @Override
         public void onPermissionAllowed(boolean permissionAllowed) {

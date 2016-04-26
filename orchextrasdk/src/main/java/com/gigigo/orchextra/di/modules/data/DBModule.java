@@ -82,26 +82,26 @@ public class DBModule {
                                        ClientAuthRealmMapper clientAuthRealmMapper, CrmRealmMapper crmRealmMapper) {
         return new SessionReader(sdkAuthRealmMapper, clientAuthRealmMapper, crmRealmMapper);
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     ConfigBeaconUpdater provideConfigBeaconUpdater(
         @RealmMapperBeaconRegion Mapper<OrchextraRegion, BeaconRegionRealm> beaconRegionRealmMapper) {
         return new ConfigBeaconUpdater(beaconRegionRealmMapper);
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     ConfigGeofenceUpdater provideConfigGeofenceUpdater(Mapper<OrchextraGeofence, GeofenceRealm> geofenceRealmMapper) {
         return new ConfigGeofenceUpdater(geofenceRealmMapper);
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     ConfigVuforiaUpdater provideConfigVuforiaUpdater(Mapper<Vuforia, VuforiaRealm> vuforiaRealmMapper) {
         return new ConfigVuforiaUpdater(vuforiaRealmMapper);
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     ConfigThemeUpdater provideConfigThemeUpdater(Mapper<Theme, ThemeRealm> themeRealmMapper) {
@@ -116,7 +116,7 @@ public class DBModule {
                                                            ConfigThemeUpdater configThemeUpdater) {
         return new ConfigInfoResultUpdater(configBeaconUpdater, configGeofenceUpdater, configVuforiaUpdater, configThemeUpdater);
     }
-
+    //TODO LIB_CRUNCH gggLib
     @Singleton
     @Provides
     ConfigInfoResultReader provideConfigInfoResultReader(@RealmMapperBeaconRegion Mapper<OrchextraRegion, BeaconRegionRealm>  regionRealmMapper,
@@ -125,7 +125,7 @@ public class DBModule {
                                                          Mapper<Theme, ThemeRealm> themeRealmMapper) {
         return new ConfigInfoResultReader(regionRealmMapper, geofenceRealmMapper, vuforiaRealmMapper, themeRealmMapper);
     }
-
+    //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides BeaconEventsUpdater provideBeaconEventsUpdater(
       Mapper<OrchextraRegion, BeaconRegionEventRealm> regionEventRealmMapper,
@@ -133,34 +133,34 @@ public class DBModule {
   ) {
     return new BeaconEventsUpdater(regionEventRealmMapper, beaconEventRealmMapper);
   }
-
+    //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides BeaconEventsReader provideBeaconEventsReader(
       Mapper<OrchextraRegion, BeaconRegionEventRealm> regionEventRealmMapper
   ) {
     return new BeaconEventsReader(regionEventRealmMapper);
   }
-
+    //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides
     GeofenceEventsUpdater provideGeofenceEventsUpdater(
           Mapper<OrchextraGeofence, GeofenceEventRealm> geofenceEventRealmMapper) {
       return new GeofenceEventsUpdater(geofenceEventRealmMapper);
   }
-
+    //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides
   GeofenceEventsReader provideGeofenceEventsReader(
           Mapper<OrchextraGeofence, GeofenceEventRealm> geofenceEventRealmMapper) {
       return new GeofenceEventsReader(geofenceEventRealmMapper);
   }
-
+    //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides OrchextraStatusUpdater provideOrchextraStatusUpdater(
       Mapper<OrchextraStatus, OrchextraStatusRealm> orchextraStatusRealmMapper) {
     return new OrchextraStatusUpdater(orchextraStatusRealmMapper);
   }
-
+    //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides OrchextraStatusReader provideOrchextraStatusReader(
       Mapper<OrchextraStatus, OrchextraStatusRealm> orchextraStatusRealmMapper) {

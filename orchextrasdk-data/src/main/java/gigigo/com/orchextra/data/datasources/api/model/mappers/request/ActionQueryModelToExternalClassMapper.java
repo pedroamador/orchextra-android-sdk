@@ -23,7 +23,7 @@ import com.gigigo.orchextra.domain.model.triggers.strategy.types.Trigger;
 import java.util.HashMap;
 import java.util.Map;
 
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision  //TODO LIB_CRUNCH gggLib
 public class ActionQueryModelToExternalClassMapper
     implements ModelToExternalClassMapper<Trigger, Map<String, String>> {
 
@@ -34,7 +34,7 @@ public class ActionQueryModelToExternalClassMapper
   private final static String EVENT_QUERY_PARAM = "event";
   private final static String PHONE_STATUS_QUERY_PARAM = "phoneStatus";
   private final static String DISTANCE_QUERY_PARAM = "distance";
-
+  //TODO LIB_CRUNCH  orchextrasdk-dataprovision
   @Override public Map<String, String> modelToExternalClass(Trigger trigger) {
 
     Map<String, String> query = new HashMap<>();

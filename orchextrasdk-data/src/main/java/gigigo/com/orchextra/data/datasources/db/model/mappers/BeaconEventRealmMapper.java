@@ -23,7 +23,7 @@ import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraBeacon;
 import com.gigigo.orchextra.domain.model.triggers.params.BeaconDistanceType;
 import gigigo.com.orchextra.data.datasources.db.model.BeaconEventRealm;
 
-
+//TODO LIB_CRUNCH gggLib
 public class BeaconEventRealmMapper implements Mapper<OrchextraBeacon, BeaconEventRealm> {
 
   @Override public OrchextraBeacon externalClassToModel(BeaconEventRealm data) {

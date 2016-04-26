@@ -18,7 +18,7 @@
 
 package gigigo.com.orchextra.data.datasources.db.geofences;
 
-import com.gigigo.ggglib.mappers.Mapper;
+//import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.ggglogger.GGGLogImpl;
 import com.gigigo.ggglogger.LogLevel;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraGeofence;
@@ -31,9 +31,9 @@ import io.realm.RealmResults;
 import java.util.NoSuchElementException;
 
 public class GeofenceEventsUpdater {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraGeofence, GeofenceEventRealm> geofenceEventRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public GeofenceEventsUpdater(
       Mapper<OrchextraGeofence, GeofenceEventRealm> geofenceEventRealmMapper) {
 

@@ -35,7 +35,7 @@ import io.realm.RealmObject;
 
 
 public class SessionUpdater {
-
+  //TODO LIB_CRUNCH gggLib ini
   private final ModelToExternalClassMapper<SdkAuthData, SdkAuthRealm> sdkAuthRealmMapper;
   private final ModelToExternalClassMapper<ClientAuthData, ClientAuthRealm> clientAuthRealmMapper;
   private final ModelToExternalClassMapper<Crm, CrmRealm> crmRealmMapper;
@@ -56,7 +56,7 @@ public class SessionUpdater {
     this.sdkCredentialsRealmMapper = sdkCredentialsRealmMapper;
     this.clientCredentialsRealmMapper = clientCredentialsRealmMapper;
   }
-
+  //TODO LIB_CRUNCH gggLib end
   public void updateSdkAuthCredentials(Realm realm, SdkAuthCredentials sdkAuthCredentials) {
     SdkAuthCredentialsRealm realmItem = getRealmItem(realm, SdkAuthCredentialsRealm.class);
 

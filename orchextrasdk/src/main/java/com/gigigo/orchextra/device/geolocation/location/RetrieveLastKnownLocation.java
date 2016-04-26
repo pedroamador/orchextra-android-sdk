@@ -33,14 +33,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.location.LocationServices;
 
 public class RetrieveLastKnownLocation {
-
+    //TODO LIB_CRUNCH gggLib
     private final ContextProvider contextProvider;
     private final GoogleApiClientConnector googleApiClientConnector;
+    //TODO LIB_CRUNCH gggLib
     private final PermissionChecker permissionChecker;
     private final PermissionLocationImp accessFineLocationPermissionImp;
 
     private OnLastKnownLocationListener onLastKnownLocationListener;
-
+    //TODO LIB_CRUNCH gggLib
     public RetrieveLastKnownLocation(ContextProvider contextProvider,
                                      GoogleApiClientConnector googleApiClientConnector,
                                      PermissionChecker permissionChecker,
@@ -91,7 +92,7 @@ public class RetrieveLastKnownLocation {
             onLastKnownLocationListener.onLastKnownLocation(lastLocation);
         }
     }
-
+    //TODO LIB_CRUNCH gggLib
     private UserPermissionRequestResponseListener userPermissionResponseListener =
             new UserPermissionRequestResponseListener() {
         @Override

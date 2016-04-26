@@ -39,6 +39,7 @@ import me.dm7.barcodescanner.zbar.Result;
 
 public class OxScannerActivity extends OxToolbarActivity implements OxCodeScannerView, OxZBarScannerView.ResultHandler {
 
+    //TODO LIB_CRUNCH gggLib
     @Inject
     PermissionChecker permissionChecker;
 
@@ -99,7 +100,7 @@ public class OxScannerActivity extends OxToolbarActivity implements OxCodeScanne
             openScanner();
         }
     }
-
+    //TODO LIB_CRUNCH gggLib
     private UserPermissionRequestResponseListener cameraPermissionResponseListener =
             new UserPermissionRequestResponseListener() {
         @Override

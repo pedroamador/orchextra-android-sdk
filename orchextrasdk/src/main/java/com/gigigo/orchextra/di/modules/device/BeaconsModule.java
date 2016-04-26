@@ -56,7 +56,7 @@ import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 
 @Module
 public class BeaconsModule {
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton BeaconManager provideBeaconManager(ContextProvider contextProvider){
     BeaconManager beaconManager = BeaconManager.getInstanceForApplication(
         contextProvider.getApplicationContext());
@@ -76,7 +76,7 @@ public class BeaconsModule {
     //  LogManager.setLogger(Loggers.verboseLogger());
     //}
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton BackgroundPowerSaver BackgroundPowerSaver(ContextProvider contextProvider){
     return new BackgroundPowerSaver(contextProvider.getApplicationContext());
   }
@@ -95,7 +95,7 @@ public class BeaconsModule {
     return new BeaconRangingScannerImpl(beaconManager, beaconsController, beaconRegionControlMapper,
         beaconAndroidMapper);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton RegionMonitoringScanner provideRegionMonitoringScanner(ContextProvider contextProvider,
     BeaconManager beaconManager, MonitoringListener monitoringListener, BeaconsController beaconsController,
       BeaconRegionAndroidMapper beaconRegionControlMapper){

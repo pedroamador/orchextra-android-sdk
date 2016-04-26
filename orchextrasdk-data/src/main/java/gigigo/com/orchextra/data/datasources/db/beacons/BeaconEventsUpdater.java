@@ -36,10 +36,11 @@ import java.util.NoSuchElementException;
 
 
 public class BeaconEventsUpdater {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraRegion, BeaconRegionEventRealm> regionEventRealmMapper;
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraBeacon, BeaconEventRealm> beaconEventRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public BeaconEventsUpdater(Mapper<OrchextraRegion, BeaconRegionEventRealm> regionEventRealmMapper,
       Mapper<OrchextraBeacon, BeaconEventRealm> beaconEventRealmMapper) {
 

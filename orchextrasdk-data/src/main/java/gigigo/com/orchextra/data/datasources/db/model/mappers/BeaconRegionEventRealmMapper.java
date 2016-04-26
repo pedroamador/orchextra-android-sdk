@@ -25,12 +25,12 @@ import com.gigigo.orchextra.domain.model.entities.proximity.RegionEventType;
 import gigigo.com.orchextra.data.datasources.db.model.BeaconRegionEventRealm;
 import gigigo.com.orchextra.data.datasources.db.model.BeaconRegionRealm;
 
-
+//TODO LIB_CRUNCH gggLib
 public class BeaconRegionEventRealmMapper
     implements Mapper<OrchextraRegion, BeaconRegionEventRealm> {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraRegion, BeaconRegionRealm> beaconRegionRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public BeaconRegionEventRealmMapper(
       Mapper<OrchextraRegion, BeaconRegionRealm> beaconRegionRealmMapper) {
     this.beaconRegionRealmMapper = beaconRegionRealmMapper;

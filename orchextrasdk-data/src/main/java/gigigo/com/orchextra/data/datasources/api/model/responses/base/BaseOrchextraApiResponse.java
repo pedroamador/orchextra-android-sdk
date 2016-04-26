@@ -22,14 +22,14 @@ import com.gigigo.ggglib.network.responses.ApiGenericResponse;
 import com.gigigo.ggglib.network.responses.HttpResponse;
 import com.google.gson.annotations.SerializedName;
 
-
+//TODO LIB_CRUNCH gggLib
 public class BaseOrchextraApiResponse<JSONData>
     implements ApiGenericResponse<JSONData, OrchextraApiErrorResponse> {
 
   @SerializedName("status") private boolean status;
   @SerializedName("data") private JSONData data;
   @SerializedName("error") private OrchextraApiErrorResponse error;
-
+  //TODO LIB_CRUNCH gggLib
   private HttpResponse httpResponse;
 
   public boolean getStatus() {
@@ -39,11 +39,11 @@ public class BaseOrchextraApiResponse<JSONData>
   public void setStatus(boolean status) {
     this.status = status;
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Override public HttpResponse getHttpResponse() {
     return httpResponse;
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Override public void setHttpResponse(HttpResponse httpResponse) {
     this.httpResponse = httpResponse;
   }

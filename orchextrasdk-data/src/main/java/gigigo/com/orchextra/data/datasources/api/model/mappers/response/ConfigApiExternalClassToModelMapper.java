@@ -33,7 +33,7 @@ import gigigo.com.orchextra.data.datasources.api.model.responses.ApiBeaconRegion
 import gigigo.com.orchextra.data.datasources.api.model.responses.ApiConfigData;
 import gigigo.com.orchextra.data.datasources.api.model.responses.ApiGeofence;
 
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision //TODO LIB_CRUNCH gggLib
 public class ConfigApiExternalClassToModelMapper
     implements ExternalClassToModelMapper<ApiConfigData, ConfigInfoResult> {
 
@@ -54,36 +54,38 @@ public class ConfigApiExternalClassToModelMapper
     this.beaconResponseMapper = beaconResponseMapper;
     this.geofenceResponseMapper = geofenceResponseMapper;
   }
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision
   @Override public ConfigInfoResult externalClassToModel(ApiConfigData apiConfigData) {
 
     List<OrchextraRegion> beacons = mapBeacons(apiConfigData.getProximity());
     List<OrchextraGeofence> geofences = mapGeofences(apiConfigData.getGeoMarketing());
+    //TODO LIB_CRUNCH gggLib
     Theme theme = MapperUtils.checkNullDataResponse(themeResponseMapper, apiConfigData.getTheme());
+    //TODO LIB_CRUNCH gggLib
     Vuforia vuforia =
         MapperUtils.checkNullDataResponse(vuforiaResponseMapper, apiConfigData.getVuforia());
 
     return new ConfigInfoResult.Builder(apiConfigData.getRequestWaitTime() * ONE_SECOND, geofences,
         beacons, theme, vuforia).build();
   }
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision
   private List<OrchextraGeofence> mapGeofences(List<ApiGeofence> apiGeofences) {
     List<OrchextraGeofence> geofences = new ArrayList<>();
 
     if (apiGeofences == null) return geofences;
-
+//TODO LIB_CRUNCH gggLib
     for (ApiGeofence apiGeofence : apiGeofences) {
       geofences.add(MapperUtils.checkNullDataResponse(geofenceResponseMapper, apiGeofence));
     }
 
     return geofences;
   }
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision
   private List<OrchextraRegion> mapBeacons(List<ApiBeaconRegion> apiBeaconRegions) {
     List<OrchextraRegion> beacons = new ArrayList<>();
 
     if (beacons == null) return beacons;
-
+//TODO LIB_CRUNCH gggLib
     for (ApiBeaconRegion apiBeaconRegion : apiBeaconRegions) {
       beacons.add(MapperUtils.checkNullDataResponse(beaconResponseMapper, apiBeaconRegion));
     }

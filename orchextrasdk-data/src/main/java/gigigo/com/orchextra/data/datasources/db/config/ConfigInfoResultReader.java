@@ -40,12 +40,12 @@ import io.realm.RealmResults;
 
 
 public class ConfigInfoResultReader {
-
+  //TODO LIB_CRUNCH gggLib ini
   private final ExternalClassToModelMapper<BeaconRegionRealm, OrchextraRegion> regionRealmMapper;
   private final ExternalClassToModelMapper<GeofenceRealm, OrchextraGeofence> geofencesRealmMapper;
   private final ExternalClassToModelMapper<VuforiaRealm, Vuforia> vuforiaRealmMapper;
   private final ExternalClassToModelMapper<ThemeRealm, Theme> themeRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib end
   public ConfigInfoResultReader(
       ExternalClassToModelMapper<BeaconRegionRealm, OrchextraRegion> regionRealmMapper,
       ExternalClassToModelMapper<GeofenceRealm, OrchextraGeofence> geofencesRealmMapper,

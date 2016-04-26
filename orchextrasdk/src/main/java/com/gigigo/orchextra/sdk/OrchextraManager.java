@@ -81,6 +81,7 @@ public class OrchextraManager {
    * @param apiKey credentials
    * @param apiSecret credentials
    */
+  //TODO LIB_CRUNCH gggLib
   public static synchronized void sdkStart(String apiKey, String apiSecret) {
     if (OrchextraManager.instance!=null &&
             AndroidSdkVersion.hasJellyBean18()) {
@@ -93,6 +94,7 @@ public class OrchextraManager {
    * users. This call can provokes call to configuration
    * @param user information about client app user
    */
+  //TODO LIB_CRUNCH gggLib
   public static synchronized void setUser(ORCUser user) {
     OrchextraManager orchextraManager = OrchextraManager.instance;
     if (orchextraManager!=null &&
@@ -161,7 +163,7 @@ public class OrchextraManager {
   private void init(Application app, OrchextraManagerCompletionCallback completionCallback) {
 
     orchextraCompletionCallback = completionCallback;
-
+//TODO LIB_CRUNCH gggLib
     if (AndroidSdkVersion.hasJellyBean18()){
       initDependencyInjection(app.getApplicationContext(), completionCallback);
       initLifecyle(app);

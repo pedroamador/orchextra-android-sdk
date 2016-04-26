@@ -22,10 +22,10 @@ import com.gigigo.ggglib.mappers.ModelToExternalClassMapper;
 import com.gigigo.orchextra.domain.model.vo.Device;
 import gigigo.com.orchextra.data.datasources.api.model.requests.ApiDevice;
 
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision //TODO LIB_CRUNCH gggLib
 public class DeviceModelToExternalClassMapper
     implements ModelToExternalClassMapper<Device, ApiDevice> {
-
+  //TODO LIB_CRUNCH  orchextrasdk-dataprovision
   @Override public ApiDevice modelToExternalClass(Device device) {
     ApiDevice apiDevice = new ApiDevice();
 

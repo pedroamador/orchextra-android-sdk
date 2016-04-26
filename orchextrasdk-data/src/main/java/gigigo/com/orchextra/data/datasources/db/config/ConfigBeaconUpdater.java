@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigBeaconUpdater {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraRegion, BeaconRegionRealm> beaconRealmMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public ConfigBeaconUpdater(Mapper<OrchextraRegion, BeaconRegionRealm> beaconRealmMapper) {
     this.beaconRealmMapper = beaconRealmMapper;
   }

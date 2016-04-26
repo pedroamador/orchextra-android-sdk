@@ -26,11 +26,11 @@ import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraGeofence;
 import com.gigigo.orchextra.domain.model.vo.OrchextraPoint;
 import gigigo.com.orchextra.data.datasources.db.model.GeofenceEventRealm;
 import gigigo.com.orchextra.data.datasources.db.model.RealmPoint;
-
+//TODO LIB_CRUNCH gggLib
 public class GeofenceEventRealmMapper implements Mapper<OrchextraGeofence, GeofenceEventRealm> {
-
+  //TODO LIB_CRUNCH gggLib
   private final Mapper<OrchextraPoint, RealmPoint> realmPointMapper;
-
+  //TODO LIB_CRUNCH gggLib
   public GeofenceEventRealmMapper(Mapper<OrchextraPoint, RealmPoint> realmPointMapper) {
     this.realmPointMapper = realmPointMapper;
   }
@@ -39,6 +39,7 @@ public class GeofenceEventRealmMapper implements Mapper<OrchextraGeofence, Geofe
     OrchextraGeofence geofence = new OrchextraGeofence();
 
     geofence.setRadius(geofenceEventRealm.getRadius());
+    //TODO LIB_CRUNCH gggLib
     geofence.setPoint(
         MapperUtils.checkNullDataResponse(realmPointMapper, geofenceEventRealm.getPoint()));
 
@@ -58,6 +59,7 @@ public class GeofenceEventRealmMapper implements Mapper<OrchextraGeofence, Geofe
     GeofenceEventRealm geofenceRealm = new GeofenceEventRealm();
 
     geofenceRealm.setRadius(geofence.getRadius());
+    //TODO LIB_CRUNCH gggLib
     geofenceRealm.setPoint(MapperUtils.checkNullDataRequest(realmPointMapper, geofence.getPoint()));
 
     geofenceRealm.setCode(geofence.getCode());

@@ -69,17 +69,17 @@ import gigigo.com.orchextra.data.datasources.api.model.mappers.response.VuforiaE
 public class ApiMappersModule {
 
   //region Response Mappers
-
+//TODO LIB_CRUNCH gggLib
   @Provides @Singleton @SdkDataResponseMapper ApiGenericResponseMapper
   provideSdkDataResponseMapper(SdkApiExternalClassToModelMapper sdkMapper){
     return createResponseMapper(sdkMapper);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton @ClientDataResponseMapper ApiGenericResponseMapper
   provideClientDataResponseMapper(ClientApiExternalClassToModelMapper clientMapper){
     return createResponseMapper(clientMapper);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton @ConfigResponseMapper ApiGenericResponseMapper
   provideConfigResponseMapper(ConfigApiExternalClassToModelMapper configApiResponseMapper) {
     return createResponseMapper(configApiResponseMapper);
@@ -92,23 +92,23 @@ public class ApiMappersModule {
   @Provides @Singleton ClientApiExternalClassToModelMapper provideClientMapper(){
     return new ClientApiExternalClassToModelMapper();
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton @ActionsResponse   ApiGenericResponseMapper provideActionsResMapper(
       @ActionsResponse ExternalClassToModelMapper actionsApiResponseMapper){
     return createResponseMapper(actionsApiResponseMapper);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton @ActionsResponse ExternalClassToModelMapper provideActionsApiResponseMapper(
       @ActionNotificationResponse ExternalClassToModelMapper actionNotifResponseMapper,
       @ActionScheduleResponse ExternalClassToModelMapper actionScheduleResponseMapper){
     return new ActionsApiExternalClassToModelMapper(actionNotifResponseMapper, actionScheduleResponseMapper);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton @ActionNotificationResponse
   ExternalClassToModelMapper provideActionNotificationResponseMapper(){
     return new ActionNotificationExternalClassToModelMapper();
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton @ActionScheduleResponse
   ExternalClassToModelMapper provideActionScheduleResponseMapper(){
     return new ActionScheduledExternalClassToModelMapper();
@@ -142,7 +142,7 @@ public class ApiMappersModule {
   @Provides @Singleton @BeaconResponse BeaconExternalClassToModelMapper provideBeaconResponseMapper(){
     return new BeaconExternalClassToModelMapper();
   }
-
+  //TODO LIB_CRUNCH gggLib
   private ApiGenericResponseMapper createResponseMapper(ExternalClassToModelMapper mapper) {
     return new OrchextraGenericResponseMapper(mapper);
   }
@@ -154,7 +154,7 @@ public class ApiMappersModule {
   }
 
   //region Request Mappers
-
+//TODO LIB_CRUNCH gggLib
   @Provides @Singleton @ActionQueryRequest
   ModelToExternalClassMapper provideActionQueryRequestMapper(){
     return new ActionQueryModelToExternalClassMapper();
@@ -182,7 +182,7 @@ public class ApiMappersModule {
       @PointReqResMapper PointMapper pointMapper){
     return new GeoLocationModelToExternalClassMapper(pointMapper);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton @ConfigRequest ModelToExternalClassMapper provideConfigRequestMapper(
       @PushNotificationRequest
       PushNotificationModelToExternalClassMapper pushNotificationRequestMapper,

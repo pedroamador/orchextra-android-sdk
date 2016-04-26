@@ -39,7 +39,7 @@ public class BluetoothModule {
   BluetoothAvailability provideBluetoothAvailability(BeaconManager beaconManager){
     return new BluetoothAvailabilityImpl(beaconManager);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Provides @Singleton BluetoothStatusInfo provideBluetoothStatusInfo(BluetoothAvailability bluetoothAvailability,
       PermissionChecker permissionChecker, ContextProvider contextProvider, AppRunningMode appRunningMode,
       FeatureListener featureListener){

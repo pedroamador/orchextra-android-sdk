@@ -32,21 +32,24 @@ public class DeviceDetailsProviderImpl implements DeviceDetailsProvider {
   }
 
   @Override public String getAndroidInstanceId() {
+    //TODO LIB_CRUNCH gggLib
     return DeviceInfoProvider.getAndroidInstanceId(context);
   }
 
   @Override public String getAndroidSecureId() {
+    //TODO LIB_CRUNCH gggLib
     return DeviceInfoProvider.getAndroidSecureId(context);
   }
 
   @Override public String getAndroidSerialNumber() {
+    //TODO LIB_CRUNCH gggLib
     return DeviceInfoProvider.getAndroidSerialNumber();
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Override public String getWifiMac() {
     return DeviceInfoProvider.getWifiMac(context);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Override public String getBluetoothMac() {
     return DeviceInfoProvider.getBluetoothMac();
   }

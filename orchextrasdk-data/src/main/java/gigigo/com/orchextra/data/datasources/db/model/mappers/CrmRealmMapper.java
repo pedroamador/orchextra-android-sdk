@@ -27,7 +27,7 @@ import com.gigigo.orchextra.domain.model.GenderType;
 import com.gigigo.orchextra.domain.model.entities.authentication.Crm;
 import gigigo.com.orchextra.data.datasources.db.model.CrmRealm;
 
-
+//TODO LIB_CRUNCH gggLib
 public class CrmRealmMapper implements Mapper<Crm, CrmRealm> {
 
   private final KeyWordRealmMapper keyWordRealmMapper;
@@ -43,7 +43,7 @@ public class CrmRealmMapper implements Mapper<Crm, CrmRealm> {
       if (crm.getKeywords() != null) {
         crmRealm.setKeywords(keyWordRealmMapper.stringKeyWordsToRealmList(crm.getKeywords()));
       }
-
+//TODO LIB_CRUNCH gggLib
       if (crm.getBirthDate() != null) {
         crmRealm.setBirthDate(
             DateUtils.dateToStringWithFormat(crm.getBirthDate(), DateFormatConstants.DATE_FORMAT));
@@ -77,7 +77,7 @@ public class CrmRealmMapper implements Mapper<Crm, CrmRealm> {
       if (!TextUtils.isEmpty(crmRealm.getGender())) {
         crm.setGender(GenderType.getTypeFromString(crmRealm.getGender()));
       }
-
+//TODO LIB_CRUNCH gggLib
       if (!TextUtils.isEmpty(crmRealm.getBirthDate())) {
         crm.setBirthDate(DateUtils.stringToDateWithFormat(crmRealm.getBirthDate(),
                 DateFormatConstants.DATE_FORMAT));

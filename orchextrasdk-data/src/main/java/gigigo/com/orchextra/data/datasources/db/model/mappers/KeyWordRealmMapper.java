@@ -25,7 +25,7 @@ import io.realm.RealmList;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//TODO LIB_CRUNCH gggLib
 public class KeyWordRealmMapper implements Mapper<String, KeyWordRealm> {
 
   @Override public KeyWordRealm modelToExternalClass(String s) {
@@ -43,7 +43,7 @@ public class KeyWordRealmMapper implements Mapper<String, KeyWordRealm> {
     if (keywords == null) {
       return keyWordRealms;
     }
-
+//TODO LIB_CRUNCH gggLib
     for (String keyword : keywords) {
       keyWordRealms.add(MapperUtils.checkNullDataRequest(this, keyword));
     }
@@ -56,7 +56,7 @@ public class KeyWordRealmMapper implements Mapper<String, KeyWordRealm> {
     if (keyWordRealms == null) {
       return keyWords;
     }
-
+//TODO LIB_CRUNCH gggLib
     for (KeyWordRealm keyWordRealm : keyWordRealms) {
       keyWords.add(MapperUtils.checkNullDataResponse(this, keyWordRealm));
     }

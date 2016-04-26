@@ -21,7 +21,7 @@ package com.gigigo.orchextra.sdk.application.applifecycle;
 import com.gigigo.ggglib.ContextProvider;
 import com.gigigo.orchextra.sdk.application.applifecycle.OrchextraActivityLifecycle;
 
-
+//TODO LIB_CRUNCH gggLib
 public interface OrchextraContextProvider extends ContextProvider {
   void setOrchextraActivityLifecycle(OrchextraActivityLifecycle orchextraActivityLifecycle);
 }

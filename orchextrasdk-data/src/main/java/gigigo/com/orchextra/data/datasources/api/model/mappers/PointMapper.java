@@ -22,9 +22,9 @@ import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.orchextra.domain.model.vo.OrchextraPoint;
 import gigigo.com.orchextra.data.datasources.api.model.responses.ApiPoint;
 
-
+//TODO LIB_CRUNCH  orchextrasdk-dataprovision //TODO LIB_CRUNCH gggLib
 public class PointMapper implements Mapper<OrchextraPoint, ApiPoint> {
-
+  //TODO LIB_CRUNCH  orchextrasdk-dataprovision
   @Override public ApiPoint modelToExternalClass(OrchextraPoint point) {
     ApiPoint apiPoint = new ApiPoint();
 
@@ -33,7 +33,7 @@ public class PointMapper implements Mapper<OrchextraPoint, ApiPoint> {
 
     return apiPoint;
   }
-
+  //TODO LIB_CRUNCH  orchextrasdk-dataprovision
   @Override public OrchextraPoint externalClassToModel(ApiPoint apiPoint) {
     OrchextraPoint point = new OrchextraPoint();
 

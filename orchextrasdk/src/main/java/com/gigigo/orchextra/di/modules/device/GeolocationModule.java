@@ -43,6 +43,7 @@ import orchextra.dagger.Provides;
 @Module
 public class GeolocationModule {
 
+//TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides
   RetrieveLastKnownLocation provideRetrieveLastKnownLocation(ContextProvider contextProvider,
@@ -51,7 +52,7 @@ public class GeolocationModule {
       PermissionLocationImp permissionLocationImp) {
     return new RetrieveLastKnownLocation(contextProvider, googleApiClientConnector, permissionChecker, permissionLocationImp);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides AndroidGeocoder provideAndroidGeocoder(ContextProvider contextProvider) {
     return new AndroidGeocoder(contextProvider.getApplicationContext());
@@ -62,7 +63,7 @@ public class GeolocationModule {
       RetrieveLastKnownLocation retrieveLastKnownLocation, AndroidGeocoder androidGeocoder) {
     return new AndroidGeolocationManager(retrieveLastKnownLocation, androidGeocoder);
   }
-
+  //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides GeofencePendingIntentCreator provideGeofencePendingIntentCreator(ContextProvider contextProvider) {
     return new GeofencePendingIntentCreator(contextProvider.getApplicationContext());
@@ -80,7 +81,7 @@ public class GeolocationModule {
   @Provides AndroidGeofenceConverter provideAndroidGeofenceMapper() {
         return new AndroidGeofenceConverter();
     }
-
+  //TODO LIB_CRUNCH gggLib
   @Singleton
   @Provides GeofenceDeviceRegister provideGeofenceDeviceRegister(ContextProvider contextProvider,
                                                                  GoogleApiClientConnector googleApiClientConnector,

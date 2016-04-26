@@ -24,7 +24,7 @@ import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraRegion;
 import com.gigigo.orchextra.domain.model.entities.proximity.RegionEventType;
 import gigigo.com.orchextra.data.datasources.db.model.BeaconRegionRealm;
 
-
+//TODO LIB_CRUNCH gggLib
 public class BeaconRegionRealmMapper implements Mapper<OrchextraRegion, BeaconRegionRealm> {
 
   @Override public BeaconRegionRealm modelToExternalClass(OrchextraRegion region) {
