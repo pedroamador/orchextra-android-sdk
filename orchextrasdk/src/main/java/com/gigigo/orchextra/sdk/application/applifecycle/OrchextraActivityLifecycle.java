@@ -76,6 +76,7 @@ import java.util.Stack;
       ConsistencyUtils.checkNotEmpty(activityStack);
       activityStack.peek().setIsPaused(false);
     } catch (Exception e) {
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Exception :" + e.getMessage(), LogLevel.ERROR);
     }
   }
@@ -85,6 +86,7 @@ import java.util.Stack;
       ConsistencyUtils.checkNotEmpty(activityStack);
       activityStack.peek().setIsPaused(true);
     } catch (Exception e) {
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Exception :" + e.getMessage(), LogLevel.ERROR);
     }
   }
@@ -99,6 +101,7 @@ import java.util.Stack;
       removeActivityFromStack(activity);
       setBackgroundModeIfNeeded();
     } catch (Exception e) {
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Exception :" + e.getMessage(), LogLevel.ERROR);
     }
   }
@@ -156,6 +159,7 @@ import java.util.Stack;
   }
 
   private void prinStatusOfStack(String s) {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("STACK Status :: " + s);
     GGGLogImpl.log("STACK Status :: Elements in Stack :" + activityStack.size());
     for (int i = 0; i < activityStack.size(); i++) {

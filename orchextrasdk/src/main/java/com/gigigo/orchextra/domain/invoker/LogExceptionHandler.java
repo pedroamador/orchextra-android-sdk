@@ -26,8 +26,10 @@ public class LogExceptionHandler implements Thread.UncaughtExceptionHandler {
   @Override public void uncaughtException(Thread thread, Throwable ex) {
     if (ex!=null){
       ex.printStackTrace();
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Unhandled Interactor Exception: " + ex.getMessage(), LogLevel.ERROR);
     }else{
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Unhandled Interactor Exception: exception trace not available");
     }
   }

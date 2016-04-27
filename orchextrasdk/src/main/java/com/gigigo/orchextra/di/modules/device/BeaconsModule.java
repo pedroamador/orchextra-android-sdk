@@ -56,17 +56,18 @@ import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 
 @Module
 public class BeaconsModule {
-  //TODO LIB_CRUNCH gggLib
+  //TODO LIB_CRUNCH gggLib //TODO LIB_CRUNCH altBeacon
   @Provides @Singleton BeaconManager provideBeaconManager(ContextProvider contextProvider){
     BeaconManager beaconManager = BeaconManager.getInstanceForApplication(
         contextProvider.getApplicationContext());
 
     switchAltBeaconLogOnOff();
+    //TODO LIB_CRUNCH altBeacon
     BeaconParser bp = new BeaconParser().setBeaconLayout(BuildConfig.IBEACON_LAYOUT_PARSING);
     beaconManager.getBeaconParsers().add(bp);
     return beaconManager;
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void switchAltBeaconLogOnOff() {
     //if (BuildConfig.DEBUG){
       LogManager.setVerboseLoggingEnabled(false);
@@ -76,11 +77,11 @@ public class BeaconsModule {
     //  LogManager.setLogger(Loggers.verboseLogger());
     //}
   }
-  //TODO LIB_CRUNCH gggLib
+  //TODO LIB_CRUNCH gggLib //TODO LIB_CRUNCH altBeacon
   @Provides @Singleton BackgroundPowerSaver BackgroundPowerSaver(ContextProvider contextProvider){
     return new BackgroundPowerSaver(contextProvider.getApplicationContext());
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-control
   @Provides @Singleton BeaconScanner provideBeaconScanner(RegionMonitoringScanner regionMonitoringScanner,
       BeaconRangingScanner beaconRangingScanner, AppRunningMode appRunningMode,
       BluetoothStatusInfo bluetoothStatusInfo, ConfigObservable configObservable){
@@ -88,28 +89,28 @@ public class BeaconsModule {
     return new BeaconScannerImpl(regionMonitoringScanner, beaconRangingScanner, bluetoothStatusInfo,
         appRunningMode, configObservable);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-control
   @Provides @Singleton BeaconRangingScanner provideBeaconRangingScanner(BeaconManager beaconManager,
       BeaconsController beaconsController, BeaconRegionAndroidMapper beaconRegionControlMapper,
       BeaconAndroidMapper beaconAndroidMapper){
     return new BeaconRangingScannerImpl(beaconManager, beaconsController, beaconRegionControlMapper,
         beaconAndroidMapper);
   }
-  //TODO LIB_CRUNCH gggLib
+  //TODO LIB_CRUNCH gggLib //TODO LIB_CRUNCH altBeacon //TODO LIB_CRUNCH orchextrasdk-control
   @Provides @Singleton RegionMonitoringScanner provideRegionMonitoringScanner(ContextProvider contextProvider,
     BeaconManager beaconManager, MonitoringListener monitoringListener, BeaconsController beaconsController,
       BeaconRegionAndroidMapper beaconRegionControlMapper){
     return new RegionMonitoringScannerImpl(contextProvider, beaconManager, monitoringListener,
         beaconsController, beaconRegionControlMapper);
   }
-
+  //TODO LIB_CRUNCH threaddecoratedview //TODO LIB_CRUNCH orchextrasdk-control
   @Provides @Singleton BeaconsController provideBeaconsController(
       InteractorInvoker interactorInvoker, ActionDispatcher actionDispatcher,
       @BeaconEventsInteractorExecution
       Provider<InteractorExecution> beaconsInteractorExecutionProvider,
       @RegionsProviderInteractorExecution Provider<InteractorExecution> regionsProviderInteractorExecutionProvider,
       ErrorLogger errorLogger, @MainThread ThreadSpec mainThreadSpec){
-
+//TODO LIB_CRUNCH orchextrasdk-control
     return new BeaconsController(interactorInvoker, actionDispatcher, beaconsInteractorExecutionProvider,
         regionsProviderInteractorExecutionProvider, errorLogger, mainThreadSpec);
   }

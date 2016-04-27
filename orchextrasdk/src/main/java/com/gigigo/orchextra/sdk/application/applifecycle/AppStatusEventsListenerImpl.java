@@ -41,6 +41,7 @@ public class AppStatusEventsListenerImpl implements AppStatusEventsListener {
   }
 
   @Override public void onBackgroundStart() {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("App goes to background mode ");
     if (orchextraStatusAccessor.isStarted()){
       startServices();
@@ -48,6 +49,7 @@ public class AppStatusEventsListenerImpl implements AppStatusEventsListener {
   }
 
   @Override public void onBackgroundEnd() {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("App leaves background mode");
     stopServices();
   }
@@ -59,6 +61,7 @@ public class AppStatusEventsListenerImpl implements AppStatusEventsListener {
 
   @Override public void onForegroundStart() {
     //Stop Monitoring && startRanging
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("App Come to Foreground mode");
     if (orchextraStatusAccessor.isStarted()){
       startForegroundTasks();
@@ -66,6 +69,7 @@ public class AppStatusEventsListenerImpl implements AppStatusEventsListener {
   }
 
   @Override public void onForegroundEnd() {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("App leaves Foreground mode");
     foregroundTasksManager.finalizeForegroundTasks();
   }

@@ -53,7 +53,7 @@ public class OrchextraGcmTaskService extends GcmTaskService {
   }
 
   @Override public int onRunTask(TaskParams taskParams) {
-
+//TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("Executing Scheduled action " + taskParams.getTag());
 
     try{
@@ -61,9 +61,11 @@ public class OrchextraGcmTaskService extends GcmTaskService {
       String stringAndroidBasicAction = extras.getString(ActionsSchedulerGcmImpl.BUNDLE_TASK_PARAM_NAME);
       AndroidBasicAction androidBasicAction = gson.fromJson(stringAndroidBasicAction, AndroidBasicAction.class);
       actionRecovery.recoverAction(androidBasicAction);
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Scheduled action Executed and deleted " + taskParams.getTag());
       return GcmNetworkManager.RESULT_SUCCESS;
     }catch (Exception e){
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Error retrieving Scheduled action", LogLevel.ERROR);
       return GcmNetworkManager.RESULT_FAILURE;
     }

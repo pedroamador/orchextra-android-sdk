@@ -44,6 +44,7 @@ public class OrchextraBackgroundService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		//TODO LIB_CRUNCH gggLogger
 		GGGLogImpl.log("Service method :: onStartCommand");
 		boolean requestConfig = shouldRequestConfig(intent);
 		if (orchextraStatusAccessor.isStarted()){
@@ -75,11 +76,13 @@ public class OrchextraBackgroundService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		OrchextraManager.getInjector().injectServiceComponent(this);
+		//TODO LIB_CRUNCH gggLogger
 		GGGLogImpl.log("Service method :: onCreate");
 	}
 
 	@Override
 	public void onDestroy() {
+		//TODO LIB_CRUNCH gggLogger
 		GGGLogImpl.log("Service method :: onDestroy");
 		backgroundTasksManager.finalizeBackgroundTasks();
 		super.onDestroy();

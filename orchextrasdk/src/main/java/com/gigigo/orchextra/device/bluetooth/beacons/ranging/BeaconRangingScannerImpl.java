@@ -42,13 +42,14 @@ import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
-
+//TODO LIB_CRUNCH altBeacon
 public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingScanner{
 
   private static BackgroundBeaconsRangingTimeType backgroundBeaconsRangingTimeType =
           BackgroundBeaconsRangingTimeType.getType(BuildConfig.BACKGROUND_BEACONS_RANGING_TIME);
-
+  //TODO LIB_CRUNCH altBeacon
   private final BeaconManager beaconManager;
+  //TODO LIB_CRUNCH orchextrasdk-control
   private final BeaconsController beaconsController;
   private final BeaconRegionAndroidMapper beaconRegionMapper;
   private final BeaconAndroidMapper beaconAndroidMapper;
@@ -56,10 +57,10 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
   private HashMap<String, Thread> regionThreads = new HashMap<>();
 
   private boolean ranging = false;
-
+  //TODO LIB_CRUNCH altBeacon
   //avoid possible duplicates in region using set collection
   private Set<Region> regions = (Set<Region>) Collections.synchronizedSet(new HashSet<Region>());
-
+  //TODO LIB_CRUNCH altBeacon //TODO LIB_CRUNCH orchextrasdk-control
   public BeaconRangingScannerImpl(BeaconManager beaconManager, BeaconsController beaconsController,
                                   BeaconRegionAndroidMapper beaconRegionMapper, BeaconAndroidMapper beaconAndroidMapper) {
     this.beaconManager = beaconManager;
@@ -76,6 +77,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
    * @param collection beacons that are currently in range
    * @param region region which all the scanned beacons received belongs to
    */
+  //TODO LIB_CRUNCH altBeacon
   @Override public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
     List beaconsList = new ArrayList<>(collection);
 
@@ -87,6 +89,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
 
     if (collection.size() > 0) {
       for (Beacon beacon : collection) {
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Beacon: " + beacon.getId1() + " major id:" + beacon.getId2()
                 + "  minor id: " + beacon.getId3());
       }
@@ -101,6 +104,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
    * This method will be called when regions are obtained from datasources and ready to be used
    * @param regions regions to be scanned in ranging
    */
+  //TODO LIB_CRUNCH altBeacon
   @Override public void onRegionsReady(List<OrchextraRegion> regions) {
     List<Region> altRegions = beaconRegionMapper.modelListToExternalClassList(regions);
     this.regions.addAll(altRegions);
@@ -156,6 +160,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
    *
    * @throws BulkRangingScannInBackgroundException when called on from background
    */
+  //TODO LIB_CRUNCH altBeacon
   @Override public void initRangingScanForDetectedRegion(List<Region> regions,
                                                          BackgroundBeaconsRangingTimeType backgroundBeaconsRangingTimeType) {
 
@@ -180,7 +185,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
 
     }
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void manageGeneralBackgroundScanTimes(BackgroundBeaconsRangingTimeType time) {
     if (time == BackgroundBeaconsRangingTimeType.MAX){
       updateBackgroudScanTimes(BuildConfig.BACKGROUND_BEACONS_SCAN_TIME,
@@ -190,14 +195,14 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
               BeaconManager.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
     }
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void manageRegionBackgroundScanTime(Region region,
                                               BackgroundBeaconsRangingTimeType backgroundBeaconsRangingTimeType) {
     if (backgroundBeaconsRangingTimeType != BackgroundBeaconsRangingTimeType.INFINITE){
       scheduleEndOfRanging(region, backgroundBeaconsRangingTimeType.getIntValue());
     }
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void scheduleEndOfRanging(final Region region, final int duration) {
 
     Thread t = new Thread(new Runnable() {
@@ -207,6 +212,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
           stopRangingRegion(region);
           regionThreads.remove(region.getUniqueId());
         } catch (InterruptedException e) {
+          //TODO LIB_CRUNCH gggLogger
           GGGLogImpl.log("This interruption coulbe be provoked see log below", LogLevel.WARN);
         }
       }
@@ -230,10 +236,11 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
    * This method will terminate the scan over the specified region. This method should be called on
    * monitoring exit event received over specific region.
    */
+  //TODO LIB_CRUNCH altBeacon
   @Override public void stopRangingScanForDetectedRegion(Region region) {
     stopRangingRegion(region);
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void stopRangingAllRegions() {
     Iterator<Region> iterator = regions.iterator();
     while (iterator.hasNext()){
@@ -248,9 +255,10 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
     }
     updateBackgroudScanTimes(BeaconManager.DEFAULT_BACKGROUND_SCAN_PERIOD, BeaconManager.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
     ranging = false;
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("Ranging stop");
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void stopRangingRegion(Region region) {
 
     if (!regions.contains(region)){
@@ -260,7 +268,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
     try {
       beaconManager.stopRangingBeaconsInRegion(region);
       removeRangingRegion(region);
-
+//TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Ranging stop in region: " + region.getUniqueId());
     } catch (RemoteException e) {
       e.printStackTrace();
@@ -268,7 +276,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
 
     checkAvailableRegions();
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void removeRangingRegion(Region region) {
     removeScheduledEndOfRanging(region);
     regions.remove(region);
@@ -277,12 +285,13 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
           BeaconManager.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
     }
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void removeScheduledEndOfRanging(Region region) {
     if (regionThreads.containsKey(region.getUniqueId())){
       Thread t = regionThreads.remove(region.getUniqueId());
 
       if (t!=null && t.isAlive()){
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Thread " +t.toString() +"Will be Interrupted", LogLevel.WARN);
         t.interrupt();
       }
@@ -297,9 +306,11 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
         beaconManager.setBackgroundBetweenScanPeriod(beetweenScanPeriod);
         beaconManager.updateScanPeriods();
       }
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Update cycled Scan times");
     } catch (RemoteException e) {
       e.printStackTrace();
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Unable to update cycled Scan times", LogLevel.ERROR);
     }
 
@@ -309,10 +320,12 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
   private void checkAvailableRegions() {
     if (regions.size()>0){
       for (Region region1 : regions){
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Regions for scanning "+ regions.toString() +": " + region1.getUniqueId());
       }
     }else{
       ranging = false;
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Regions to be ranged EMPTY: " + regions.toString());
     }
   }
@@ -321,6 +334,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
   // region Background scanning time
   @Override public BackgroundBeaconsRangingTimeType getBackgroundBeaconsRangingTimeType() {
     if (this.backgroundBeaconsRangingTimeType == BackgroundBeaconsRangingTimeType.INFINITE) {
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("WARNING --> INFINITE Background Beacons Ranging Time Type could provoke "
           + "an extremely drain of you battery use MAX instead", LogLevel.WARN);
     }

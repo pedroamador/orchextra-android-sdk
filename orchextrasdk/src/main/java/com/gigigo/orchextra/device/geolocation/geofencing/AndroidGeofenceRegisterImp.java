@@ -34,11 +34,13 @@ public class AndroidGeofenceRegisterImp implements GeofenceRegister, Observer,
     GeofencesProviderListener {
 
     private final GeofenceDeviceRegister geofenceDeviceRegister;
+    //TODO LIB_CRUNCH orchextrasdk-control
     private final ConfigObservable configObservable;
+    //TODO LIB_CRUNCH orchextrasdk-control
     private final GeofenceController geofenceController;
 
     private boolean isRegistered = false;
-
+    //TODO LIB_CRUNCH orchextrasdk-control
     public AndroidGeofenceRegisterImp(GeofenceDeviceRegister geofenceDeviceRegister,
                                       ConfigObservable configObservable,
                                       GeofenceController geofenceController) {

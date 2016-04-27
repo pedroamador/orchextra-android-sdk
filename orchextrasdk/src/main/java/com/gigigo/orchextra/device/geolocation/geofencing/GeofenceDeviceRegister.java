@@ -53,6 +53,7 @@ public class GeofenceDeviceRegister implements ResultCallback<Status> {
     private final AndroidGeofenceConverter androidGeofenceConverter;
 
     private OrchextraGeofenceUpdates geofenceUpdates;
+
     //TODO LIB_CRUNCH gggLib
     public GeofenceDeviceRegister(ContextProvider contextProvider,
                                   GoogleApiClientConnector googleApiClientConnector,
@@ -91,6 +92,7 @@ public class GeofenceDeviceRegister implements ResultCallback<Status> {
     @Override
     public void onResult(Status status) {
         if (status.isSuccess()) {
+            //TODO LIB_CRUNCH gggLogger
             GGGLogImpl.log("Registered Geofences Success!", LogLevel.INFO);
         } else if (status.hasResolution()) {
             Activity currentActivity = contextProvider.getCurrentActivity();
@@ -98,12 +100,15 @@ public class GeofenceDeviceRegister implements ResultCallback<Status> {
                 try {
                     status.startResolutionForResult(currentActivity, status.getStatusCode());
                 } catch (IntentSender.SendIntentException e) {
+                    //TODO LIB_CRUNCH gggLogger
                     GGGLogImpl.log("Geofences Handle resolution!", LogLevel.INFO);
                 }
             }
         } else if (status.isCanceled()) {
+            //TODO LIB_CRUNCH gggLogger
             GGGLogImpl.log("Registered Geofences Canceled!", LogLevel.INFO);
         } else if (status.isInterrupted()) {
+            //TODO LIB_CRUNCH gggLogger
             GGGLogImpl.log("Registered Geofences Interrupted!", LogLevel.INFO);
         }
 
@@ -121,6 +126,7 @@ public class GeofenceDeviceRegister implements ResultCallback<Status> {
 
                 @Override
                 public void onConnectionFailed(ConnectionResult connectionResult) {
+                    //TODO LIB_CRUNCH gggLogger
                     GGGLogImpl.log("No se ha podido conectar GoogleApiClientConnector en las peticion de las geofences");
                 }
             };
@@ -136,32 +142,34 @@ public class GeofenceDeviceRegister implements ResultCallback<Status> {
 
     @SuppressWarnings("ResourceType")
     private void registerGeofence() {
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Removing " + geofenceUpdates.getDeleteGeofences().size() + " geofences...");
         GGGLogImpl.log("Registering " + geofenceUpdates.getNewGeofences().size() + " geofences...");
 
         List<String> deleteCodeList = androidGeofenceConverter.getCodeList(geofenceUpdates.getDeleteGeofences());
-
+//TODO LIB_CRUNCH playServicesLocation
         if (deleteCodeList.size() > 0) {
             LocationServices.GeofencingApi.removeGeofences(googleApiClientConnector.getGoogleApiClient(), deleteCodeList);
         }
-
+//TODO LIB_CRUNCH playServicesLocation
         if (geofenceUpdates.getNewGeofences().size() > 0) {
             GeofencingRequest geofencingRequest =
-                androidGeofenceConverter.convertGeofencesToGeofencingRequest(geofenceUpdates.getNewGeofences());
-
+                    androidGeofenceConverter.convertGeofencesToGeofencingRequest(geofenceUpdates.getNewGeofences());
+//TODO LIB_CRUNCH playServicesLocation
             if (googleApiClientConnector.googleApiClientAvailable()) {
                 try {
                     LocationServices.GeofencingApi.addGeofences(googleApiClientConnector.getGoogleApiClient(), geofencingRequest,
-                        geofencePendingIntentCreator.getGeofencingPendingIntent()).setResultCallback(this);
-                }catch (Exception e){
+                            geofencePendingIntentCreator.getGeofencingPendingIntent()).setResultCallback(this);
+                } catch (Exception e) {
                     GGGLogImpl.log("Exception trying to add geofences: " + e.getMessage(),
-                        LogLevel.ERROR);
+                            LogLevel.ERROR);
                 }
             }
         }
     }
 
     public void clean() {
+        //TODO LIB_CRUNCH playServicesLocation
         LocationServices.GeofencingApi.removeGeofences(googleApiClientConnector.getGoogleApiClient(), geofencePendingIntentCreator.getGeofencingPendingIntent());
     }
 

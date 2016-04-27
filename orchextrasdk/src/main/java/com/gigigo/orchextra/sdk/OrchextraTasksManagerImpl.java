@@ -38,12 +38,14 @@ public class OrchextraTasksManagerImpl implements OrchextraTasksManager{
   }
 
   private void initTasks(int appRunningMode) {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("Generic tasks have been started: Monitoring and Geofences");
 
     beaconScanner.startMonitoring();
     geofenceRegister.startGeofenceRegister();
 
     if (appRunningMode == FOREGROUND){
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Foreground tasks have been started: Ranging and Request config");
       beaconScanner.initAvailableRegionsRangingScanner();
       configDelegateImp.sendConfiguration();

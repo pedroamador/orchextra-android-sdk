@@ -44,9 +44,10 @@ public class BeaconScannerImpl implements BeaconScanner, Observer, BluetoothStat
   private final BeaconRangingScanner beaconRangingScanner;
   private final BluetoothStatusInfo bluetoothStatusInfo;
   private final AppRunningMode appRunningMode;
+  //TODO LIB_CRUNCH orchextrasdk-control
   private final ConfigObservable configObservable;
   private boolean isRegisteredAsObserver = false;
-
+  //TODO LIB_CRUNCH orchextrasdk-control
   public BeaconScannerImpl(RegionMonitoringScanner regionMonitoringScanner,
       BeaconRangingScanner beaconRangingScanner, BluetoothStatusInfo bluetoothStatusInfo,
       AppRunningMode appRunningMode, ConfigObservable configObservable) {
@@ -129,17 +130,21 @@ public class BeaconScannerImpl implements BeaconScanner, Observer, BluetoothStat
 
   @Override public void onBluetoothStatus(BluetoothStatus bluetoothStatus) {
     switch (bluetoothStatus){
-      case NO_BLTE_SUPPORTED:GGGLogImpl.log("CAUTION BLTE not supported, some features can not work as expected",
+      case NO_BLTE_SUPPORTED:
+        //TODO LIB_CRUNCH gggLogger
+        GGGLogImpl.log("CAUTION BLTE not supported, some features can not work as expected",
             LogLevel.WARN);
         // would be great to do something with error? like show a toast...
         break;
       case NO_PERMISSIONS:
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log(
             "CAUTION Bluetooth permissions not granted, some features can not work as expected",
             LogLevel.WARN);
         // would be great to do something with error? like show a toast...
         break;
       case NOT_ENABLED:
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("CAUTION Bluetooth is off some features "
             + "cannot start to work till the user switches it on", LogLevel.WARN);
         //IMPORTANT: DO NOT "break;", SCAN SHOULD START AUTOMATICALLY WHEN BLUETOOTH IS SWITCHED ON
@@ -159,7 +164,7 @@ public class BeaconScannerImpl implements BeaconScanner, Observer, BluetoothStat
   }
 
   @Override public void update(OrchextraChanges observable, Object data) {
-
+//TODO LIB_CRUNCH orchextrasdk-control
     if (observable instanceof ConfigObservable){
 
       OrchextraBeaconUpdates beaconUpdates = ((OrchextraUpdates)data).getOrchextraBeaconUpdates();

@@ -77,13 +77,14 @@ public class ActionsSchedulerGcmImpl implements ActionsScheduler {
         .build();
 
     logShowTime(action);
-
+//TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("Scheduled action "+ action.getId());
 
     gcmNetworkManager.schedule(task);
   }
 
   @Override public void cancelAction(ScheduledAction action) {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("Canceled Scheduled action "+ action.getId());
     gcmNetworkManager.cancelTask(action.getId(), OrchextraGcmTaskService.class);
   }
@@ -94,6 +95,7 @@ public class ActionsSchedulerGcmImpl implements ActionsScheduler {
 
   public long logShowTime(ScheduledAction action) {
     long time = System.currentTimeMillis() + action.getScheduleTime();
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("Scheduled Notification will be shown at minimum " + new Date(time).toString() + " max " + new Date(time+(DEFAULT_DELAY_MAX*ONE_SECOND)).toString() );
     return time;
   }

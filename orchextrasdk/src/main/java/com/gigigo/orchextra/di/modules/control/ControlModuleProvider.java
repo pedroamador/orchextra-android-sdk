@@ -24,9 +24,10 @@ import com.gigigo.orchextra.di.modules.domain.DomainModuleProvider;
 import com.gigigo.orchextra.di.qualifiers.BackThread;
 import me.panavtec.threaddecoratedview.views.ThreadSpec;
 
-
+//TODO LIB_CRUNCH orchextrasdk-control
 public interface ControlModuleProvider extends DomainModuleProvider{
   ConfigObservable provideConfigObservable();
   GeofenceController provideProximityItemController();
+  //TODO LIB_CRUNCH threaddecoratedview
   @BackThread ThreadSpec provideThreadSpec();
 }

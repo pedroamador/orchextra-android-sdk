@@ -22,6 +22,8 @@ import org.altbeacon.beacon.Region;
 
 
 public interface MonitoringListener {
+  //TODO LIB_CRUNCH altBeacon
   void onRegionEnter(Region region);
+  //TODO LIB_CRUNCH altBeacon
   void onRegionExit(Region region);
 }

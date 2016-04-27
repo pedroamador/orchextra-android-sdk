@@ -24,13 +24,13 @@ import org.altbeacon.beacon.BleNotAvailableException;
 
 
 public class BluetoothAvailabilityImpl implements BluetoothAvailability {
-
+  //TODO LIB_CRUNCH altBeacon
   private final BeaconManager beaconManager;
-
+  //TODO LIB_CRUNCH altBeacon
   public BluetoothAvailabilityImpl(BeaconManager beaconManager) {
     this.beaconManager = beaconManager;
   }
-
+  //TODO LIB_CRUNCH altBeacon
   @Override public boolean isBlteSupported() {
 
     try {

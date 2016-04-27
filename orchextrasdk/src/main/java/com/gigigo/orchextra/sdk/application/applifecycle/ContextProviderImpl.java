@@ -41,6 +41,7 @@ public class ContextProviderImpl implements OrchextraContextProvider {
   //region context provider interface
   @Override public Activity getCurrentActivity() {
     if (orchextraActivityLifecycle==null){
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Calling activity context before app finished initialization", LogLevel.WARN);
       return null;
     }

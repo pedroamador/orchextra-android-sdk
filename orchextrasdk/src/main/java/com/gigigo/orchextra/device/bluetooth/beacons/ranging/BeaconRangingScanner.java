@@ -28,10 +28,12 @@ import org.altbeacon.beacon.Region;
 public interface BeaconRangingScanner extends RegionsProviderListener {
 
   void initRangingScanForAllKnownRegions(AppRunningModeType appRunningModeType);
+  //TODO LIB_CRUNCH altBeacon
   void initRangingScanForDetectedRegion(List<Region> regions,
       BackgroundBeaconsRangingTimeType backgroundBeaconsRangingTimeType);
 
   void stopAllCurrentRangingScannedRegions();
+  //TODO LIB_CRUNCH altBeacon
   void stopRangingScanForDetectedRegion(Region region);
 
   BackgroundBeaconsRangingTimeType getBackgroundBeaconsRangingTimeType();

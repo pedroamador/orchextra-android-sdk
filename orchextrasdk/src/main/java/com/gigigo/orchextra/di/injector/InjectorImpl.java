@@ -47,109 +47,124 @@ import java.util.List;
 
 public class InjectorImpl implements Injector {
 
-  private OrchextraComponent orchextraComponent;
+    private OrchextraComponent orchextraComponent;
 
-  public InjectorImpl(OrchextraComponent orchextraComponent) {
-    this.orchextraComponent = orchextraComponent;
-  }
+    public InjectorImpl(OrchextraComponent orchextraComponent) {
+        this.orchextraComponent = orchextraComponent;
+    }
 
-  @Override public ServiceComponent injectServiceComponent(OrchextraBackgroundService myAppService) {
+    @Override
+    public ServiceComponent injectServiceComponent(OrchextraBackgroundService myAppService) {
+        //TODO LIB_CRUNCH Dagger
+        ServiceComponent serviceComponent = DaggerServiceComponent.builder().
+                orchextraComponent(orchextraComponent).build();
+        serviceComponent.injectOrchextraService(myAppService);
 
-    ServiceComponent serviceComponent = DaggerServiceComponent.builder().
-        orchextraComponent(orchextraComponent).build();
-    serviceComponent.injectOrchextraService(myAppService);
+        return serviceComponent;
+    }
 
-    return serviceComponent;
-  }
+    @Override
+    public TaskServiceComponent injectTaskServiceComponent(OrchextraGcmTaskService orchextraGcmTaskService) {
 
-  @Override public TaskServiceComponent injectTaskServiceComponent(OrchextraGcmTaskService orchextraGcmTaskService) {
+        //TODO LIB_CRUNCH Dagger
+        TaskServiceComponent taskServiceComponent = DaggerTaskServiceComponent.builder().
+                orchextraComponent(orchextraComponent).build();
+        taskServiceComponent.injectTaskService(orchextraGcmTaskService);
 
-    TaskServiceComponent taskServiceComponent = DaggerTaskServiceComponent.builder().
-        orchextraComponent(orchextraComponent).build();
-    taskServiceComponent.injectTaskService(orchextraGcmTaskService);
+        return taskServiceComponent;
+    }
 
-    return taskServiceComponent;
-  }
+    @Override
+    public GeofenceIntentServiceComponent injectGeofenceIntentServiceComponent(
+            GeofenceIntentService geofenceIntentService) {
 
-  @Override public GeofenceIntentServiceComponent injectGeofenceIntentServiceComponent(
-      GeofenceIntentService geofenceIntentService) {
+        //TODO LIB_CRUNCH Dagger
+        GeofenceIntentServiceComponent gisc = DaggerGeofenceIntentServiceComponent.builder().
+                orchextraComponent(orchextraComponent).build();
+        gisc.injectGeofenceIntentService(geofenceIntentService);
 
-    GeofenceIntentServiceComponent gisc = DaggerGeofenceIntentServiceComponent.builder().
-        orchextraComponent(orchextraComponent).build();
-    gisc.injectGeofenceIntentService(geofenceIntentService);
+        return gisc;
+    }
 
-    return gisc;
-  }
+    @Override
+    public OrchextraBootBroadcastReceiverComponent injectBroadcastComponent(
+            OrchextraBootBroadcastReceiver orchextraBootBroadcastReceiver) {
 
-  @Override public OrchextraBootBroadcastReceiverComponent injectBroadcastComponent(
-      OrchextraBootBroadcastReceiver orchextraBootBroadcastReceiver) {
+        //TODO LIB_CRUNCH Dagger
+        OrchextraBootBroadcastReceiverComponent obbrc = DaggerOrchextraBootBroadcastReceiverComponent.builder().
+                orchextraComponent(orchextraComponent).build();
+        obbrc.injectOrchextraBootBroadcastReceiver(orchextraBootBroadcastReceiver);
+        return obbrc;
+    }
 
-    OrchextraBootBroadcastReceiverComponent obbrc = DaggerOrchextraBootBroadcastReceiverComponent.builder().
-        orchextraComponent(orchextraComponent).build();
-    obbrc.injectOrchextraBootBroadcastReceiver(orchextraBootBroadcastReceiver);
-    return obbrc;
-  }
+    private InteractorExecutionComponent createInteractorExecutionComponent() {
+        return orchextraComponent.plus(new InteractorsModule());
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public InteractorExecutionComponent injectRegionsProviderInteractorExecution(InteractorExecution<List<OrchextraRegion>> interactorExecution) {
+        InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
+        interactorExecutionComponent.injectRegionsProviderInteractorExecution(interactorExecution);
+        return interactorExecutionComponent;
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public InteractorExecutionComponent injectSaveUserInteractorExecution(InteractorExecution<ClientAuthData> interactorExecution) {
+        InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
+        interactorExecutionComponent.injectSaveUserInteractorExecution(interactorExecution);
+        return interactorExecutionComponent;
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public InteractorExecutionComponent injectConfigInteractorInteractorExecution(InteractorExecution<OrchextraUpdates> interactorExecution) {
+        InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
+        interactorExecutionComponent.injectConfigInteractorInteractorExecution(interactorExecution);
+        return interactorExecutionComponent;
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public InteractorExecutionComponent injectBeaconEventsInteractorExecution(InteractorExecution<List<BasicAction>> interactorExecution) {
+        InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
+        interactorExecutionComponent.injectBeaconEventsInteractorExecution(interactorExecution);
+        return interactorExecutionComponent;
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public InteractorExecutionComponent injectGeofenceInteractorExecution(InteractorExecution<List<BasicAction>> interactorExecution) {
+        InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
+        interactorExecutionComponent.injectGeofenceInteractorExecution(interactorExecution);
+        return interactorExecutionComponent;
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public InteractorExecutionComponent injectGeofenceProviderInteractorExecution(
+            InteractorExecution<List<OrchextraGeofence>> interactorExecution) {
+        InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
+        interactorExecutionComponent.injectGeofenceProviderInteractorExecution(interactorExecution);
+        return interactorExecutionComponent;
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public InteractorExecutionComponent injectObtainThemeInteractorExecution(InteractorExecution<Theme> interactorExecution) {
+        InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
+        interactorExecutionComponent.injectObtainThemeInteractorExecution(interactorExecution);
+        return interactorExecutionComponent;
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public InteractorExecutionComponent injectScannerInteractorExecution(InteractorExecution<BasicAction> interactorExecution) {
+        InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
+        interactorExecutionComponent.injectScannerInteractorExecution(interactorExecution);
+        return interactorExecutionComponent;
+    }
 
-  private InteractorExecutionComponent createInteractorExecutionComponent() {
-    return orchextraComponent.plus(new InteractorsModule());
-  }
+    public OrchextraComponent getOrchextraComponent() {
+        return orchextraComponent;
+    }
 
-  @Override public InteractorExecutionComponent injectRegionsProviderInteractorExecution(InteractorExecution<List<OrchextraRegion>> interactorExecution) {
-    InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
-    interactorExecutionComponent.injectRegionsProviderInteractorExecution(interactorExecution);
-    return interactorExecutionComponent;
-  }
-
-  @Override public InteractorExecutionComponent injectSaveUserInteractorExecution(InteractorExecution<ClientAuthData> interactorExecution) {
-    InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
-    interactorExecutionComponent.injectSaveUserInteractorExecution(interactorExecution);
-    return interactorExecutionComponent;
-  }
-
-  @Override public InteractorExecutionComponent injectConfigInteractorInteractorExecution(InteractorExecution<OrchextraUpdates> interactorExecution) {
-    InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
-    interactorExecutionComponent.injectConfigInteractorInteractorExecution(interactorExecution);
-    return interactorExecutionComponent;
-  }
-
-  @Override public InteractorExecutionComponent injectBeaconEventsInteractorExecution(InteractorExecution<List<BasicAction>> interactorExecution) {
-    InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
-    interactorExecutionComponent.injectBeaconEventsInteractorExecution(interactorExecution);
-    return interactorExecutionComponent;
-  }
-
-  @Override public InteractorExecutionComponent injectGeofenceInteractorExecution(InteractorExecution<List<BasicAction>> interactorExecution) {
-    InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
-    interactorExecutionComponent.injectGeofenceInteractorExecution(interactorExecution);
-    return interactorExecutionComponent;
-  }
-
-  @Override public InteractorExecutionComponent injectGeofenceProviderInteractorExecution(
-      InteractorExecution<List<OrchextraGeofence>> interactorExecution) {
-    InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
-    interactorExecutionComponent.injectGeofenceProviderInteractorExecution(interactorExecution);
-    return interactorExecutionComponent;
-  }
-
-  @Override public InteractorExecutionComponent injectObtainThemeInteractorExecution(InteractorExecution<Theme> interactorExecution) {
-    InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
-    interactorExecutionComponent.injectObtainThemeInteractorExecution(interactorExecution);
-    return interactorExecutionComponent;
-  }
-
-  @Override
-  public InteractorExecutionComponent injectScannerInteractorExecution(InteractorExecution<BasicAction> interactorExecution) {
-    InteractorExecutionComponent interactorExecutionComponent = createInteractorExecutionComponent();
-    interactorExecutionComponent.injectScannerInteractorExecution(interactorExecution);
-    return interactorExecutionComponent;
-  }
-
-  public OrchextraComponent getOrchextraComponent() {
-    return orchextraComponent;
-  }
-
-  @Override public OrchextraComponent injectCodeScannerActivity(OxScannerActivity oxCodeScannerActivity) {
-    orchextraComponent.injectCodeScannerActivity(oxCodeScannerActivity);
-    return orchextraComponent;
-  }
+    @Override
+    public OrchextraComponent injectCodeScannerActivity(OxScannerActivity oxCodeScannerActivity) {
+        orchextraComponent.injectCodeScannerActivity(oxCodeScannerActivity);
+        return orchextraComponent;
+    }
 }

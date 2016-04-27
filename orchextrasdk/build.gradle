@@ -33,116 +33,121 @@ def BACKGROUND_BEACONS_SCAN_TIME = '1100'
 def BACKGROUND_BEACONS_BEETWEEN_SCAN_TIME = '5000'
 
 buildscript {
-  repositories {
-    mavenCentral()
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:2.0.0'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-  }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+    }
 }
 
 android {
 
-  compileSdkVersion parent.ext.androidCompileSdkVersion
-  buildToolsVersion parent.ext.androidBuildToolsVersion
+    compileSdkVersion parent.ext.androidCompileSdkVersion
+    buildToolsVersion parent.ext.androidBuildToolsVersion
 
-  defaultConfig {
-    minSdkVersion parent.ext.androidMinSdkVersion
-    targetSdkVersion parent.ext.androidTargetSdkVersion
-    versionCode parent.ext.androidVersionCode
-    versionName parent.ext.androidVersionName
+    defaultConfig {
+        minSdkVersion parent.ext.androidMinSdkVersion
+        targetSdkVersion parent.ext.androidTargetSdkVersion
+        versionCode parent.ext.androidVersionCode
+        versionName parent.ext.androidVersionName
 
-    buildConfigField INT, "BACKGROUND_BEACONS_RANGING_TIME", MIN_RAGGING_TIME
-    buildConfigField LONG, "BACKGROUND_BEACONS_SCAN_TIME", BACKGROUND_BEACONS_SCAN_TIME
-    buildConfigField LONG, "BACKGROUND_BEACONS_BEETWEEN_SCAN_TIME", BACKGROUND_BEACONS_BEETWEEN_SCAN_TIME
-    buildConfigField STRING, "API_VERSION", '"v1/"'
-    buildConfigField INT, "CONCURRENT_INTERACTORS", '3'
-    buildConfigField STRING, "X_APP_SDK", '"ANDROID"'
-    buildConfigField STRING, "TOKEN_TYPE_BEARER", '"Bearer"'
-    buildConfigField STRING, "IBEACON_LAYOUT_PARSING", '"m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"'
-    buildConfigField STRING, "API_URL", '"https://sdk.orchextra.io/"'
-  }
-
-  buildTypes {
-    debug{
-      testCoverageEnabled = true
-      buildConfigField BOOLEAN, "RETROFIT_LOG", "true"
-      buildConfigField STRING, "API_URL", '"https://sdk.orchextra.io/"'
+        buildConfigField INT, "BACKGROUND_BEACONS_RANGING_TIME", MIN_RAGGING_TIME
+        buildConfigField LONG, "BACKGROUND_BEACONS_SCAN_TIME", BACKGROUND_BEACONS_SCAN_TIME
+        buildConfigField LONG, "BACKGROUND_BEACONS_BEETWEEN_SCAN_TIME", BACKGROUND_BEACONS_BEETWEEN_SCAN_TIME
+        buildConfigField STRING, "API_VERSION", '"v1/"'
+        buildConfigField INT, "CONCURRENT_INTERACTORS", '3'
+        buildConfigField STRING, "X_APP_SDK", '"ANDROID"'
+        buildConfigField STRING, "TOKEN_TYPE_BEARER", '"Bearer"'
+        buildConfigField STRING, "IBEACON_LAYOUT_PARSING", '"m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"'
+        buildConfigField STRING, "API_URL", '"https://sdk.orchextra.io/"'
     }
-    release {
-      buildConfigField BOOLEAN, "RETROFIT_LOG", "false"
-      buildConfigField STRING, "API_URL", '"https://sdk.orchextra.io/"'
 
-      minifyEnabled true
-      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    buildTypes {
+        debug {
+            testCoverageEnabled = true
+            buildConfigField BOOLEAN, "RETROFIT_LOG", "true"
+            buildConfigField STRING, "API_URL", '"https://sdk.orchextra.io/"'
+        }
+        release {
+            buildConfigField BOOLEAN, "RETROFIT_LOG", "false"
+            buildConfigField STRING, "API_URL", '"https://sdk.orchextra.io/"'
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
-  }
 
-  testOptions {
-    unitTests.returnDefaultValues = true
-  }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_7
-    targetCompatibility JavaVersion.VERSION_1_7
-  }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 
-  lintOptions {
-    abortOnError false
-  }
-  packagingOptions {
-    exclude 'LICENSE.txt'
-  }
-  // Required due to a conflict due to easy and jmock required for doclava
-  packagingOptions {
-    exclude 'META-INF/INDEX.LIST'
-  }
+    lintOptions {
+        abortOnError false
+    }
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+    // Required due to a conflict due to easy and jmock required for doclava
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+    }
 }
 
 dependencies {
 
-  compile (parent.ext.dependencies.dagger){
-    transitive = false
-  }
-
-  apt (parent.ext.dependencies.daggerCompiler){
-    transitive = false
-    exclude group:'com.google.dagger'
-    exclude group:'javax.inject'
-  }
+    compile(parent.ext.dependencies.dagger) {
+        transitive = false
+    }
+    apt(parent.ext.dependencies.daggerCompiler) {
+        transitive = false
+        exclude group: 'com.google.dagger'
+        exclude group: 'javax.inject'
+    }
 
 //  compile parent.ext.dependencies.retrofit
 //  compile parent.ext.dependencies.gsonConverter
-  compile parent.ext.dependencies.loggingInterceptor
 
+    compile parent.ext.dependencies.loggingInterceptor
 
-  compile parent.ext.dependencies.altBeacon
+    compile parent.ext.dependencies.altBeacon
 
-  apt parent.ext.dependencies.threaddecoratedviewcompiler
-  compile parent.ext.dependencies.threaddecoratedview
+//TODO LIB_CRUNCH important
 
-  compile parent.ext.dependencies.playServicesLocation
+    //TODO LIB_CRUNCH threaddecoratedview if you keep this apt&compile commentes are included anyway
+    //because are inluded inside :orchextrasdk-control
+    //apt parent.ext.dependencies.threaddecoratedviewcompiler
+    //compile parent.ext.dependencies.threaddecoratedview
+
+    compile parent.ext.dependencies.playServicesLocation
 //  compile parent.ext.dependencies.playServicesGcm
 
-  compile parent.ext.dependencies.barcodescanner
+    compile parent.ext.dependencies.barcodescanner
 
-  compile project(':orchextrasdk-control')
-  compile project(':orchextrasdk-data')
+    compile project(':orchextrasdk-control')
+    compile project(':orchextrasdk-data')
+    //TODO LIB_CRUNCH gggLib if you keep this compile commented are included anyway
+    //because are inluded inside :orchextrasdk-data
+    //compile parent.ext.dependencies.gggLib
+    //TODO LIB_CRUNCH gggLogger if you keep this compile commented are included anyway
+    //because are inluded inside gggLib
+    //compile parent.ext.dependencies.gggLogger
 
-  compile parent.ext.dependencies.gggLib
-  compile parent.ext.dependencies.gggLogger
-
-  testCompile parent.ext.testDependencies.junit
-  testCompile parent.ext.testDependencies.mockito
+    testCompile parent.ext.testDependencies.junit
+    testCompile parent.ext.testDependencies.mockito
 }
-
 
 // build a jar with source files
 task sourcesJar(type: Jar) {
-  from android.sourceSets.main.java.srcDirs
-  classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
 }
 
 //task javadoc(type: Javadoc) {
@@ -160,24 +165,24 @@ task sourcesJar(type: Jar) {
 
 
 task javadoc(type: Javadoc) {
-  failOnError  false
-  source = android.sourceSets.main.java.srcDirs
-  classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
 afterEvaluate {
-  javadoc.classpath += files(android.libraryVariants.collect { variant ->
-    variant.javaCompile.classpath.files
-  })
+    javadoc.classpath += files(android.libraryVariants.collect { variant ->
+        variant.javaCompile.classpath.files
+    })
 }
 
 // build a jar with javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier = 'javadoc'
-  from javadoc.destinationDir
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 artifacts {
-  archives sourcesJar
-  archives javadocJar
+    archives sourcesJar
+    archives javadocJar
 }

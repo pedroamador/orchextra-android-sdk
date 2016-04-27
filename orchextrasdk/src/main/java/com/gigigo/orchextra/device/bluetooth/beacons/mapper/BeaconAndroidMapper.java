@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.altbeacon.beacon.Beacon;
 
-//TODO LIB_CRUNCH gggLib
+//TODO LIB_CRUNCH gggLib //TODO LIB_CRUNCH altBeacon
 public class BeaconAndroidMapper implements
     ExternalClassListToModelListMapper<Beacon, OrchextraBeacon>,
     ExternalClassToModelMapper<Beacon, OrchextraBeacon> {
@@ -37,13 +37,13 @@ public class BeaconAndroidMapper implements
   @Override public List<OrchextraBeacon> externalClassListToModelList(List<Beacon> beacons) {
 
     List<OrchextraBeacon> beaconList = new ArrayList<>();
-
+//TODO LIB_CRUNCH altBeacon
     for (Beacon beacon:beacons){
       beaconList.add(externalClassToModel(beacon));
     }
     return beaconList;
   }
-
+  //TODO LIB_CRUNCH altBeacon
   @Override public OrchextraBeacon externalClassToModel(Beacon beacon) {
     return  new OrchextraBeacon(beacon.getId1().toString(), beacon.getId2().toInt(),
         beacon.getId3().toInt(), getDistance(beacon.getDistance()));

@@ -43,6 +43,7 @@ import com.gigigo.orchextra.domain.outputs.MainThreadSpec;
 
 import com.gigigo.orchextra.domain.services.status.LoadOrchextraServiceStatus;
 import com.gigigo.orchextra.domain.services.status.UpdateOrchextraServiceStatus;
+
 import orchextra.javax.inject.Provider;
 import orchextra.javax.inject.Singleton;
 
@@ -52,54 +53,70 @@ import me.panavtec.threaddecoratedview.views.ThreadSpec;
 
 @Module(includes = {DomainModule.class, FastDomainServicesModule.class})
 public class ControlModule {
+    //TODO LIB_CRUNCH threaddecoratedview //TODO LIB_CRUNCH orchextrasdk-control
+    @Provides
+    @Singleton
+    GeofenceController provideProximityItemController(InteractorInvoker interactorInvoker,
+                                                      @GeofenceInteractorExecution Provider<InteractorExecution> geofenceInteractorExecution,
+                                                      @GeofenceProviderInteractorExecution Provider<InteractorExecution> geofenceProviderInteractorExecution,
+                                                      ActionDispatcher actionDispatcher, ErrorLogger errorLogger, @MainThread ThreadSpec mainThreadSpec) {
 
-  @Provides @Singleton
-  GeofenceController provideProximityItemController(InteractorInvoker interactorInvoker,
-      @GeofenceInteractorExecution Provider<InteractorExecution> geofenceInteractorExecution,
-      @GeofenceProviderInteractorExecution Provider<InteractorExecution> geofenceProviderInteractorExecution,
-      ActionDispatcher actionDispatcher, ErrorLogger errorLogger, @MainThread ThreadSpec mainThreadSpec) {
+        return new GeofenceController(interactorInvoker, geofenceInteractorExecution, geofenceProviderInteractorExecution, actionDispatcher,
+                errorLogger, mainThreadSpec);
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Provides
+    @Singleton
+    ConfigObservable providesConfigObservable() {
+        return new ConfigObservable();
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Provides
+    @Singleton
+    ConfigController provideConfigController(
+            InteractorInvoker interactorInvoker,
+            @ConfigInteractorExecution Provider<InteractorExecution> sendConfigInteractorProvider,
+            ConfigObservable configObservable) {
+        return new ConfigController(interactorInvoker, sendConfigInteractorProvider, configObservable);
+    }
 
-    return new GeofenceController(interactorInvoker, geofenceInteractorExecution, geofenceProviderInteractorExecution, actionDispatcher,
-        errorLogger, mainThreadSpec);
-  }
+    //TODO LIB_CRUNCH threaddecoratedview //TODO LIB_CRUNCH orchextrasdk-control
+    @Provides
+    @Singleton
+    SaveUserController provideAuthenticationController(
+            InteractorInvoker interactorInvoker,
+            @SaveUserInteractorExecution Provider<InteractorExecution> interactorExecutionProvider,
+            @MainThread ThreadSpec backThreadSpec, ConfigObservable configObservable) {
 
-  @Provides
-  @Singleton ConfigObservable providesConfigObservable(){
-    return new ConfigObservable();
-  }
+        return new SaveUserController(interactorInvoker, interactorExecutionProvider, backThreadSpec, configObservable);
+    }
 
-  @Provides
-  @Singleton ConfigController provideConfigController(
-      InteractorInvoker interactorInvoker,
-      @ConfigInteractorExecution Provider<InteractorExecution> sendConfigInteractorProvider,
-      ConfigObservable configObservable) {
-    return new ConfigController(interactorInvoker, sendConfigInteractorProvider, configObservable);
-  }
+    @Provides
+    @Singleton
+    OrchextraStatusAccessor provideOrchextraStatusAccessor(
+            Session session, LoadOrchextraServiceStatus loadOrchextraServiceStatus,
+            UpdateOrchextraServiceStatus updateOrchextraServiceStatus,
+            ErrorLogger errorLogger) {
+//TODO LIB_CRUNCH orchextrasdk-control
+        return new OrchextraStatusAccessorAccessorImpl(session, loadOrchextraServiceStatus,
+                updateOrchextraServiceStatus, errorLogger);
+    }
 
-  @Provides @Singleton
-  SaveUserController provideAuthenticationController(
-      InteractorInvoker interactorInvoker,
-      @SaveUserInteractorExecution Provider<InteractorExecution> interactorExecutionProvider,
-      @MainThread ThreadSpec backThreadSpec, ConfigObservable configObservable){
+    //TODO LIB_CRUNCH threaddecoratedview
+    @Singleton
+    @Provides
+    @MainThread
+    ThreadSpec provideMainThread() {
+        return new MainThreadSpec();
+    }
 
-    return new SaveUserController(interactorInvoker, interactorExecutionProvider, backThreadSpec, configObservable);
-  }
-
-  @Provides @Singleton OrchextraStatusAccessor provideOrchextraStatusAccessor(
-      Session session, LoadOrchextraServiceStatus loadOrchextraServiceStatus,
-      UpdateOrchextraServiceStatus updateOrchextraServiceStatus,
-      ErrorLogger errorLogger){
-
-    return new OrchextraStatusAccessorAccessorImpl(session, loadOrchextraServiceStatus,
-        updateOrchextraServiceStatus, errorLogger);
-  }
-
-  @Singleton @Provides @MainThread ThreadSpec provideMainThread(){
-    return new MainThreadSpec();
-  }
-  @Singleton @Provides @BackThread ThreadSpec provideBackThread(){
-    return new BackThreadSpec();
-  }
+    //TODO LIB_CRUNCH threaddecoratedview
+    @Singleton
+    @Provides
+    @BackThread
+    ThreadSpec provideBackThread() {
+        return new BackThreadSpec();
+    }
 
 
 }

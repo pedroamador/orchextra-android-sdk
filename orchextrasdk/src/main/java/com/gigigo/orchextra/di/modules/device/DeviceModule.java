@@ -102,10 +102,12 @@ public class DeviceModule {
   @Provides ErrorLogger provideErrorLogger() {
     return new ErrorLogger() {
       @Override public void log(BusinessError businessError) {
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log(businessError.getMessage(), LogLevel.ERROR);
       }
 
       @Override public void log(String message) {
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log(message, LogLevel.ERROR);
       }
     };

@@ -36,7 +36,7 @@ import com.gigigo.orchextra.ui.OxToolbarActivity;
 import orchextra.javax.inject.Inject;
 
 import me.dm7.barcodescanner.zbar.Result;
-
+//TODO LIB_CRUNCH orchextrasdk-control
 public class OxScannerActivity extends OxToolbarActivity implements OxCodeScannerView, OxZBarScannerView.ResultHandler {
 
     //TODO LIB_CRUNCH gggLib
@@ -45,7 +45,7 @@ public class OxScannerActivity extends OxToolbarActivity implements OxCodeScanne
 
     @Inject
     PermissionCameraImp cameraPermissionImp;
-
+    //TODO LIB_CRUNCH orchextrasdk-control
     @Inject
     OxCodeScannerPresenter presenter;
 
@@ -60,6 +60,7 @@ public class OxScannerActivity extends OxToolbarActivity implements OxCodeScanne
         setContentView(R.layout.ox_activity_scanner_layout);
 
         initDI();
+        //TODO LIB_CRUNCH orchextrasdk-control
         presenter.attachView(this);
     }
 
@@ -153,18 +154,19 @@ public class OxScannerActivity extends OxToolbarActivity implements OxCodeScanne
 
         finish();
     }
-
+    //TODO LIB_CRUNCH barcodescanner
     @Override
     public void handleResult(Result rawResult) {
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log(rawResult.toString());
-
+//TODO LIB_CRUNCH orchextrasdk-control
         final ScannerResultPresenter scanResult = new ScannerResultPresenter();
         scanResult.setContent(rawResult.getContents());
         scanResult.setType(rawResult.getBarcodeFormat().getName());
-
+//TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Scanner Code: " + rawResult.getContents());
         GGGLogImpl.log("Scanner Type: " + rawResult.getBarcodeFormat().getName());
-
+//TODO LIB_CRUNCH orchextrasdk-control
         presenter.sendScannerResult(scanResult);
 
         closeActivity();
@@ -173,7 +175,7 @@ public class OxScannerActivity extends OxToolbarActivity implements OxCodeScanne
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+//TODO LIB_CRUNCH orchextrasdk-control
         presenter.detachView();
     }
 }

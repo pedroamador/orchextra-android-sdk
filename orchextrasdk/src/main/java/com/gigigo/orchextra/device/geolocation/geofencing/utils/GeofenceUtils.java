@@ -31,7 +31,7 @@ public class GeofenceUtils {
                 (ConstantsAndroidGeofence.MILISECONDS_IN_ONE_SECOND * stayTime) :
                 ConstantsAndroidGeofence.STAY_TIME_MS_DEFAULT;
     }
-
+    //TODO LIB_CRUNCH playServicesLocation
     public static int getTransitionTypes(boolean entry, boolean exit) {
         if (entry && exit) {
             return Geofence.GEOFENCE_TRANSITION_ENTER |

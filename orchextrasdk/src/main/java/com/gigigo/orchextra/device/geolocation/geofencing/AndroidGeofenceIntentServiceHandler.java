@@ -37,26 +37,26 @@ public class AndroidGeofenceIntentServiceHandler {
     public AndroidGeofenceIntentServiceHandler(LocationMapper locationMapper) {
         this.locationMapper = locationMapper;
     }
-
+    //TODO LIB_CRUNCH playServicesLocation
     public GeofencingEvent getGeofencingEvent(Intent intent) {
         return GeofencingEvent.fromIntent(intent);
     }
-
+    //TODO LIB_CRUNCH playServicesLocation
     public OrchextraPoint getTriggeringPoint(GeofencingEvent geofencingEvent) {
         Location triggeringLocation = geofencingEvent.getTriggeringLocation();
         return locationMapper.externalClassToModel(triggeringLocation);
     }
-
+    //TODO LIB_CRUNCH playServicesLocation
     public List<String> getTriggeringGeofenceIds(GeofencingEvent geofencingEvent) {
         List<String> triggerGeofenceIds = new ArrayList<>();
-
+//TODO LIB_CRUNCH playServicesLocation
         List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
         for (Geofence triggeringGeofence : triggeringGeofences) {
             triggerGeofenceIds.add(triggeringGeofence.getRequestId());
         }
         return triggerGeofenceIds;
     }
-
+    //TODO LIB_CRUNCH playServicesLocation
     public GeoPointEventType getGeofenceTransition(GeofencingEvent geofencingEvent) {
         if (!geofencingEvent.hasError()) {
             int transition = geofencingEvent.getGeofenceTransition();

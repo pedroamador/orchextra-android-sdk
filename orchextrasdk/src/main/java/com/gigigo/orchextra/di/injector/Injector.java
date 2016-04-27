@@ -45,6 +45,7 @@ public interface Injector {
   TaskServiceComponent injectTaskServiceComponent(OrchextraGcmTaskService orchextraGcmTaskService);
   GeofenceIntentServiceComponent injectGeofenceIntentServiceComponent(GeofenceIntentService geofenceIntentService);
   OrchextraBootBroadcastReceiverComponent injectBroadcastComponent(OrchextraBootBroadcastReceiver orchextraBootBroadcastReceiver);
+  //TODO LIB_CRUNCH orchextrasdk-control ini
   InteractorExecutionComponent injectRegionsProviderInteractorExecution(InteractorExecution<List<OrchextraRegion>> interactorExecution);
   InteractorExecutionComponent injectSaveUserInteractorExecution(InteractorExecution<ClientAuthData> interactorExecution);
   InteractorExecutionComponent injectConfigInteractorInteractorExecution(InteractorExecution<OrchextraUpdates> interactorExecution);
@@ -55,6 +56,6 @@ public interface Injector {
   InteractorExecutionComponent injectObtainThemeInteractorExecution(InteractorExecution<Theme> interactorExecution);
 
   InteractorExecutionComponent injectScannerInteractorExecution(InteractorExecution<BasicAction> interactorExecution);
-
+  //TODO LIB_CRUNCH orchextrasdk-control end
   OrchextraComponent injectCodeScannerActivity(OxScannerActivity oxCodeScannerActivity);
 }

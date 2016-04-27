@@ -36,17 +36,19 @@ import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.Region;
 
-
+//TODO LIB_CRUNCH altBeacon
 public class RegionMonitoringScannerImpl implements RegionMonitoringScanner,
     BeaconConsumer, MonitorNotifier {
-
+  //TODO LIB_CRUNCH altBeacon
   private final BeaconManager beaconManager;
   private final Context context;
   private final MonitoringListener monitoringListener;
+  //TODO LIB_CRUNCH orchextrasdk-control
   private final BeaconsController beaconsController;
   private final BeaconRegionAndroidMapper regionMapper;
-
+  //TODO LIB_CRUNCH altBeacon
   private List<Region> regionsToBeMonitored = (List<Region>) Collections.synchronizedList(new ArrayList<Region>());
+  //TODO LIB_CRUNCH altBeacon
   private List<Region> regionsInEnter = (List<Region>) Collections.synchronizedList(new ArrayList<Region>());
 
   private boolean monitoring = false;
@@ -85,25 +87,25 @@ public class RegionMonitoringScannerImpl implements RegionMonitoringScanner,
   // endregion
 
   //region MonitorNotifier Interface
-
+//TODO LIB_CRUNCH altBeacon
   @Override public void didEnterRegion(Region region) {
     OrchextraRegion orchextraRegion = regionMapper.externalClassToModel(region);
     beaconsController.onRegionEnter(orchextraRegion);
     monitoringListener.onRegionEnter(region);
     regionsInEnter.add(region);
-
+//TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("ENTER BEACON REGION : " + region.getUniqueId());
   }
-
+  //TODO LIB_CRUNCH altBeacon
   @Override public void didExitRegion(Region region) {
     OrchextraRegion orchextraRegion = regionMapper.externalClassToModel(region);
     beaconsController.onRegionExit(orchextraRegion);
     monitoringListener.onRegionExit(region);
     regionsInEnter.remove(region);
-
+//TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("EXIT BEACON REGION : " + region.getUniqueId());
   }
-
+  //TODO LIB_CRUNCH altBeacon
   @Override public void didDetermineStateForRegion(int i, Region region) {}
 
   // endregion
@@ -132,7 +134,7 @@ public class RegionMonitoringScannerImpl implements RegionMonitoringScanner,
   @Override public void setRunningMode(AppRunningModeType appRunningModeType) {
     beaconManager.setBackgroundMode(appRunningModeType == AppRunningModeType.BACKGROUND);
   }
-
+  //TODO LIB_CRUNCH altBeacon
   @Override public void updateRegions(List deletedRegions, List newRegions) {
     if (!deletedRegions.isEmpty()){
       List<Region> deleted = regionMapper.modelListToExternalClassList(deletedRegions);
@@ -145,18 +147,19 @@ public class RegionMonitoringScannerImpl implements RegionMonitoringScanner,
     }
   }
   // region RegionsProviderListener Interface
-
+//TODO LIB_CRUNCH altBeacon
   @Override public void onRegionsReady(List<OrchextraRegion> regions) {
     List<Region> altRegions = regionMapper.modelListToExternalClassList(regions);
     this.regionsToBeMonitored.clear();
     this.regionsToBeMonitored.addAll(altRegions);
     startMonitoringRegions(altRegions);
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void startMonitoringRegions(List<Region> altRegions) {
     try {
       for (Region region:altRegions){
         beaconManager.startMonitoringBeaconsInRegion(region);
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Start Beacons Monitoring for region " + region.getUniqueId());
       }
     } catch (RemoteException e) {
@@ -164,18 +167,19 @@ public class RegionMonitoringScannerImpl implements RegionMonitoringScanner,
     }
     monitoring = true;
   }
-
+  //TODO LIB_CRUNCH altBeacon
   private void stopMonitoringRegions(List<Region> altRegions) {
     try {
       for (Region region:altRegions){
         beaconManager.stopMonitoringBeaconsInRegion(region);
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Stop Beacons Monitoring for region " + region.getUniqueId());
       }
     } catch (RemoteException e) {
       e.printStackTrace();
     }
   }
-
+  //TODO LIB_CRUNCH altBeacon
   public List<Region> obtainRegionsInRange() {
     return regionsInEnter;
   }

@@ -32,7 +32,7 @@ import com.gigigo.orchextra.domain.model.vo.Theme;
 import java.util.List;
 
 import orchextra.dagger.Subcomponent;
-
+//TODO LIB_CRUNCH orchextrasdk-control ini
 @PerExecution @Subcomponent(modules = InteractorsModule.class)
 public interface InteractorExecutionComponent extends InteractorsModuleProvider {
     void injectSaveUserInteractorExecution(InteractorExecution<ClientAuthData> interactorExecution);
@@ -44,3 +44,4 @@ public interface InteractorExecutionComponent extends InteractorsModuleProvider 
     void injectObtainThemeInteractorExecution(InteractorExecution<Theme> interactorExecution);
     void injectScannerInteractorExecution(InteractorExecution<BasicAction> interactorExecution);
 }
+//TODO LIB_CRUNCH orchextrasdk-control end

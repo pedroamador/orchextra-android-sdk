@@ -23,50 +23,56 @@ import com.gigigo.orchextra.device.bluetooth.beacons.ranging.BeaconRangingScanne
 import com.gigigo.orchextra.domain.abstractions.beacons.BackgroundBeaconsRangingTimeType;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.AppRunningMode;
 import com.gigigo.orchextra.domain.model.triggers.params.AppRunningModeType;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.altbeacon.beacon.Region;
 
 
 public class MonitoringListenerImpl implements MonitoringListener {
 
-  private final AppRunningMode appRunningMode;
-  private final BeaconRangingScanner beaconRangingScanner;
-  private final BackgroundBeaconsRangingTimeType backgroundBeaconsRangingTimeType;
+    private final AppRunningMode appRunningMode;
+    private final BeaconRangingScanner beaconRangingScanner;
+    private final BackgroundBeaconsRangingTimeType backgroundBeaconsRangingTimeType;
 
-  public MonitoringListenerImpl(AppRunningMode appRunningMode,
-      BeaconRangingScanner beaconRangingScanner) {
+    public MonitoringListenerImpl(AppRunningMode appRunningMode,
+                                  BeaconRangingScanner beaconRangingScanner) {
 
-    this.appRunningMode = appRunningMode;
-    this.beaconRangingScanner = beaconRangingScanner;
-    this.backgroundBeaconsRangingTimeType = beaconRangingScanner.getBackgroundBeaconsRangingTimeType();
-  }
-
-  @Override public void onRegionEnter(Region region) {
-
-    List<Region> regions = new ArrayList<>();
-    regions.add(region);
-
-    if (appRunningMode.getRunningModeType() == AppRunningModeType.FOREGROUND){
-
-      beaconRangingScanner.initRangingScanForDetectedRegion(regions,
-          BackgroundBeaconsRangingTimeType.INFINITE);
-
-      GGGLogImpl.log("Ranging will be Started with infinite duration");
-
-    }else if (appRunningMode.getRunningModeType() == AppRunningModeType.BACKGROUND &&
-        backgroundBeaconsRangingTimeType != BackgroundBeaconsRangingTimeType.DISABLED){
-
-      beaconRangingScanner.initRangingScanForDetectedRegion(regions,
-          backgroundBeaconsRangingTimeType);
-
-      GGGLogImpl.log("Ranging will be Started with " +
-          String.valueOf(backgroundBeaconsRangingTimeType.getIntValue()) + " duration");
-
+        this.appRunningMode = appRunningMode;
+        this.beaconRangingScanner = beaconRangingScanner;
+        this.backgroundBeaconsRangingTimeType = beaconRangingScanner.getBackgroundBeaconsRangingTimeType();
     }
-  }
 
-  @Override public void onRegionExit(Region region) {
-    beaconRangingScanner.stopRangingScanForDetectedRegion(region);
-  }
+    //TODO LIB_CRUNCH altBeacon
+    @Override
+    public void onRegionEnter(Region region) {
+//TODO LIB_CRUNCH altBeacon
+        List<Region> regions = new ArrayList<>();
+        regions.add(region);
+
+        if (appRunningMode.getRunningModeType() == AppRunningModeType.FOREGROUND) {
+
+            beaconRangingScanner.initRangingScanForDetectedRegion(regions,
+                    BackgroundBeaconsRangingTimeType.INFINITE);
+//TODO LIB_CRUNCH gggLogger
+            GGGLogImpl.log("Ranging will be Started with infinite duration");
+
+        } else if (appRunningMode.getRunningModeType() == AppRunningModeType.BACKGROUND &&
+                backgroundBeaconsRangingTimeType != BackgroundBeaconsRangingTimeType.DISABLED) {
+
+            beaconRangingScanner.initRangingScanForDetectedRegion(regions,
+                    backgroundBeaconsRangingTimeType);
+//TODO LIB_CRUNCH gggLogger
+            GGGLogImpl.log("Ranging will be Started with " +
+                    String.valueOf(backgroundBeaconsRangingTimeType.getIntValue()) + " duration");
+
+        }
+    }
+
+    //TODO LIB_CRUNCH altBeacon
+    @Override
+    public void onRegionExit(Region region) {
+        beaconRangingScanner.stopRangingScanForDetectedRegion(region);
+    }
 }

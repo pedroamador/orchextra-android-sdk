@@ -28,14 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AndroidGeofenceConverter {
-
+    //TODO LIB_CRUNCH playServicesLocation
     public GeofencingRequest convertGeofencesToGeofencingRequest(List<OrchextraGeofence> orchextraGeofenceList) {
         List<Geofence> androidGeofenceList = new ArrayList<>();
 
         int i = 0;
         while (i < orchextraGeofenceList.size() && i < ConstantsAndroidGeofence.MAX_NUM_GEOFENCES) {
             OrchextraGeofence orchextraGeofence = orchextraGeofenceList.get(i);
-
+//TODO LIB_CRUNCH playServicesLocation
             Geofence geofence = new Geofence.Builder()
                     .setRequestId(orchextraGeofence.getCode())
                     .setCircularRegion(orchextraGeofence.getPoint().getLat(),
@@ -50,7 +50,7 @@ public class AndroidGeofenceConverter {
 
             i++;
         }
-
+//TODO LIB_CRUNCH playServicesLocation
         GeofencingRequest geofencingRequest = new GeofencingRequest.Builder()
                 .addGeofences(androidGeofenceList)
                 .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER | GeofencingRequest.INITIAL_TRIGGER_DWELL)

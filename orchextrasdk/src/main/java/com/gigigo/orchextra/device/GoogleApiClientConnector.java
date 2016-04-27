@@ -57,6 +57,7 @@ public class GoogleApiClientConnector
   }
 
   @Override public void onConnected(Bundle bundle) {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("onConnected");
 
     if (onConnectedListener != null) {
@@ -65,18 +66,22 @@ public class GoogleApiClientConnector
   }
 
   @Override public void onConnectionSuspended(int cause) {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log(
         "onConnectionSuspended: Called when the client is temporarily in a disconnected state");
   }
 
   @Override public void onConnectionFailed(ConnectionResult connectionResult) {
+    //TODO LIB_CRUNCH gggLogger
     GGGLogImpl.log("onConnectionFailed");
 
     switch (connectionResult.getErrorCode()) {
       case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Necesita actualizar google play");
         break;
       case ConnectionResult.SERVICE_MISSING_PERMISSION:
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("Falta algun permiso para ejecutar Google Play Services");
         break;
     }
@@ -108,12 +113,14 @@ public class GoogleApiClientConnector
       if (isConnected()) {
         return true;
       } else {
+        //TODO LIB_CRUNCH gggLogger
         GGGLogImpl.log("GoogleApiClientConnector connection Status: " + isConnected(),
             LogLevel.ERROR);
 
         return false;
       }
     } else {
+      //TODO LIB_CRUNCH gggLogger
       GGGLogImpl.log("Google play services not ready, Status: " + gpss.getStringValue(),
           LogLevel.ERROR);
       return false;

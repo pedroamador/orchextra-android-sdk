@@ -87,6 +87,7 @@ public class RetrieveLastKnownLocation {
 
     @SuppressWarnings("ResourceType")
     private void getLastKnownLocation() {
+        //TODO LIB_CRUNCH playServicesLocation
         Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClientConnector.getGoogleApiClient());
         if (onLastKnownLocationListener != null) {
             onLastKnownLocationListener.onLastKnownLocation(lastLocation);
@@ -112,6 +113,7 @@ public class RetrieveLastKnownLocation {
         } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             locationProvider = LocationManager.NETWORK_PROVIDER;
         } else {
+            //TODO LIB_CRUNCH gggLogger
             GGGLogImpl.log("Connection failed: Location not Available");
             return;
         }

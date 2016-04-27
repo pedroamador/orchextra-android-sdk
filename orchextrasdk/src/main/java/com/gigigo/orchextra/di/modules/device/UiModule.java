@@ -41,7 +41,7 @@ public class UiModule {
     @Provides ScannerResultMapper provideScannerResultMapper() {
         return new ScannerResultMapper();
     }
-
+    //TODO LIB_CRUNCH threaddecoratedview
     @Singleton
     @Provides
     OxCodeScannerPresenter provideOxCodeScannerPresenter(@BackThread ThreadSpec threadSpec,

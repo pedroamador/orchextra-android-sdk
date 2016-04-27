@@ -39,7 +39,7 @@ import me.dm7.barcodescanner.zbar.BarcodeFormat;
 import me.dm7.barcodescanner.zbar.Result;
 
 public class OxZBarScannerView extends OxScannerView {
-
+    //TODO LIB_CRUNCH barcodescanner
     private ImageScanner scanner;
     private OxZBarScannerView.ResultHandler resultHandler;
 
@@ -66,12 +66,13 @@ public class OxZBarScannerView extends OxScannerView {
     public void setResultHandler(OxZBarScannerView.ResultHandler resultHandler) {
         this.resultHandler = resultHandler;
     }
-
+    //TODO LIB_CRUNCH barcodescanner
     public Collection<BarcodeFormat> getFormats() {
         return BarcodeFormat.ALL_FORMATS;
     }
 
     public void setupScanner() {
+        //TODO LIB_CRUNCH barcodescanner
         scanner = new ImageScanner();
 
         scanner.setConfig(Symbol.NONE, Config.X_DENSITY, 3);
@@ -113,7 +114,7 @@ public class OxZBarScannerView extends OxScannerView {
                 height = result;
                 data = barcode;
             }
-
+//TODO LIB_CRUNCH barcodescanner
             Image image = new Image(width, height, "Y800");
             image.setData(data);
             result = scanner.scanImage(image);

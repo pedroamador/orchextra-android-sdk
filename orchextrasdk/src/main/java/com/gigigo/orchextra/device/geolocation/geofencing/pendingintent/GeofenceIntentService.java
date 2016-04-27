@@ -39,7 +39,7 @@ public class GeofenceIntentService extends IntentService {
 
     @Inject
     AndroidGeofenceIntentServiceHandler geofenceHandler;
-
+    //TODO LIB_CRUNCH orchextrasdk-control
     @Inject
     GeofenceController controller;
 
@@ -59,17 +59,19 @@ public class GeofenceIntentService extends IntentService {
     }
 
     public void processGeofenceIntentPending(Intent intent) {
+        //TODO LIB_CRUNCH playServicesLocation
         GeofencingEvent geofencingEvent = geofenceHandler.getGeofencingEvent(intent);
 
         List<String> geofenceIds = geofenceHandler.getTriggeringGeofenceIds(geofencingEvent);
 
         try {
             GeoPointEventType transition = geofenceHandler.getGeofenceTransition(geofencingEvent);
-
+//TODO LIB_CRUNCH gggLogger
             GGGLogImpl.log("Localizado: " + transition.getStringValue());
 
             controller.processTriggers(geofenceIds, transition);
         }catch (GeofenceEventException geofenceEventException){
+            //TODO LIB_CRUNCH gggLogger
             GGGLogImpl.log(geofenceEventException.getMessage(), LogLevel.ERROR);
         }
     }

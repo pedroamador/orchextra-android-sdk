@@ -34,7 +34,7 @@ import org.altbeacon.beacon.BeaconManager;
 
 @Module(includes = BeaconsModule.class)
 public class BluetoothModule {
-
+  //TODO LIB_CRUNCH altBeacon
   @Provides @Singleton
   BluetoothAvailability provideBluetoothAvailability(BeaconManager beaconManager){
     return new BluetoothAvailabilityImpl(beaconManager);

@@ -35,6 +35,7 @@ public abstract class OxScannerView extends FrameLayout implements Camera.Previe
     protected final Context context;
 
     public Camera camera;
+    //TODO LIB_CRUNCH barcodescanner
     private CameraPreview preview;
 
     public OxScannerView(Context context) {
@@ -74,17 +75,19 @@ public abstract class OxScannerView extends FrameLayout implements Camera.Previe
     public void startCamera(Camera camera) {
         this.camera = camera;
         if (this.camera != null) {
+            //TODO LIB_CRUNCH barcodescanner
             preview = new CameraPreview(context, camera, this);
             setupLayout();
         }
     }
-
+    //TODO LIB_CRUNCH barcodescanner
     public void startCamera() {
         startCamera(CameraUtils.getCameraInstance());
     }
 
     public void stopCamera() {
         if (camera != null) {
+            //TODO LIB_CRUNCH barcodescanner
             preview.stopCameraPreview();
             preview.setCamera(null, null);
             camera.release();

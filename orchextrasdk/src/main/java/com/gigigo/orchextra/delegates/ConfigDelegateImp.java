@@ -21,15 +21,16 @@ package com.gigigo.orchextra.delegates;
 import com.gigigo.orchextra.control.controllers.config.ConfigController;
 
 public class ConfigDelegateImp {
+    //TODO LIB_CRUNCH orchextrasdk-control
+    private final ConfigController configController;
 
-  private final ConfigController configController;
+    //TODO LIB_CRUNCH orchextrasdk-control
+    public ConfigDelegateImp(ConfigController configController) {
+        this.configController = configController;
+    }
 
-  public ConfigDelegateImp(ConfigController configController) {
-    this.configController = configController;
-  }
-
-  public void sendConfiguration() {
-    configController.sendConfiguration();
-  }
+    public void sendConfiguration() {
+        configController.sendConfiguration();
+    }
 
 }

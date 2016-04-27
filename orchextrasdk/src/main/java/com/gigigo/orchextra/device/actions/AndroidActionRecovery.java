@@ -29,8 +29,9 @@ public class AndroidActionRecovery implements ActionRecovery {
 
   private final ActionDispatcher actionDispatcher;
   private final AndroidBasicActionMapper androidBasicActionMapper;
+  //TODO LIB_CRUNCH threaddecoratedview
   private final ThreadSpec mainThreadSpec;
-
+  //TODO LIB_CRUNCH threaddecoratedview
   public AndroidActionRecovery(ActionDispatcher actionDispatcher,
       AndroidBasicActionMapper androidBasicActionMapper, ThreadSpec mainThreadSpec) {
     this.actionDispatcher = actionDispatcher;

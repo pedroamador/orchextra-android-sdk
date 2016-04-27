@@ -56,84 +56,104 @@ import me.panavtec.threaddecoratedview.views.ThreadSpec;
 
 @Module
 public class ActionsModule {
-  //TODO LIB_CRUNCH gggLib
-  @Provides @Singleton
-  BrowserActionExecutor provideBrowserActionExecutor(ContextProvider contextProvider) {
-    return new BrowserActionExecutor(contextProvider.getApplicationContext());
-  }
-  //TODO LIB_CRUNCH gggLib
-  @Provides
-  @Singleton WebViewActionExecutor provideWebViewActionExecutor(ContextProvider contextProvider) {
-    return new WebViewActionExecutor(contextProvider.getApplicationContext());
-  }
-
-  @Provides
-  @Singleton ScanActionExecutor provideScanActionExecutor() {
-    return new ScanActionExecutor();
-  }
-
-  @Provides
-  @Singleton VuforiaActionExecutor provideVuforiaActionExecutor() {
-    return new VuforiaActionExecutor();
-  }
-
-  @Provides
-  @Singleton ActionExecution provideActionExecution(BrowserActionExecutor browserActionExecutor,
-      WebViewActionExecutor webViewActionExecutor,
-      ScanActionExecutor scanActionExecutor,
-      VuforiaActionExecutor vuforiaActionExecutor) {
-    return new ActionExecutionImp(browserActionExecutor, webViewActionExecutor, scanActionExecutor,
-        vuforiaActionExecutor);
-  }
-
-  @Provides
-  @Singleton ActionDispatcher provideActionDispatcher(ActionExecution actionExecution, NotificationBehavior notificationBehavior,
-      CustomSchemeReceiverContainer customSchemeReceiverContainer, StatsDispatcher statsDispatcher) {
-    return new ActionDispatcherImpl(actionExecution, notificationBehavior, customSchemeReceiverContainer, statsDispatcher);
-  }
-
-  @Provides
-  @Singleton
-  AndroidBasicActionMapper provideAndroidBasicActionMapper(AndroidNotificationMapper androidNotificationMapper) {
-    return new AndroidBasicActionMapper(androidNotificationMapper);
-  }
-  //TODO LIB_CRUNCH gggLib
-  @Singleton @Provides ActionsScheduler provideActionsScheduler(ContextProvider contextProvider, Gson gson,
-      AndroidBasicActionMapper androidBasicActionMapper, GoogleApiPermissionChecker googleApiPermissionChecker){
-    return new ActionsSchedulerGcmImpl(contextProvider.getApplicationContext(), gson,
-        androidBasicActionMapper, googleApiPermissionChecker);
-  }
-
-  @Singleton @Provides Gson gson(){
-    return new Gson();
-  }
-
-  @Singleton @Provides ActionsSchedulerPersistor provideActionsSchedulerPersistorNull(){
-    return new ActionsSchedulerPersistorNullImpl();
-  }
-
-  @Singleton @Provides ActionsSchedulerController provideActionsSchedulerController(
-      ActionsScheduler actionsScheduler, ActionsSchedulerPersistor actionsSchedulerPersistor){
-
-    if (actionsScheduler.hasPersistence() &&
-        !(actionsSchedulerPersistor instanceof ActionsSchedulerPersistorNullImpl)){
-      throw new IllegalArgumentException("Param ActionsSchedulerPersistor in"
-          + " ActionsSchedulerControllerImpl MUST be NullObject when ActionsScheduler "
-          + "already supports persistence ");
+    //TODO LIB_CRUNCH gggLib
+    @Provides
+    @Singleton
+    BrowserActionExecutor provideBrowserActionExecutor(ContextProvider contextProvider) {
+        return new BrowserActionExecutor(contextProvider.getApplicationContext());
     }
 
-    return new ActionsSchedulerControllerImpl(actionsScheduler, actionsSchedulerPersistor);
-  }
-
-  @Provides
-  @Singleton ActionRecovery providesActionRecovery(AndroidBasicActionMapper androidBasicActionMapper,
-      ActionDispatcher actionDispatcher, @MainThread ThreadSpec mainThreadSpec){
-    return new AndroidActionRecovery(actionDispatcher, androidBasicActionMapper, mainThreadSpec);
-  }
+    //TODO LIB_CRUNCH gggLib
+    @Provides
+    @Singleton
+    WebViewActionExecutor provideWebViewActionExecutor(ContextProvider contextProvider) {
+        return new WebViewActionExecutor(contextProvider.getApplicationContext());
+    }
 
     @Provides
-    @Singleton StatsDispatcher provideStatsDispatcher(StatsDataSourceImp statsDataSourceImp,
-                                                      @BackThread ThreadSpec bacThreadSpec) {
+    @Singleton
+    ScanActionExecutor provideScanActionExecutor() {
+        return new ScanActionExecutor();
+    }
+
+    @Provides
+    @Singleton
+    VuforiaActionExecutor provideVuforiaActionExecutor() {
+        return new VuforiaActionExecutor();
+    }
+
+    @Provides
+    @Singleton
+    ActionExecution provideActionExecution(BrowserActionExecutor browserActionExecutor,
+                                           WebViewActionExecutor webViewActionExecutor,
+                                           ScanActionExecutor scanActionExecutor,
+                                           VuforiaActionExecutor vuforiaActionExecutor) {
+        return new ActionExecutionImp(browserActionExecutor, webViewActionExecutor, scanActionExecutor,
+                vuforiaActionExecutor);
+    }
+
+    @Provides
+    @Singleton
+    ActionDispatcher provideActionDispatcher(ActionExecution actionExecution, NotificationBehavior notificationBehavior,
+                                             CustomSchemeReceiverContainer customSchemeReceiverContainer, StatsDispatcher statsDispatcher) {
+        return new ActionDispatcherImpl(actionExecution, notificationBehavior, customSchemeReceiverContainer, statsDispatcher);
+    }
+
+    @Provides
+    @Singleton
+    AndroidBasicActionMapper provideAndroidBasicActionMapper(AndroidNotificationMapper androidNotificationMapper) {
+        return new AndroidBasicActionMapper(androidNotificationMapper);
+    }
+
+    //TODO LIB_CRUNCH gggLib
+    @Singleton
+    @Provides
+    ActionsScheduler provideActionsScheduler(ContextProvider contextProvider, Gson gson,
+                                             AndroidBasicActionMapper androidBasicActionMapper, GoogleApiPermissionChecker googleApiPermissionChecker) {
+        return new ActionsSchedulerGcmImpl(contextProvider.getApplicationContext(), gson,
+                androidBasicActionMapper, googleApiPermissionChecker);
+    }
+
+    @Singleton
+    @Provides
+    Gson gson() {
+        return new Gson();
+    }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Singleton
+    @Provides
+    ActionsSchedulerPersistor provideActionsSchedulerPersistorNull() {
+        return new ActionsSchedulerPersistorNullImpl();
+    }
+
+    @Singleton
+    @Provides
+    ActionsSchedulerController provideActionsSchedulerController(
+            ActionsScheduler actionsScheduler, ActionsSchedulerPersistor actionsSchedulerPersistor) {
+//TODO LIB_CRUNCH orchextrasdk-control
+        if (actionsScheduler.hasPersistence() &&
+                !(actionsSchedulerPersistor instanceof ActionsSchedulerPersistorNullImpl)) {
+            throw new IllegalArgumentException("Param ActionsSchedulerPersistor in"
+                    + " ActionsSchedulerControllerImpl MUST be NullObject when ActionsScheduler "
+                    + "already supports persistence ");
+        }
+//TODO LIB_CRUNCH orchextrasdk-control
+        return new ActionsSchedulerControllerImpl(actionsScheduler, actionsSchedulerPersistor);
+    }
+
+    //TODO LIB_CRUNCH threaddecoratedview
+    @Provides
+    @Singleton
+    ActionRecovery providesActionRecovery(AndroidBasicActionMapper androidBasicActionMapper,
+                                          ActionDispatcher actionDispatcher, @MainThread ThreadSpec mainThreadSpec) {
+        return new AndroidActionRecovery(actionDispatcher, androidBasicActionMapper, mainThreadSpec);
+    }
+
+    //TODO LIB_CRUNCH threaddecoratedview
+    @Provides
+    @Singleton
+    StatsDispatcher provideStatsDispatcher(StatsDataSourceImp statsDataSourceImp,
+                                           @BackThread ThreadSpec bacThreadSpec) {
         return new StatsDispatcherImp(statsDataSourceImp, bacThreadSpec);
     }
 }

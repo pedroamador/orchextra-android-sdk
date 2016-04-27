@@ -46,224 +46,243 @@ import com.gigigo.orchextra.domain.model.triggers.params.AppRunningModeType;
 import com.gigigo.orchextra.sdk.application.applifecycle.OrchextraActivityLifecycle;
 import com.gigigo.orchextra.sdk.model.OrcUserToCrmConverter;
 import com.gigigo.orchextra.sdk.scanner.ScannerManager;
+
 import orchextra.javax.inject.Inject;
 
 public class OrchextraManager {
 
-  private static OrchextraManager instance;
-  private InjectorImpl injector;
-  private OrchextraManagerCompletionCallback orchextraCompletionCallback;
+    private static OrchextraManager instance;
+    private InjectorImpl injector;
+    private OrchextraManagerCompletionCallback orchextraCompletionCallback;
 
-  @Inject OrchextraActivityLifecycle orchextraActivityLifecycle;
-  @Inject OrchextraTasksManager orchextraTasksManager;
-  @Inject OrcUserToCrmConverter orcUserToCrmConverter;
-  @Inject OrchextraStatusAccessor orchextraStatusAccessor;
-  @Inject SaveUserController saveUserController;
-  @Inject AppRunningMode appRunningMode;
-  @Inject AppStatusEventsListener appStatusEventsListener;
-  @Inject ScannerManager scannerManager;
+    //TODO LIB_CRUNCH Dagger ini
+    @Inject
+    OrchextraActivityLifecycle orchextraActivityLifecycle;
+    @Inject
+    OrchextraTasksManager orchextraTasksManager;
+    @Inject
+    OrcUserToCrmConverter orcUserToCrmConverter;
+    @Inject
+    OrchextraStatusAccessor orchextraStatusAccessor;
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Inject
+    SaveUserController saveUserController;
+    @Inject
+    AppRunningMode appRunningMode;
+    @Inject
+    AppStatusEventsListener appStatusEventsListener;
+    @Inject
+    ScannerManager scannerManager;
+    //TODO LIB_CRUNCH Dagger end
 
-  /**
-   * Fist call to orchextra, it is compulsory call this for starting to do any sdk Stuff
-   *
-   * @param application
-   * @param orchextraCompletionCallback
-   */
-  public static void sdkInit(Application application, OrchextraManagerCompletionCallback orchextraCompletionCallback) {
-    OrchextraManager.instance = new OrchextraManager();
-    OrchextraManager.instance.init(application, orchextraCompletionCallback);
-  }
-
-  /**
-   * This method is called from client app in order to start application at one concrete moment,
-   * this is not dependant on context neither app lifecycle, could be called in any moment.
-   *
-   * @param apiKey credentials
-   * @param apiSecret credentials
-   */
-  //TODO LIB_CRUNCH gggLib
-  public static synchronized void sdkStart(String apiKey, String apiSecret) {
-    if (OrchextraManager.instance!=null &&
-            AndroidSdkVersion.hasJellyBean18()) {
-      OrchextraManager.instance.start(apiKey, apiSecret);
+    /**
+     * Fist call to orchextra, it is compulsory call this for starting to do any sdk Stuff
+     *
+     * @param application
+     * @param orchextraCompletionCallback
+     */
+    public static void sdkInit(Application application, OrchextraManagerCompletionCallback orchextraCompletionCallback) {
+        OrchextraManager.instance = new OrchextraManager();
+        OrchextraManager.instance.init(application, orchextraCompletionCallback);
     }
-  }
 
-  /**
-   * Called for inform sdk about client app user information, useful for tacking segmentation about
-   * users. This call can provokes call to configuration
-   * @param user information about client app user
-   */
-  //TODO LIB_CRUNCH gggLib
-  public static synchronized void setUser(ORCUser user) {
-    OrchextraManager orchextraManager = OrchextraManager.instance;
-    if (orchextraManager!=null &&
-            AndroidSdkVersion.hasJellyBean18()) {
-      if (orchextraManager.orchextraStatusAccessor.isStarted()){
-        OrcUserToCrmConverter orcUserToCrmConverter = orchextraManager.orcUserToCrmConverter;
-        SaveUserController saveUserController = orchextraManager.saveUserController;
-
-        Crm crm = orcUserToCrmConverter.convertOrcUserToCrm(user);
-        saveUserController.saveUser(crm);
-      }else{
-      //TODO could be nice the idea of just store user in local storage if sdk is not running
-        orchextraManager.orchextraCompletionCallback.onInit("Not started SDK, "
-          + "must have SDK started before calling set user");
-      }
+    /**
+     * This method is called from client app in order to start application at one concrete moment,
+     * this is not dependant on context neither app lifecycle, could be called in any moment.
+     *
+     * @param apiKey    credentials
+     * @param apiSecret credentials
+     */
+    //TODO LIB_CRUNCH gggLib
+    public static synchronized void sdkStart(String apiKey, String apiSecret) {
+        if (OrchextraManager.instance != null &&
+                AndroidSdkVersion.hasJellyBean18()) {
+            OrchextraManager.instance.start(apiKey, apiSecret);
+        }
     }
-  }
 
-  /**
-   * Called for set custom scheme receiver
-   * @param customSchemeReceiver custom scheme receiver
-   */
-  public static synchronized void setCustomSchemeReceiver(CustomOrchextraSchemeReceiver customSchemeReceiver){
-    OrchextraModule orchextraModule = getOrchextraModule();
-    if (orchextraModule != null){
-      orchextraModule.setCustomSchemeReceiver(customSchemeReceiver);
+    /**
+     * Called for inform sdk about client app user information, useful for tacking segmentation about
+     * users. This call can provokes call to configuration
+     *
+     * @param user information about client app user
+     */
+    //TODO LIB_CRUNCH gggLib
+    public static synchronized void setUser(ORCUser user) {
+        OrchextraManager orchextraManager = OrchextraManager.instance;
+        if (orchextraManager != null &&
+                AndroidSdkVersion.hasJellyBean18()) {
+            if (orchextraManager.orchextraStatusAccessor.isStarted()) {
+                OrcUserToCrmConverter orcUserToCrmConverter = orchextraManager.orcUserToCrmConverter;
+                //TODO LIB_CRUNCH orchextrasdk-control
+                SaveUserController saveUserController = orchextraManager.saveUserController;
+
+                Crm crm = orcUserToCrmConverter.convertOrcUserToCrm(user);
+                saveUserController.saveUser(crm);
+            } else {
+                //TODO could be nice the idea of just store user in local storage if sdk is not running
+                orchextraManager.orchextraCompletionCallback.onInit("Not started SDK, "
+                        + "must have SDK started before calling set user");
+            }
+        }
     }
-  }
 
-  /**
-   * Called when client app want to stop all orchextra proccess
-   */
-  public static synchronized void sdkStop() {
-    OrchextraManager orchextraManager = OrchextraManager.instance;
-    if (orchextraManager !=null && orchextraManager.orchextraStatusAccessor.isStarted()){
-      orchextraManager.orchextraStatusAccessor.setStoppedStatus();
-      orchextraManager.instance.stopOrchextraTasks();
+    /**
+     * Called for set custom scheme receiver
+     *
+     * @param customSchemeReceiver custom scheme receiver
+     */
+    public static synchronized void setCustomSchemeReceiver(CustomOrchextraSchemeReceiver customSchemeReceiver) {
+        OrchextraModule orchextraModule = getOrchextraModule();
+        if (orchextraModule != null) {
+            orchextraModule.setCustomSchemeReceiver(customSchemeReceiver);
+        }
     }
-  }
 
-  /**
-   * Internal sdk dependency injector
-   * @return dependency injector
-   */
-  public static InjectorImpl getInjector() {
-    if (OrchextraManager.instance != null) {
-      return OrchextraManager.instance.injector;
+    /**
+     * Called when client app want to stop all orchextra proccess
+     */
+    public static synchronized void sdkStop() {
+        OrchextraManager orchextraManager = OrchextraManager.instance;
+        if (orchextraManager != null && orchextraManager.orchextraStatusAccessor.isStarted()) {
+            orchextraManager.orchextraStatusAccessor.setStoppedStatus();
+            orchextraManager.instance.stopOrchextraTasks();
+        }
     }
-    return null;
-  }
 
-  private void stopOrchextraTasks() {
-    orchextraTasksManager.stopAllTasks();
-
-    if (appRunningMode.getRunningModeType() == AppRunningModeType.BACKGROUND){
-      appStatusEventsListener.onBackgroundEnd();
+    /**
+     * Internal sdk dependency injector
+     *
+     * @return dependency injector
+     */
+    public static InjectorImpl getInjector() {
+        if (OrchextraManager.instance != null) {
+            return OrchextraManager.instance.injector;
+        }
+        return null;
     }
-  }
 
-  /**
-   * Fist call to orchextra, it is compulsory call this for starting to do any sdk Stuff
-   *
-   * @param app
-   * @param completionCallback
-   */
-  private void init(Application app, OrchextraManagerCompletionCallback completionCallback) {
+    private void stopOrchextraTasks() {
+        orchextraTasksManager.stopAllTasks();
 
-    orchextraCompletionCallback = completionCallback;
-//TODO LIB_CRUNCH gggLib
-    if (AndroidSdkVersion.hasJellyBean18()){
-      initDependencyInjection(app.getApplicationContext(), completionCallback);
-      initLifecyle(app);
-      //initialize();
-      orchextraStatusAccessor.initialize();
-    }else{
-      completionCallback.onInit(app.getString(R.string.ox_not_supported_android_sdk));
+        if (appRunningMode.getRunningModeType() == AppRunningModeType.BACKGROUND) {
+            appStatusEventsListener.onBackgroundEnd();
+        }
     }
-  }
 
-  private void initDependencyInjection(Context applicationContext, 
-      OrchextraManagerCompletionCallback orchextraCompletionCallback) {
-    
-    OrchextraComponent orchextraComponent = DaggerOrchextraComponent.builder()
-        .orchextraModule(new OrchextraModule(applicationContext, orchextraCompletionCallback))
-        .build();
-    
-    injector = new InjectorImpl(orchextraComponent);
-    orchextraComponent.injectOrchextra(OrchextraManager.instance);
-  }
+    /**
+     * Fist call to orchextra, it is compulsory call this for starting to do any sdk Stuff
+     *
+     * @param app
+     * @param completionCallback
+     */
+    private void init(Application app, OrchextraManagerCompletionCallback completionCallback) {
 
-  private void start() {
-    new Thread(getStartRunnable()).start();
-  }
-
-  private Runnable getStartRunnable() {
-    return new Runnable() {
-      @Override public void run() {
-        startSDK();
-      }
-    };
-  }
-
-  private void startSDK() {
-    if (appRunningMode.getRunningModeType() == AppRunningModeType.FOREGROUND){
-      appStatusEventsListener.onForegroundStart();
-    }else if (appRunningMode.getRunningModeType() == AppRunningModeType.BACKGROUND){
-      appStatusEventsListener.onBackgroundStart();
+        orchextraCompletionCallback = completionCallback;
+        //TODO LIB_CRUNCH gggLib
+        if (AndroidSdkVersion.hasJellyBean18()) {
+            initDependencyInjection(app.getApplicationContext(), completionCallback);
+            initLifecyle(app);
+            //initialize();
+            orchextraStatusAccessor.initialize();
+        } else {
+            completionCallback.onInit(app.getString(R.string.ox_not_supported_android_sdk));
+        }
     }
-  }
 
-  /**
-   * This method is called from client app in order to start application at one concrete moment,
-   * this is not dependant on context neither app lifecycle, could be called in any moment.
-   *
-   * @param apiKey
-   * @param apiSecret
-   */
-  private void start(String apiKey, String apiSecret) {
-    Exception exception = null;
-    try {
-      StartStatusType status = orchextraStatusAccessor.setStartedStatus(apiKey, apiSecret);
+    private void initDependencyInjection(Context applicationContext,
+                                         OrchextraManagerCompletionCallback orchextraCompletionCallback) {
+        //TODO LIB_CRUNCH Dagger
+        OrchextraComponent orchextraComponent = DaggerOrchextraComponent.builder()
+                .orchextraModule(new OrchextraModule(applicationContext, orchextraCompletionCallback))
+                .build();
 
-      if (status == StartStatusType.SDK_READY_FOR_START){
-        start();
-      }
-
-      if (status == StartStatusType.SDK_WAS_ALREADY_STARTED_WITH_DIFERENT_CREDENTIALS){
-        //TODO restart or call any service???
-      }
-
-    }catch (SdkAlreadyStartedException alreadyStartedException){
-      GGGLogImpl.log(alreadyStartedException.getMessage(), LogLevel.WARN);
-      orchextraCompletionCallback.onInit(alreadyStartedException.getMessage());
-
-    }catch (SdkNotInitializedException notInitializedException){
-      exception = notInitializedException;
-
-    }catch (SdkInitializationException initializationException){
-      exception = initializationException;
-      exception.printStackTrace();
-
-    }finally {
-      if (exception!=null) {
-        GGGLogImpl.log(exception.getMessage(), LogLevel.ERROR);
-        orchextraCompletionCallback.onError(exception.getMessage());
-      }
+        injector = new InjectorImpl(orchextraComponent);
+        orchextraComponent.injectOrchextra(OrchextraManager.instance);
     }
-  }
 
-  @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-  private void initLifecyle(Application app) {
-    app.registerActivityLifecycleCallbacks(orchextraActivityLifecycle);
-  }
-
-  public static void openScannerView() {
-    OrchextraManager orchextraManager = OrchextraManager.instance;
-    OrchextraModule orchextraModule = getOrchextraModule();
-    if (orchextraModule != null) {
-      ScannerManager scannerManager = orchextraManager.scannerManager;
-      scannerManager.open();
+    private void start() {
+        new Thread(getStartRunnable()).start();
     }
-  }
 
-  private static OrchextraModule getOrchextraModule() {
-    if (getInjector()!=null) {
-      OrchextraComponent orchextraComponent = getInjector().getOrchextraComponent();
-      return orchextraComponent.getOrchextraModule();
-    } else {
-      return null;
+    private Runnable getStartRunnable() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                startSDK();
+            }
+        };
     }
-  }
+
+    private void startSDK() {
+        if (appRunningMode.getRunningModeType() == AppRunningModeType.FOREGROUND) {
+            appStatusEventsListener.onForegroundStart();
+        } else if (appRunningMode.getRunningModeType() == AppRunningModeType.BACKGROUND) {
+            appStatusEventsListener.onBackgroundStart();
+        }
+    }
+
+    /**
+     * This method is called from client app in order to start application at one concrete moment,
+     * this is not dependant on context neither app lifecycle, could be called in any moment.
+     *
+     * @param apiKey
+     * @param apiSecret
+     */
+    private void start(String apiKey, String apiSecret) {
+        Exception exception = null;
+        try {
+            StartStatusType status = orchextraStatusAccessor.setStartedStatus(apiKey, apiSecret);
+
+            if (status == StartStatusType.SDK_READY_FOR_START) {
+                start();
+            }
+
+            if (status == StartStatusType.SDK_WAS_ALREADY_STARTED_WITH_DIFERENT_CREDENTIALS) {
+                //TODO restart or call any service???
+            }
+//TODO LIB_CRUNCH orchextrasdk-control ini
+        } catch (SdkAlreadyStartedException alreadyStartedException) {
+            //TODO LIB_CRUNCH gggLogger
+            GGGLogImpl.log(alreadyStartedException.getMessage(), LogLevel.WARN);
+            orchextraCompletionCallback.onInit(alreadyStartedException.getMessage());
+
+        } catch (SdkNotInitializedException notInitializedException) {
+            exception = notInitializedException;
+
+        } catch (SdkInitializationException initializationException) {
+            exception = initializationException;
+            exception.printStackTrace();
+//TODO LIB_CRUNCH orchextrasdk-control end
+        } finally {
+            if (exception != null) {
+                //TODO LIB_CRUNCH gggLogger
+                GGGLogImpl.log(exception.getMessage(), LogLevel.ERROR);
+                orchextraCompletionCallback.onError(exception.getMessage());
+            }
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private void initLifecyle(Application app) {
+        app.registerActivityLifecycleCallbacks(orchextraActivityLifecycle);
+    }
+
+    public static void openScannerView() {
+        OrchextraManager orchextraManager = OrchextraManager.instance;
+        OrchextraModule orchextraModule = getOrchextraModule();
+        if (orchextraModule != null) {
+            ScannerManager scannerManager = orchextraManager.scannerManager;
+            scannerManager.open();
+        }
+    }
+
+    private static OrchextraModule getOrchextraModule() {
+        if (getInjector() != null) {
+            OrchextraComponent orchextraComponent = getInjector().getOrchextraComponent();
+            return orchextraComponent.getOrchextraModule();
+        } else {
+            return null;
+        }
+    }
 }

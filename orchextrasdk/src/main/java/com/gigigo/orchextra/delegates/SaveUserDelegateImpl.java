@@ -24,36 +24,47 @@ import com.gigigo.orchextra.control.controllers.authentication.SaveUserControlle
 import com.gigigo.orchextra.control.controllers.authentication.SaveUserDelegate;
 import com.gigigo.orchextra.domain.model.entities.authentication.Crm;
 
-
+//TODO LIB_CRUNCH orchextrasdk-control
 public class SaveUserDelegateImpl implements SaveUserDelegate {
+    //TODO LIB_CRUNCH orchextrasdk-control
+    private final SaveUserController saveUserController;
 
-  private final SaveUserController saveUserController;
+    //TODO LIB_CRUNCH orchextrasdk-control
+    public SaveUserDelegateImpl(SaveUserController saveUserController) {
+        this.saveUserController = saveUserController;
+    }
 
-  public SaveUserDelegateImpl(SaveUserController saveUserController) {
-    this.saveUserController = saveUserController;
-  }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public void init() {
+        saveUserController.attachView(this);
+    }
 
-  @Override public void init() {
-    saveUserController.attachView(this);
-  }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public void destroy() {
+        saveUserController.detachView();
+    }
 
-  @Override public void destroy() {
-    saveUserController.detachView();
-  }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public void saveUserSuccessful() {
+        destroy();
+    }
 
-  @Override public void saveUserSuccessful() {
-    destroy();
-  }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public void saveUserError() {
+        //TODO LIB_CRUNCH gggLogger
+        GGGLogImpl.log("Save user was not successful", LogLevel.ERROR);
+        destroy();
+    }
 
-  @Override public void saveUserError() {
-    GGGLogImpl.log("Save user was not successful", LogLevel.ERROR);
-    destroy();
-  }
-
-  @Override
-  public void saveUser(Crm crm) {
-    init();
-    saveUserController.saveUser(crm);
-  }
+    //TODO LIB_CRUNCH orchextrasdk-control
+    @Override
+    public void saveUser(Crm crm) {
+        init();
+        saveUserController.saveUser(crm);
+    }
 
 }

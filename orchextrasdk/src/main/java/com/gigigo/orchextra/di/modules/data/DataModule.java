@@ -66,7 +66,7 @@ import gigigo.com.orchextra.data.datasources.db.geofences.GeofenceEventsReader;
 import gigigo.com.orchextra.data.datasources.db.geofences.GeofenceEventsUpdater;
 import gigigo.com.orchextra.data.datasources.device.DeviceDetailsProviderImpl;
 
-
+//TODO LIB_CRUNCH orchextrasdk-data ini
 @Module(includes = {ApiModule.class, ApiMappersModule.class, DBModule.class})
 public class DataModule {
 //TODO LIB_CRUNCH gggLib
@@ -159,4 +159,5 @@ public class DataModule {
       return new RealmDefaultInstance();
   }
 
+  //TODO LIB_CRUNCH orchextrasdk-data end
 }
