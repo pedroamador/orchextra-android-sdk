@@ -32,9 +32,11 @@ import me.panavtec.threaddecoratedview.views.ThreadSpec;
 public class SaveUserController extends Presenter<SaveUserDelegate> {
 
   private final InteractorInvoker interactorInvoker;
+  //TODO LIB_CRUNCH Dagger
   private final Provider<InteractorExecution> interactorExecutionProvider;
   private final ConfigObservable configObservable;
 
+  //TODO LIB_CRUNCH threaddecoratedview //TODO LIB_CRUNCH Dagger
   public SaveUserController(InteractorInvoker interactorInvoker,
       Provider<InteractorExecution> interactorExecutionProvider, ThreadSpec mainThreadSpec,
       ConfigObservable configObservable) {
@@ -46,9 +48,10 @@ public class SaveUserController extends Presenter<SaveUserDelegate> {
 
   @Override public void onViewAttached() {
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public void saveUser(Crm crm) {
     InteractorExecution interactorExecution = interactorExecutionProvider.get();
+    //TODO LIB_CRUNCH orchextrasdk-domain
     SaveUserInteractor saveUserInteractor =
         (SaveUserInteractor) interactorExecution.getInteractor();
     saveUserInteractor.setCrm(crm);
@@ -59,7 +62,7 @@ public class SaveUserController extends Presenter<SaveUserDelegate> {
       }
     }).execute(interactorInvoker);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private void notifyChanges(OrchextraUpdates result) {
     if (result.hasChanges()) {
       configObservable.notifyObservers(result);

@@ -30,7 +30,7 @@ targetCompatibility = JavaVersion.VERSION_1_7
 dependencies {
     compile project(':orchextrasdk-domain')
 
-    compile (parent.ext.dependencies.dagger){
+    compile(parent.ext.dependencies.dagger) {
         transitive = false
     }
 

@@ -27,18 +27,20 @@ import java.util.Map;
 
 public class InteractorExecution<T> {
   private InteractorResult<T> interactorResult;
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final Map<Class<? extends InteractorError>, InteractorResult<? extends InteractorError>>
       errors = new HashMap<>(0);
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private Interactor<InteractorResponse<T>> interactor;
   private int priority;
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public InteractorExecution(Interactor<InteractorResponse<T>> interactor) {
     this.interactor = interactor;
   }
 
   public InteractorExecution() {
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public void setInteractor(Interactor<InteractorResponse<T>> interactor) {
     this.interactor = interactor;
   }
@@ -47,7 +49,7 @@ public class InteractorExecution<T> {
     this.interactorResult = interactorResult;
     return this;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public InteractorExecution<T> error(Class<? extends InteractorError> errorClass,
       InteractorResult<? extends InteractorError> interactorError) {
     this.errors.put(errorClass, interactorError);
@@ -58,11 +60,11 @@ public class InteractorExecution<T> {
     this.priority = priority;
     return this;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public Interactor<InteractorResponse<T>> getInteractor() {
     return interactor;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public InteractorResult<? extends InteractorError> getInteractorErrorResult(
       Class<? extends InteractorError> errorClass) {
     return errors.get(errorClass);

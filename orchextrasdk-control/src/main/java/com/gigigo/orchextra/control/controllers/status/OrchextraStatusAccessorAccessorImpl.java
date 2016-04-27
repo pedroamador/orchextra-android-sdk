@@ -21,16 +21,19 @@ import com.gigigo.orchextra.domain.services.status.UpdateOrchextraServiceStatus;
  *
  * TODO Dev note: regarding refactor, think about using state pattern for managing status
  */
+//TODO LIB_CRUNCH orchextrasdk-domain
 public class OrchextraStatusAccessorAccessorImpl implements OrchextraStatusAccessor {
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private OrchextraStatus orchextraStatus = null;
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final ErrorLogger errorLogger;
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final Session session;
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final LoadOrchextraServiceStatus loadOrchextraServiceStatus;
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final UpdateOrchextraServiceStatus updateOrchextraServiceStatus;
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public OrchextraStatusAccessorAccessorImpl(Session session,
       LoadOrchextraServiceStatus loadOrchextraServiceStatus,
       UpdateOrchextraServiceStatus updateOrchextraServiceStatus, ErrorLogger errorLogger) {
@@ -46,10 +49,10 @@ public class OrchextraStatusAccessorAccessorImpl implements OrchextraStatusAcces
     orchextraStatus.setInitialized(true);
     updateOrchextraStatus();
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public StartStatusType setStartedStatus(String apiKey, String apiSecret)
       throws RuntimeException {
-
+//TODO LIB_CRUNCH orchextrasdk-domain
     StartStatusType startStatusType = obtainCurrentStartStatus(apiKey, apiSecret);
 
     switch (startStatusType) {
@@ -93,7 +96,7 @@ public class OrchextraStatusAccessorAccessorImpl implements OrchextraStatusAcces
     orchextraStatus.setStarted(true);
     updateOrchextraStatus();
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private StartStatusType obtainCurrentStartStatus(String apiKey, String apiSecret) {
 
     loadOrchextraStatus();
@@ -108,7 +111,7 @@ public class OrchextraStatusAccessorAccessorImpl implements OrchextraStatusAcces
       return StartStatusType.UNKNOWN_START_STATUS;
     }
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private StartStatusType alreadyStartedType(String startApiKey, String startApiSecret) {
     String currentApiKey = orchextraStatus.getSession().getApiKey();
     String currentApiSecret = orchextraStatus.getSession().getApiSecret();
@@ -160,6 +163,7 @@ public class OrchextraStatusAccessorAccessorImpl implements OrchextraStatusAcces
    */
 
   private void loadOrchextraStatus() {
+    //TODO LIB_CRUNCH orchextrasdk-domain
     InteractorResponse<OrchextraStatus> response = loadOrchextraServiceStatus.load();
     if (!response.hasError()) {
       this.orchextraStatus = response.getResult();
@@ -167,6 +171,7 @@ public class OrchextraStatusAccessorAccessorImpl implements OrchextraStatusAcces
   }
 
   private void updateOrchextraStatus() {
+    //TODO LIB_CRUNCH orchextrasdk-domain
     InteractorResponse<OrchextraStatus> response =
         updateOrchextraServiceStatus.update(orchextraStatus);
     if (!response.hasError()) {

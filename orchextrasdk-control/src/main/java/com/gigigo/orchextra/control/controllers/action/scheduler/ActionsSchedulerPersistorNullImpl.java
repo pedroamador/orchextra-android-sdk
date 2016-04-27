@@ -22,21 +22,21 @@ import com.gigigo.orchextra.domain.abstractions.actions.ActionsSchedulerPersisto
 import com.gigigo.orchextra.domain.model.actions.ScheduledAction;
 import java.util.Collections;
 import java.util.List;
-
+//TODO LIB_CRUNCH orchextrasdk-domain
 public class ActionsSchedulerPersistorNullImpl implements ActionsSchedulerPersistor {
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public ScheduledAction getScheduledActionWithId(String id) {
     return null;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public void addAction(ScheduledAction action) {
     //Fake null impl
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public List<ScheduledAction> obtainAllPendingActions() {
     return Collections.emptyList();
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public void removeAction(ScheduledAction action) {
     //Fake null impl
   }

@@ -36,12 +36,17 @@ import orchextra.javax.inject.Provider;
 public class GeofenceController {
 
   private final InteractorInvoker interactorInvoker;
+  //TODO LIB_CRUNCH Dagger
   private final Provider<InteractorExecution> interactorExecutionProvider;
+  //TODO LIB_CRUNCH Dagger
   private final Provider<InteractorExecution> geofencesProviderInteractorExecutionProvider;
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final ActionDispatcher actionDispatcher;
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final ErrorLogger errorLogger;
+  //TODO LIB_CRUNCH threaddecoratedview
   private final ThreadSpec mainThreadSpec;
-
+  //TODO LIB_CRUNCH threaddecoratedview //TODO LIB_CRUNCH Dagger //TODO LIB_CRUNCH orchextrasdk-domain
   public GeofenceController(InteractorInvoker interactorInvoker,
                             Provider<InteractorExecution> interactorExecutionProvider,
                             Provider<InteractorExecution> geofencesProviderInteractorExecutionProvider,
@@ -55,11 +60,12 @@ public class GeofenceController {
     this.errorLogger = errorLogger;
     this.mainThreadSpec = mainThreadSpec;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public void processTriggers(List<String> triggeringGeofenceIds,
       GeoPointEventType geofenceTransition) {
 
     InteractorExecution interactorExecution = interactorExecutionProvider.get();
+    //TODO LIB_CRUNCH orchextrasdk-domain
     GeofenceInteractor geofenceInteractor =
         (GeofenceInteractor) interactorExecution.getInteractor();
     geofenceInteractor.setGeofenceData(triggeringGeofenceIds, geofenceTransition);
@@ -74,7 +80,7 @@ public class GeofenceController {
       }
     }).execute(interactorInvoker);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private void executeActions(List<BasicAction> actions) {
 
     for (final BasicAction action : actions) {
@@ -85,7 +91,7 @@ public class GeofenceController {
       });
     }
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public void getAllGeofencesInDb(final GeofencesProviderListener geofencesProviderListener) {
 
     InteractorExecution interactorExecution = geofencesProviderInteractorExecutionProvider.get();

@@ -21,7 +21,7 @@ package com.gigigo.orchextra.control.controllers.config;
 import com.gigigo.gggjavalib.business.model.BusinessError;
 
 import me.panavtec.threaddecoratedview.views.qualifiers.ThreadDecoratedView;
-
+//TODO LIB_CRUNCH threaddecoratedview
 @ThreadDecoratedView public interface ConfigDelegate {
 
   void configSuccessful();

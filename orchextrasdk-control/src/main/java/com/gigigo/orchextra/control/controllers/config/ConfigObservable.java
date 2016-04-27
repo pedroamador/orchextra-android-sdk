@@ -21,26 +21,26 @@ package com.gigigo.orchextra.control.controllers.config;
 import com.gigigo.orchextra.domain.abstractions.observer.Observer;
 import com.gigigo.orchextra.domain.abstractions.observer.OrchextraChanges;
 import java.util.ArrayList;
-
+//TODO LIB_CRUNCH orchextrasdk-domain
 public class ConfigObservable implements OrchextraChanges {
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private ArrayList<Observer> observers;
 
   public ConfigObservable() {
     this.observers = new ArrayList<>();
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public void registerObserver(Observer o) {
     observers.add(o);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public void removeObserver(Observer o) {
     int index = observers.indexOf(o);
     if (index >= 0) {
       observers.remove(index);
     }
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   @Override public void notifyObservers(Object configData) {
     for (Observer observer : observers) {
       observer.update(this, configData);

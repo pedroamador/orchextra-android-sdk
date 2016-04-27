@@ -20,7 +20,7 @@ package com.gigigo.orchextra.control.controllers.authentication;
 
 import com.gigigo.orchextra.domain.model.entities.authentication.Crm;
 import me.panavtec.threaddecoratedview.views.qualifiers.ThreadDecoratedView;
-
+//TODO LIB_CRUNCH threaddecoratedview
 @ThreadDecoratedView public interface SaveUserDelegate {
 
   void init();
@@ -30,6 +30,6 @@ import me.panavtec.threaddecoratedview.views.qualifiers.ThreadDecoratedView;
   void saveUserSuccessful();
 
   void saveUserError();
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   void saveUser(Crm crm);
 }

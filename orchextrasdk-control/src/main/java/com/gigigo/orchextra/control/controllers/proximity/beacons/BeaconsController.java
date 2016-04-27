@@ -39,12 +39,18 @@ import orchextra.javax.inject.Provider;
 public class BeaconsController {
 
   private final InteractorInvoker interactorInvoker;
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final ActionDispatcher actionDispatcher;
+  //TODO LIB_CRUNCH Dagger
   private final Provider<InteractorExecution> beaconsEventsInteractorExecutionProvider;
+  //TODO LIB_CRUNCH Dagger
   private final Provider<InteractorExecution> regionsProviderInteractorExecutionProvider;
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private final ErrorLogger errorLogger;
+  //TODO LIB_CRUNCH threaddecoratedview
   private final ThreadSpec mainThreadSpec;
 
+  //TODO LIB_CRUNCH threaddecoratedview //TODO LIB_CRUNCH Dagger //TODO LIB_CRUNCH orchextrasdk-domain
   public BeaconsController(InteractorInvoker interactorInvoker, ActionDispatcher actionDispatcher,
       Provider<InteractorExecution> beaconsEventsInteractorExecutionProvider,
       Provider<InteractorExecution> regionsProviderInteractorExecutionProvider,
@@ -59,7 +65,7 @@ public class BeaconsController {
     this.errorLogger = errorLogger;
     this.mainThreadSpec = mainThreadSpec;
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public void getAllRegionsFromDataBase(final RegionsProviderListener regionsProviderListener) {
     executeBeaconInteractor(regionsProviderInteractorExecutionProvider.get(),
         new InteractorResult<List<OrchextraRegion>>() {
@@ -68,7 +74,7 @@ public class BeaconsController {
           }
         });
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public void onBeaconsDetectedInRegion(List<OrchextraBeacon> beacons, OrchextraRegion region) {
     InteractorExecution execution = beaconsEventsInteractorExecutionProvider.get();
     BeaconEventsInteractor beaconEventsInteractor =
@@ -77,7 +83,7 @@ public class BeaconsController {
     beaconEventsInteractor.setEventType(BeaconEventType.BEACONS_DETECTED);
     dispatchBeaconEvent(beacons, execution, beaconEventsInteractor);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public void onRegionEnter(OrchextraRegion region) {
     InteractorExecution execution = beaconsEventsInteractorExecutionProvider.get();
     BeaconEventsInteractor beaconEventsInteractor =
@@ -86,7 +92,7 @@ public class BeaconsController {
     beaconEventsInteractor.setEventType(BeaconEventType.REGION_ENTER);
     dispatchBeaconEvent(region, execution, beaconEventsInteractor);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   public void onRegionExit(OrchextraRegion region) {
     InteractorExecution execution = beaconsEventsInteractorExecutionProvider.get();
     BeaconEventsInteractor beaconEventsInteractor =
@@ -95,7 +101,7 @@ public class BeaconsController {
     beaconEventsInteractor.setEventType(BeaconEventType.REGION_EXIT);
     dispatchBeaconEvent(region, execution, beaconEventsInteractor);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private void dispatchBeaconEvent(Object data, InteractorExecution interactorExecution,
       BeaconEventsInteractor beaconEventsInteractor) {
     beaconEventsInteractor.setData(data);
@@ -111,7 +117,7 @@ public class BeaconsController {
       }
     });
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private void executeBeaconInteractor(InteractorExecution interactorExecution,
       InteractorResult interactorResult) {
     interactorExecution.result(interactorResult)
@@ -127,11 +133,11 @@ public class BeaconsController {
         })
         .execute(interactorInvoker);
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private void manageInteractorError(InteractorError result) {
     errorLogger.log(result.getError());
   }
-
+  //TODO LIB_CRUNCH orchextrasdk-domain
   private void manageBeaconInteractorError(BeaconsInteractorError result) {
 
     switch (result.getBeaconBusinessErrorType()) {

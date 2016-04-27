@@ -24,18 +24,21 @@ import me.panavtec.threaddecoratedview.views.ViewInjector;
 public abstract class Presenter<UiView> {
 
   private UiView uiView;
+  //TODO LIB_CRUNCH threaddecoratedview
   private ThreadSpec mainThreadSpec;
-
+  //TODO LIB_CRUNCH threaddecoratedview
   public Presenter(ThreadSpec mainThreadSpec) {
     this.mainThreadSpec = mainThreadSpec;
   }
 
   public void attachView(UiView view) {
+    //TODO LIB_CRUNCH threaddecoratedview
     this.uiView = ViewInjector.inject(view, mainThreadSpec);
     onViewAttached();
   }
 
   public void detachView() {
+    //TODO LIB_CRUNCH threaddecoratedview
     this.uiView = ViewInjector.nullObjectPatternView(uiView);
   }
 

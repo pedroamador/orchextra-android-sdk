@@ -22,10 +22,10 @@ import com.gigigo.orchextra.control.presenters.scanner.entities.ScannerResultPre
 import com.gigigo.orchextra.domain.interactors.scanner.ScannerType;
 import com.gigigo.orchextra.domain.model.entities.ScannerResult;
 import com.gigigo.orchextra.domain.model.mappers.DataToModelMapper;
-
+//TODO LIB_CRUNCH orchextrasdk-domain
 public class ScannerResultMapper implements DataToModelMapper<ScannerResult, ScannerResultPresenter> {
 
-
+    //TODO LIB_CRUNCH orchextrasdk-domain
     @Override
     public ScannerResult mapDataToModel(ScannerResultPresenter scannerResultPresenter) {
         ScannerResult scannerResult = new ScannerResult();

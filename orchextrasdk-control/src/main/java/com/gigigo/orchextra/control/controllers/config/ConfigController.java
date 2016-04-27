@@ -24,49 +24,55 @@ import com.gigigo.orchextra.control.invoker.InteractorInvoker;
 import com.gigigo.orchextra.domain.interactors.base.InteractorError;
 import com.gigigo.orchextra.domain.interactors.error.GenericError;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraUpdates;
+
 import orchextra.javax.inject.Provider;
 
 public class ConfigController {
 
-  private final InteractorInvoker interactorInvoker;
-  private final Provider<InteractorExecution> sendConfigInteractorExecution;
-  private final ConfigObservable configObservable;
+    private final InteractorInvoker interactorInvoker;
+    //TODO LIB_CRUNCH Dagger
+    private final Provider<InteractorExecution> sendConfigInteractorExecution;
+    private final ConfigObservable configObservable;
 
-  public ConfigController(InteractorInvoker interactorInvoker,
-      Provider<InteractorExecution> sendConfigInteractorExecution,
-      ConfigObservable configObservable) {
+    //TODO LIB_CRUNCH Dagger
+    public ConfigController(InteractorInvoker interactorInvoker,
+                            Provider<InteractorExecution> sendConfigInteractorExecution,
+                            ConfigObservable configObservable) {
 
-    this.interactorInvoker = interactorInvoker;
+        this.interactorInvoker = interactorInvoker;
 
-    this.sendConfigInteractorExecution = sendConfigInteractorExecution;
-    this.configObservable = configObservable;
-  }
-
-  public void sendConfiguration() {
-    sendConfigInteractorExecution.get().result(new InteractorResult<OrchextraUpdates>() {
-      @Override public void onResult(OrchextraUpdates result) {
-        if (result != null) {
-          notifyChanges(result);
-        }
-      }
-    }).error(InteractorError.class, new InteractorResult<InteractorError>() {
-      @Override public void onResult(InteractorError result) {
-        manageInteractorError(result);
-      }
-    }).error(GenericError.class, new InteractorResult<GenericError>() {
-      @Override public void onResult(GenericError result) {
-        manageInteractorError(result);
-      }
-    }).execute(interactorInvoker);
-  }
-
-  private void manageInteractorError(InteractorError result) {
-    //TODO LOG ERROR
-  }
-
-  private void notifyChanges(OrchextraUpdates result) {
-    if (result.hasChanges()) {
-      configObservable.notifyObservers(result);
+        this.sendConfigInteractorExecution = sendConfigInteractorExecution;
+        this.configObservable = configObservable;
     }
-  }
+    //TODO LIB_CRUNCH orchextrasdk-domain
+    public void sendConfiguration() {
+        sendConfigInteractorExecution.get().result(new InteractorResult<OrchextraUpdates>() {
+            @Override
+            public void onResult(OrchextraUpdates result) {
+                if (result != null) {
+                    notifyChanges(result);
+                }
+            }
+        }).error(InteractorError.class, new InteractorResult<InteractorError>() {
+            @Override
+            public void onResult(InteractorError result) {
+                manageInteractorError(result);
+            }
+        }).error(GenericError.class, new InteractorResult<GenericError>() {
+            @Override
+            public void onResult(GenericError result) {
+                manageInteractorError(result);
+            }
+        }).execute(interactorInvoker);
+    }
+    //TODO LIB_CRUNCH orchextrasdk-domain
+    private void manageInteractorError(InteractorError result) {
+        //TODO LOG ERROR
+    }
+    //TODO LIB_CRUNCH orchextrasdk-domain
+    private void notifyChanges(OrchextraUpdates result) {
+        if (result.hasChanges()) {
+            configObservable.notifyObservers(result);
+        }
+    }
 }

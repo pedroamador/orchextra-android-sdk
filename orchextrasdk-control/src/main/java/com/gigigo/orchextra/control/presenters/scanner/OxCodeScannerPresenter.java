@@ -40,11 +40,14 @@ import me.panavtec.threaddecoratedview.views.ThreadSpec;
 public class OxCodeScannerPresenter extends Presenter<OxCodeScannerView> {
 
     private final InteractorInvoker interactorInvoker;
+    //TODO LIB_CRUNCH Dagger
     private final Provider<InteractorExecution> scannerInteractorExecutionProvider;
     private final ScannerResultMapper scannerResultMapper;
+    //TODO LIB_CRUNCH orchextrasdk-domain
     private final ActionDispatcher actionDispatcher;
+    //TODO LIB_CRUNCH threaddecoratedview
     private final ThreadSpec mainThreadSpec;
-
+    //TODO LIB_CRUNCH threaddecoratedview //TODO LIB_CRUNCH Dagger //TODO LIB_CRUNCH orchextrasdk-domain
     public OxCodeScannerPresenter(ThreadSpec threadSpec,
                                   InteractorInvoker interactorInvoker,
                                   Provider<InteractorExecution> scannerInteractorExecutionProvider,
@@ -64,11 +67,12 @@ public class OxCodeScannerPresenter extends Presenter<OxCodeScannerView> {
     public void onViewAttached() {
         getView().initUi();
     }
-
+    //TODO LIB_CRUNCH orchextrasdk-domain
     public void sendScannerResult(ScannerResultPresenter scannerResponsePresenter) {
         ScannerResult scannerResult = scannerResultMapper.mapDataToModel(scannerResponsePresenter);
 
         InteractorExecution interactorExecution = scannerInteractorExecutionProvider.get();
+        //TODO LIB_CRUNCH orchextrasdk-domain
         ScannerInteractor scannerInteractor = (ScannerInteractor) interactorExecution.getInteractor();
         scannerInteractor.setScanner(scannerResult);
 
@@ -84,7 +88,7 @@ public class OxCodeScannerPresenter extends Presenter<OxCodeScannerView> {
             }
         }).execute(interactorInvoker);
     }
-
+    //TODO LIB_CRUNCH orchextrasdk-domain
     private void executeActions(List<BasicAction> actions) {
         for (final BasicAction action : actions) {
             mainThreadSpec.execute(new Runnable() {

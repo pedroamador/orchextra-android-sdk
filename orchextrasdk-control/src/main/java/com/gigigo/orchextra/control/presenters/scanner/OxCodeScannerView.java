@@ -20,10 +20,10 @@ package com.gigigo.orchextra.control.presenters.scanner;
 
 import me.panavtec.threaddecoratedview.views.qualifiers.NotDecorated;
 import me.panavtec.threaddecoratedview.views.qualifiers.ThreadDecoratedView;
-
+//TODO LIB_CRUNCH threaddecoratedview
 @ThreadDecoratedView
 public interface OxCodeScannerView {
-
+    //TODO LIB_CRUNCH threaddecoratedview
     @NotDecorated
     void initUi();
 }

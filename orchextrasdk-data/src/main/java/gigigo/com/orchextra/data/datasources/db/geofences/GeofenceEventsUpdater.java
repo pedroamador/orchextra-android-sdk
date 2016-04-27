@@ -18,7 +18,7 @@
 
 package gigigo.com.orchextra.data.datasources.db.geofences;
 
-//import com.gigigo.ggglib.mappers.Mapper;
+import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.ggglogger.GGGLogImpl;
 import com.gigigo.ggglogger.LogLevel;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraGeofence;
