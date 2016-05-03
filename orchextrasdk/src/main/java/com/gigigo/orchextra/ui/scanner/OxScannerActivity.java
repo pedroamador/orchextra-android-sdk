@@ -18,6 +18,7 @@
 
 package com.gigigo.orchextra.ui.scanner;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.gigigo.ggglib.permissions.PermissionChecker;
@@ -170,6 +171,7 @@ public class OxScannerActivity extends OxToolbarActivity implements OxCodeScanne
         presenter.sendScannerResult(scanResult);
 
         closeActivity();
+
     }
 
     @Override

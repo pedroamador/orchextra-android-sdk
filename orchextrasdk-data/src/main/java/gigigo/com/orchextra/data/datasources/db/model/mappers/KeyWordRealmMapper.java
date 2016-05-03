@@ -20,46 +20,52 @@ package gigigo.com.orchextra.data.datasources.db.model.mappers;
 
 import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.ggglib.mappers.MapperUtils;
+
 import gigigo.com.orchextra.data.datasources.db.model.KeyWordRealm;
 import io.realm.RealmList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 //TODO LIB_CRUNCH gggLib
 public class KeyWordRealmMapper implements Mapper<String, KeyWordRealm> {
 
-  @Override public KeyWordRealm modelToExternalClass(String s) {
-    KeyWordRealm keyWordRealm = new KeyWordRealm(s);
-    return keyWordRealm;
-  }
-
-  @Override public String externalClassToModel(KeyWordRealm keyWordRealm) {
-    return keyWordRealm.getKeyword();
-  }
-
-  public RealmList<KeyWordRealm> stringKeyWordsToRealmList(List<String> keywords) {
-
-    RealmList<KeyWordRealm> keyWordRealms = new RealmList<>();
-    if (keywords == null) {
-      return keyWordRealms;
+    @Override
+    public KeyWordRealm modelToExternalClass(String s) {
+        KeyWordRealm keyWordRealm = new KeyWordRealm(s);
+        return keyWordRealm;
     }
+
+    @Override
+    public String externalClassToModel(KeyWordRealm keyWordRealm) {
+        return keyWordRealm.getKeyword();
+    }
+
+    //TODO LIB_CRUNCH realm
+    public RealmList<KeyWordRealm> stringKeyWordsToRealmList(List<String> keywords) {
+//TODO LIB_CRUNCH realm
+        RealmList<KeyWordRealm> keyWordRealms = new RealmList<>();
+        if (keywords == null) {
+            return keyWordRealms;
+        }
 //TODO LIB_CRUNCH gggLib
-    for (String keyword : keywords) {
-      keyWordRealms.add(MapperUtils.checkNullDataRequest(this, keyword));
+        for (String keyword : keywords) {
+            keyWordRealms.add(MapperUtils.checkNullDataRequest(this, keyword));
+        }
+        return keyWordRealms;
     }
-    return keyWordRealms;
-  }
 
-  public List<String> realmKeyWordsToStringList(RealmList<KeyWordRealm> keyWordRealms) {
+    //TODO LIB_CRUNCH realm
+    public List<String> realmKeyWordsToStringList(RealmList<KeyWordRealm> keyWordRealms) {
 
-    List<String> keyWords = new ArrayList<>();
-    if (keyWordRealms == null) {
-      return keyWords;
-    }
+        List<String> keyWords = new ArrayList<>();
+        if (keyWordRealms == null) {
+            return keyWords;
+        }
 //TODO LIB_CRUNCH gggLib
-    for (KeyWordRealm keyWordRealm : keyWordRealms) {
-      keyWords.add(MapperUtils.checkNullDataResponse(this, keyWordRealm));
+        for (KeyWordRealm keyWordRealm : keyWordRealms) {
+            keyWords.add(MapperUtils.checkNullDataResponse(this, keyWordRealm));
+        }
+        return keyWords;
     }
-    return keyWords;
-  }
 }

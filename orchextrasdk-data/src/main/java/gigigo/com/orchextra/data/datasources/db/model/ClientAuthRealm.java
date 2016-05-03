@@ -21,9 +21,9 @@ package gigigo.com.orchextra.data.datasources.db.model;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-
+//TODO LIB_CRUNCH realm
 public class ClientAuthRealm extends RealmObject {
-
+  //TODO LIB_CRUNCH realm
   @PrimaryKey private int id;
   private String projectId;
   private String userId;

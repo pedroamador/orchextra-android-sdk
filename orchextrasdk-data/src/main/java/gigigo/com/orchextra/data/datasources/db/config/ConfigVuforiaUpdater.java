@@ -31,7 +31,7 @@ public class ConfigVuforiaUpdater {
   public ConfigVuforiaUpdater(Mapper<Vuforia, VuforiaRealm> vuforiaRealmMapper) {
     this.vuforiaRealmMapper = vuforiaRealmMapper;
   }
-
+  //TODO LIB_CRUNCH realm
   public Vuforia saveVuforia(Realm realm, Vuforia vuforia) {
     boolean hasChangedVuforia = false;
 
@@ -47,12 +47,12 @@ public class ConfigVuforiaUpdater {
       return null;
     }
   }
-
+  //TODO LIB_CRUNCH realm
   private boolean checkIfChangedVuforia(Realm realm, Vuforia vuforia) {
     boolean hasChangedVuforia = false;
 
     VuforiaRealm vuforiaRealm = vuforiaRealmMapper.modelToExternalClass(vuforia);
-
+//TODO LIB_CRUNCH realm
     RealmResults<VuforiaRealm> savedVuforia = realm.where(VuforiaRealm.class).findAll();
     if (savedVuforia.size() > 0) {
       hasChangedVuforia = !checkVuforiaAreEquals(vuforiaRealm, savedVuforia.first());

@@ -22,11 +22,11 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-
+//TODO LIB_CRUNCH realm
 public class BeaconRegionRealm extends RealmObject {
 
   public static final String CODE_FIELD_NAME = "code";
-
+  //TODO LIB_CRUNCH realm
   @PrimaryKey @Required private String code;
 
   private String uuid;

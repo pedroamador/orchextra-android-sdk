@@ -20,60 +20,61 @@ apply from: 'dependencies.gradle'
 apply from: 'gradle/jacoco.gradle'
 
 buildscript {
-  repositories {
-    jcenter()
-    mavenCentral()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:1.5.0'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
-    classpath 'io.realm:realm-gradle-plugin:0.88.3'
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
-  }
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+//TODO LIB_CRUNCH realm está disponible "io.realm:realm-gradle-plugin:0.89.1"
+        classpath 'io.realm:realm-gradle-plugin:0.88.3'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
 }
 
 allprojects {
 
-  ext {
-    // Android config
-    androidBuildToolsVersion = '23.0.1'
-    androidMinSdkVersion = 10
-    androidTargetSdkVersion = 23
-    androidCompileSdkVersion = 23
-    androidApplicationId = 'com.gigigo.orchextra.sdk'
+    ext {
+        // Android config
+        androidBuildToolsVersion = '23.0.1'
+        androidMinSdkVersion = 10
+        androidTargetSdkVersion = 23
+        androidCompileSdkVersion = 23
+        androidApplicationId = 'com.gigigo.orchextra.sdk'
 
-    versionMajor = 2
-    versionMinor = 0
-    versionPatch = 0
+        versionMajor = 2
+        versionMinor = 0
+        versionPatch = 0
 
-    androidVersionCode = versionMajor * 1000 + versionMinor * 100 + versionPatch
-    androidVersionName = versionMajor + "." + versionMinor + "." + versionPatch
-  }
+        androidVersionCode = versionMajor * 1000 + versionMinor * 100 + versionPatch
+        androidVersionName = versionMajor + "." + versionMinor + "." + versionPatch
+    }
 
-  repositories {
-    jcenter()
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-  }
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
 
-  apply plugin: 'checkstyle'
+    apply plugin: 'checkstyle'
 
-  task checkstyle(type: Checkstyle) {
-    configFile file("${project.rootDir}/config/checkstyle.xml")
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
+    task checkstyle(type: Checkstyle) {
+        configFile file("${project.rootDir}/config/checkstyle.xml")
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
 
-    classpath = files()
-  }
+        classpath = files()
+    }
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.12'
+    gradleVersion = '2.12'
 }
 
 task clean(type: Delete) {
-  delete rootProject.buildDir
+    delete rootProject.buildDir
 }

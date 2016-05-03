@@ -22,13 +22,14 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-
+//TODO LIB_CRUNCH realm
 public class CrmRealm extends RealmObject {
-
+  //TODO LIB_CRUNCH realm
   @PrimaryKey private int id;
   private String crmId;
   private String gender;
   private String birthDate;
+  //TODO LIB_CRUNCH realm
   private RealmList<KeyWordRealm> keywords;
 
   public String getCrmId() {
@@ -55,10 +56,12 @@ public class CrmRealm extends RealmObject {
     this.birthDate = birthDate;
   }
 
+  //TODO LIB_CRUNCH realm
   public RealmList<KeyWordRealm> getKeywords() {
     return keywords;
   }
 
+  //TODO LIB_CRUNCH realm
   public void setKeywords(RealmList<KeyWordRealm> keywords) {
     this.keywords = keywords;
   }

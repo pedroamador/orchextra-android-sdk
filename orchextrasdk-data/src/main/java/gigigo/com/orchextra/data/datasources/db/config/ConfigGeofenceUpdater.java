@@ -35,7 +35,7 @@ public class ConfigGeofenceUpdater {
   public ConfigGeofenceUpdater(Mapper<OrchextraGeofence, GeofenceRealm> geofencesRealmMapper) {
     this.geofencesRealmMapper = geofencesRealmMapper;
   }
-
+  //TODO LIB_CRUNCH realm
   public OrchextraGeofenceUpdates saveGeofences(Realm realm, List<OrchextraGeofence> geofences) {
     List<OrchextraGeofence> newGeofences = new ArrayList<>();
     List<OrchextraGeofence> deleteGeofences = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ConfigGeofenceUpdater {
 
     return new OrchextraGeofenceUpdates(newGeofences, deleteGeofences);
   }
-
+  //TODO LIB_CRUNCH realm
   private void addOrUpdateGeofences(Realm realm, List<OrchextraGeofence> newGeofences,
       List<String> used, List<OrchextraGeofence> geofences) {
     for (OrchextraGeofence geofence : geofences) {
@@ -66,11 +66,12 @@ public class ConfigGeofenceUpdater {
       used.add(geofence.getCode());
     }
   }
-
+  //TODO LIB_CRUNCH realm
   private List<OrchextraGeofence> removeUnusedGeofences(Realm realm, List<String> used) {
     List<OrchextraGeofence> deleteGeofences = new ArrayList<>();
 
     List<String> geofenceToDelete = new ArrayList<>();
+    //TODO LIB_CRUNCH realm
     RealmResults<GeofenceRealm> all = realm.where(GeofenceRealm.class).findAll();
     for (GeofenceRealm geofenceRealm : all) {
       if (!used.contains(geofenceRealm.getCode())) {
@@ -79,6 +80,7 @@ public class ConfigGeofenceUpdater {
       }
     }
     for (String code : geofenceToDelete) {
+      //TODO LIB_CRUNCH realm
       RealmResults<GeofenceRealm> geofenceRealms =
           realm.where(GeofenceRealm.class).equalTo("code", code).findAll();
       if (geofenceRealms.size() > 0) {
@@ -89,7 +91,7 @@ public class ConfigGeofenceUpdater {
 
     return deleteGeofences;
   }
-
+  //TODO LIB_CRUNCH realm
   private boolean checkGeofenceAreEquals(RealmResults<GeofenceRealm> geofenceRealm,
       GeofenceRealm newGeofence) {
     if (geofenceRealm.size() == 0 || newGeofence == null) {

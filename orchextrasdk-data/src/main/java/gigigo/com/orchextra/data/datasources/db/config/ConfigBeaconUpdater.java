@@ -34,7 +34,7 @@ public class ConfigBeaconUpdater {
   public ConfigBeaconUpdater(Mapper<OrchextraRegion, BeaconRegionRealm> beaconRealmMapper) {
     this.beaconRealmMapper = beaconRealmMapper;
   }
-
+  //TODO LIB_CRUNCH realm
   public OrchextraBeaconUpdates saveRegions(Realm realm, List<OrchextraRegion> regions) {
     List<OrchextraRegion> newRegions = new ArrayList<>();
     List<OrchextraRegion> deleteRegions = new ArrayList<>();
@@ -48,11 +48,12 @@ public class ConfigBeaconUpdater {
 
     return new OrchextraBeaconUpdates(newRegions, deleteRegions);
   }
-
+  //TODO LIB_CRUNCH realm
   private void addOrUpdateRegion(Realm realm, List<OrchextraRegion> newRegions, List<String> used,
       List<OrchextraRegion> regions) {
     for (OrchextraRegion region : regions) {
       BeaconRegionRealm newRegion = beaconRealmMapper.modelToExternalClass(region);
+      //TODO LIB_CRUNCH realm
       RealmResults<BeaconRegionRealm> regionRealm =
           realm.where(BeaconRegionRealm.class).equalTo("code", region.getCode()).findAll();
 
@@ -64,11 +65,12 @@ public class ConfigBeaconUpdater {
       used.add(region.getCode());
     }
   }
-
+  //TODO LIB_CRUNCH realm
   private List<OrchextraRegion> removeUnusedRegions(Realm realm, List<String> used) {
     List<OrchextraRegion> deleteRegions = new ArrayList<>();
 
     List<String> beaconsToDelete = new ArrayList<>();
+    //TODO LIB_CRUNCH realm
     RealmResults<BeaconRegionRealm> all = realm.where(BeaconRegionRealm.class).findAll();
     for (BeaconRegionRealm regionRealm : all) {
       if (!used.contains(regionRealm.getCode())) {
@@ -77,6 +79,7 @@ public class ConfigBeaconUpdater {
       }
     }
     for (String code : beaconsToDelete) {
+      //TODO LIB_CRUNCH realm
       RealmResults<BeaconRegionRealm> beaconRegionRealm =
           realm.where(BeaconRegionRealm.class).equalTo("code", code).findAll();
       if (beaconRegionRealm.size() > 0) {
@@ -86,7 +89,7 @@ public class ConfigBeaconUpdater {
 
     return deleteRegions;
   }
-
+  //TODO LIB_CRUNCH realm
   private boolean checkRegionAreEquals(RealmResults<BeaconRegionRealm> beaconRealm,
       BeaconRegionRealm newBeacon) {
     if (beaconRealm.size() == 0 || newBeacon == null) {

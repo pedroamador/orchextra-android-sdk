@@ -22,116 +22,120 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-
+//TODO LIB_CRUNCH realm
 public class GeofenceRealm extends RealmObject {
+    //TODO LIB_CRUNCH realm
+    @PrimaryKey
+    private String code;
+    private RealmPoint point;
+    private int radius;
+    private boolean notifyOnExit;
+    private boolean notifyOnEntry;
+    private int stayTime;
 
-  @PrimaryKey private String code;
-  private RealmPoint point;
-  private int radius;
-  private boolean notifyOnExit;
-  private boolean notifyOnEntry;
-  private int stayTime;
+    private String id;
+    private String name;
+    //TODO LIB_CRUNCH realm
+    private RealmList<KeyWordRealm> tags;
+    private String type;
+    private String createdAt;
+    private String updatedAt;
 
-  private String id;
-  private String name;
-  private RealmList<KeyWordRealm> tags;
-  private String type;
-  private String createdAt;
-  private String updatedAt;
+    public RealmPoint getPoint() {
+        return point;
+    }
 
-  public RealmPoint getPoint() {
-    return point;
-  }
+    public void setPoint(RealmPoint point) {
+        this.point = point;
+    }
 
-  public void setPoint(RealmPoint point) {
-    this.point = point;
-  }
+    public int getRadius() {
+        return radius;
+    }
 
-  public int getRadius() {
-    return radius;
-  }
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
 
-  public void setRadius(int radius) {
-    this.radius = radius;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public String getId() {
-    return id;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public String getCode() {
+        return code;
+    }
 
-  public String getCode() {
-    return code;
-  }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-  public void setCode(String code) {
-    this.code = code;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    //TODO LIB_CRUNCH realm
+    public RealmList<KeyWordRealm> getTags() {
+        return tags;
+    }
 
-  public RealmList<KeyWordRealm> getTags() {
-    return tags;
-  }
+    //TODO LIB_CRUNCH realm
+    public void setTags(RealmList<KeyWordRealm> tags) {
+        this.tags = tags;
+    }
 
-  public void setTags(RealmList<KeyWordRealm> tags) {
-    this.tags = tags;
-  }
+    public String getType() {
+        return type;
+    }
 
-  public String getType() {
-    return type;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-  public void setType(String type) {
-    this.type = type;
-  }
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
-  public String getCreatedAt() {
-    return createdAt;
-  }
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
-  }
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
 
-  public String getUpdatedAt() {
-    return updatedAt;
-  }
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
-  }
+    public boolean getNotifyOnExit() {
+        return notifyOnExit;
+    }
 
-  public boolean getNotifyOnExit() {
-    return notifyOnExit;
-  }
+    public void setNotifyOnExit(boolean notifyOnExit) {
+        this.notifyOnExit = notifyOnExit;
+    }
 
-  public void setNotifyOnExit(boolean notifyOnExit) {
-    this.notifyOnExit = notifyOnExit;
-  }
+    public boolean getNotifyOnEntry() {
+        return notifyOnEntry;
+    }
 
-  public boolean getNotifyOnEntry() {
-    return notifyOnEntry;
-  }
+    public void setNotifyOnEntry(boolean notifyOnEntry) {
+        this.notifyOnEntry = notifyOnEntry;
+    }
 
-  public void setNotifyOnEntry(boolean notifyOnEntry) {
-    this.notifyOnEntry = notifyOnEntry;
-  }
+    public int getStayTime() {
+        return stayTime;
+    }
 
-  public int getStayTime() {
-    return stayTime;
-  }
-
-  public void setStayTime(int stayTime) {
-    this.stayTime = stayTime;
-  }
+    public void setStayTime(int stayTime) {
+        this.stayTime = stayTime;
+    }
 }

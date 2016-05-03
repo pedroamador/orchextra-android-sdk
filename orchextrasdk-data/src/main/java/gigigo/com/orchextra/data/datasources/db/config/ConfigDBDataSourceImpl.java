@@ -54,7 +54,7 @@ public class ConfigDBDataSourceImpl implements ConfigDBDataSource {
   }
 
   public OrchextraUpdates saveConfigData(ConfigInfoResult configInfoResult) {
-
+//TODO LIB_CRUNCH realm
     Realm realm = realmDefaultInstance.createRealmInstance(context);
 
     try {
@@ -74,6 +74,7 @@ public class ConfigDBDataSourceImpl implements ConfigDBDataSource {
   }
 
   public BusinessObject<ConfigInfoResult> obtainConfigData() {
+    //TODO LIB_CRUNCH realm
     Realm realm = realmDefaultInstance.createRealmInstance(context);
 
     try {
@@ -89,6 +90,7 @@ public class ConfigDBDataSourceImpl implements ConfigDBDataSource {
   }
 
   @Override public BusinessObject<List<OrchextraRegion>> obtainRegionsForScan() {
+    //TODO LIB_CRUNCH realm
     Realm realm = realmDefaultInstance.createRealmInstance(context);
     List<OrchextraRegion> regions = configInfoResultReader.getAllRegions(realm);
     if (realm != null) {
@@ -99,6 +101,7 @@ public class ConfigDBDataSourceImpl implements ConfigDBDataSource {
 
   @Override
   public BusinessObject<Theme> obtainTheme() {
+    //TODO LIB_CRUNCH realm
     Realm realm = realmDefaultInstance.createRealmInstance(context);
     try {
       Theme theme = configInfoResultReader.getTheme(realm);
@@ -113,6 +116,7 @@ public class ConfigDBDataSourceImpl implements ConfigDBDataSource {
   }
 
   @Override public BusinessObject<List<OrchextraGeofence>> obtainGeofencesForRegister() {
+    //TODO LIB_CRUNCH realm
     Realm realm = realmDefaultInstance.createRealmInstance(context);
     try {
       List<OrchextraGeofence> geofences = configInfoResultReader.getAllGeofences(realm);
@@ -127,7 +131,7 @@ public class ConfigDBDataSourceImpl implements ConfigDBDataSource {
   }
 
   @Override public BusinessObject<OrchextraGeofence> obtainGeofenceById(String geofenceId) {
-
+//TODO LIB_CRUNCH realm
     Realm realm = realmDefaultInstance.createRealmInstance(context);
 
     try {

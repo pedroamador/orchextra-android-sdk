@@ -55,7 +55,6 @@ public class OxCodeScannerPresenter extends Presenter<OxCodeScannerView> {
                                   ActionDispatcher actionDispatcher,
                                   ThreadSpec mainThreadSpec) {
         super(threadSpec);
-
         this.interactorInvoker = interactorInvoker;
         this.scannerInteractorExecutionProvider = scannerInteractorExecutionProvider;
         this.scannerResultMapper = scannerResultMapper;

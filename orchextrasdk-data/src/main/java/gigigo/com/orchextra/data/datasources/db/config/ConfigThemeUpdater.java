@@ -20,56 +20,61 @@ package gigigo.com.orchextra.data.datasources.db.config;
 
 import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.orchextra.domain.model.vo.Theme;
+
 import gigigo.com.orchextra.data.datasources.db.model.ThemeRealm;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class ConfigThemeUpdater {
-  //TODO LIB_CRUNCH gggLib
-  private final Mapper<Theme, ThemeRealm> themeRealmMapper;
-  //TODO LIB_CRUNCH gggLib
-  public ConfigThemeUpdater(Mapper<Theme, ThemeRealm> themeRealmMapper) {
-    this.themeRealmMapper = themeRealmMapper;
-  }
+    //TODO LIB_CRUNCH gggLib
+    private final Mapper<Theme, ThemeRealm> themeRealmMapper;
 
-  public Theme saveTheme(Realm realm, Theme theme) {
-    boolean hasChangedTheme = false;
-
-    if (theme != null) {
-      hasChangedTheme = checkIfChangedTheme(realm, theme);
-    } else {
-      realm.clear(ThemeRealm.class);
+    //TODO LIB_CRUNCH gggLib
+    public ConfigThemeUpdater(Mapper<Theme, ThemeRealm> themeRealmMapper) {
+        this.themeRealmMapper = themeRealmMapper;
     }
-    if (hasChangedTheme) {
-      return theme;
-    } else {
-      return null;
+
+    //TODO LIB_CRUNCH realm
+    public Theme saveTheme(Realm realm, Theme theme) {
+        boolean hasChangedTheme = false;
+
+        if (theme != null) {
+            hasChangedTheme = checkIfChangedTheme(realm, theme);
+        } else {
+            realm.clear(ThemeRealm.class);
+        }
+        if (hasChangedTheme) {
+            return theme;
+        } else {
+            return null;
+        }
     }
-  }
 
-  private boolean checkIfChangedTheme(Realm realm, Theme theme) {
-    boolean hasChangedTheme = false;
+    //TODO LIB_CRUNCH realm
+    private boolean checkIfChangedTheme(Realm realm, Theme theme) {
+        boolean hasChangedTheme = false;
 
-    ThemeRealm themeRealm = themeRealmMapper.modelToExternalClass(theme);
+        ThemeRealm themeRealm = themeRealmMapper.modelToExternalClass(theme);
+//TODO LIB_CRUNCH realm
+        RealmResults<ThemeRealm> savedTheme = realm.where(ThemeRealm.class).findAll();
 
-    RealmResults<ThemeRealm> savedTheme = realm.where(ThemeRealm.class).findAll();
+        hasChangedTheme = !checkThemeAreEquals(themeRealm, savedTheme);
 
-    hasChangedTheme = !checkThemeAreEquals(themeRealm, savedTheme);
-
-    if (hasChangedTheme) {
-      realm.clear(ThemeRealm.class);
-      realm.copyToRealm(themeRealm);
+        if (hasChangedTheme) {
+            realm.clear(ThemeRealm.class);
+            realm.copyToRealm(themeRealm);
+        }
+        return hasChangedTheme;
     }
-    return hasChangedTheme;
-  }
 
-  private boolean checkThemeAreEquals(ThemeRealm themeRealm, RealmResults<ThemeRealm> oldTheme) {
-    if (oldTheme.size() == 0 || themeRealm == null) {
-      return false;
-    } else {
-      ThemeRealm first = oldTheme.first();
-      return first.getPrimaryColor().equals(themeRealm.getPrimaryColor())
-              && first.getSecondaryColor().equals(themeRealm.getSecondaryColor());
+    //TODO LIB_CRUNCH realm
+    private boolean checkThemeAreEquals(ThemeRealm themeRealm, RealmResults<ThemeRealm> oldTheme) {
+        if (oldTheme.size() == 0 || themeRealm == null) {
+            return false;
+        } else {
+            ThemeRealm first = oldTheme.first();
+            return first.getPrimaryColor().equals(themeRealm.getPrimaryColor())
+                    && first.getSecondaryColor().equals(themeRealm.getSecondaryColor());
+        }
     }
-  }
 }

@@ -46,7 +46,7 @@ public class SessionReader {
     this.clientAuthRealmMapper = clientAuthRealmMapper;
     this.crmRealmMapper = crmRealmMapper;
   }
-
+  //TODO LIB_CRUNCH realm
   public ClientAuthData readClientAuthData(Realm realm) throws NullPointerException {
     RealmResults<ClientAuthRealm> clientAuthRealm = realm.where(ClientAuthRealm.class).findAll();
     if (clientAuthRealm.size() > 0) {
@@ -57,7 +57,7 @@ public class SessionReader {
       throw new NotFountRealmObjectException();
     }
   }
-
+  //TODO LIB_CRUNCH realm
   public SdkAuthData readSdkAuthData(Realm realm) throws NullPointerException {
     RealmResults<SdkAuthRealm> sdkAuthRealm = realm.where(SdkAuthRealm.class).findAll();
     if (sdkAuthRealm.size() > 0) {
@@ -68,7 +68,7 @@ public class SessionReader {
       throw new NotFountRealmObjectException();
     }
   }
-
+  //TODO LIB_CRUNCH realm
   public Crm readCrm(Realm realm) {
     RealmResults<CrmRealm> crmRealm = realm.where(CrmRealm.class).findAll();
     if (crmRealm.size() > 0) {

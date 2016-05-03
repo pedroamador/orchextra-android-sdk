@@ -21,13 +21,13 @@ package gigigo.com.orchextra.data.datasources.db.model;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-
+//TODO LIB_CRUNCH realm
 public class BeaconEventRealm extends RealmObject {
 
   public static final String TIMESTAMPT_FIELD_NAME = "timeStampt";
   public static final String CODE_FIELD_NAME = "code";
   public static final String DISTANCE_FIELD_NAME = "beaconDistance";
-
+  //TODO LIB_CRUNCH realm
   @PrimaryKey private String keyForRealm;
   private String code;
   private String uuid;

@@ -19,6 +19,7 @@
 apply plugin: 'com.android.library'
 apply from: rootProject.file('gradle/checkstyle.gradle')
 apply plugin: 'com.github.dcendents.android-maven'
+//TODO LIB_CRUNCH realm
 apply plugin: 'realm-android'
 
 
