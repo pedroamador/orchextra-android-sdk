@@ -186,10 +186,12 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
   private void manageGeneralBackgroundScanTimes(BackgroundBeaconsRangingTimeType time) {
     if (time == BackgroundBeaconsRangingTimeType.MAX){
       updateBackgroudScanTimes(BuildConfig.BACKGROUND_BEACONS_SCAN_TIME,
-              BuildConfig.BACKGROUND_BEACONS_BEETWEEN_SCAN_TIME);
+          BuildConfig.BACKGROUND_BETWEEN_SCAN_TIME_RANGING);
+
     }else{
       updateBackgroudScanTimes(BeaconManager.DEFAULT_BACKGROUND_SCAN_PERIOD,
-              BeaconManager.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
+          BuildConfig.BACKGROUND_BETWEEN_SCAN_TIME_MONITORING);
+
     }
   }
 
@@ -248,7 +250,7 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
         e.printStackTrace();
       }
     }
-    updateBackgroudScanTimes(BeaconManager.DEFAULT_BACKGROUND_SCAN_PERIOD, BeaconManager.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
+    updateBackgroudScanTimes(BeaconManager.DEFAULT_BACKGROUND_SCAN_PERIOD, BuildConfig.BACKGROUND_BETWEEN_SCAN_TIME_MONITORING);
     ranging = false;
     GGGLogImpl.log("Ranging stop");
   }
@@ -276,7 +278,8 @@ public class BeaconRangingScannerImpl implements RangeNotifier, BeaconRangingSca
     regions.remove(region);
     if (regions.isEmpty()) {
       updateBackgroudScanTimes(BeaconManager.DEFAULT_BACKGROUND_SCAN_PERIOD,
-          BeaconManager.DEFAULT_BACKGROUND_BETWEEN_SCAN_PERIOD);
+          BuildConfig.BACKGROUND_BETWEEN_SCAN_TIME_MONITORING);
+
     }
   }
 

@@ -64,17 +64,19 @@ public class BeaconsModule {
     switchAltBeaconLogOnOff();
     BeaconParser bp = new BeaconParser().setBeaconLayout(BuildConfig.IBEACON_LAYOUT_PARSING);
     beaconManager.getBeaconParsers().add(bp);
+    beaconManager.setBackgroundBetweenScanPeriod(BuildConfig.BACKGROUND_BETWEEN_SCAN_TIME_MONITORING);
     return beaconManager;
   }
 
   private void switchAltBeaconLogOnOff() {
-    //if (BuildConfig.DEBUG){
-      LogManager.setVerboseLoggingEnabled(false);
-      LogManager.setLogger(Loggers.empty());
+    ////if (BuildConfig.DEBUG){
+    //  LogManager.setVerboseLoggingEnabled(false);
+    //  LogManager.setLogger(Loggers.empty());
     //}else{
-    //  LogManager.setVerboseLoggingEnabled(true);
-    //  LogManager.setLogger(Loggers.verboseLogger());
+    LogManager.setVerboseLoggingEnabled(true);
+    LogManager.setLogger(Loggers.verboseLogger());
     //}
+
   }
 
   @Provides @Singleton BackgroundPowerSaver BackgroundPowerSaver(ContextProvider contextProvider){
