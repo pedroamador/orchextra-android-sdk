@@ -20,25 +20,19 @@ apply plugin: 'com.android.application'
 apply from: rootProject.file('gradle/checkstyle.gradle')
 
 android {
-  compileSdkVersion parent.ext.androidCompileSdkVersion
-  //  buildToolsVersion parent.ext.androidBuildToolsVersion
-  buildToolsVersion = "23.0.1"
+  compileSdkVersion rootProject.ext.androidCompileSdkVersion
+  buildToolsVersion rootProject.ext.androidBuildToolsVersion
+
   defaultConfig {
-    applicationId "gigigo.com.orchextrasdk"
-    minSdkVersion 11
-    //parent.ext.androidMinSdkVersion //you can change that, but you need API >=10 for fabmenu
-    targetSdkVersion parent.ext.androidTargetSdkVersion
-    versionCode parent.ext.androidVersionCode
-    versionName "7.0.3" // parent.ext.androidVersionName
+    applicationId "com.gigigo.orchextrasdk.demoapp"
+    minSdkVersion 11 //parent.ext.androidMinSdkVersion (you can change that, but you need API >=10 for fabmenu)
+    targetSdkVersion rootProject.ext.androidTargetSdkVersion
+
     //for VuforiaCredentials,VuforiaCredentials Only work with armv7 lib.so, in this case we exclude all
     //less than armv7, but not with exclude, wit Ndk { abifilters
     ndk {
       abiFilters "armeabi-v7a"
     }
-    //java8
-    //        jackOptions {
-    //            enabled true
-    //        }
   }
 
   lintOptions {
@@ -83,6 +77,16 @@ android {
     play9 {}
     playno {}
   }
+
+  productFlavors.whenObjectAdded { flavor ->
+    //def version = rootProject.ext[versionMajor].version
+    def version = [major: rootProject.ext.versionMajor,
+                   minor: rootProject.ext.versionMinor,
+                   patch: rootProject.ext.versionPatch]
+
+    flavor.versionCode generateVersionCode(version.major, version.minor, version.patch)
+    flavor.versionName generateVersionName(version.major, version.minor, version.patch)
+  }
 }
 
 configurations {
@@ -103,13 +107,12 @@ configurations {
 }
 
 dependencies {
-
-  //fab menu webview
+  compile 'com.android.support:appcompat-v7:22.1.0'
   compile 'com.github.Gigigo-Android-Devs:fabmenu:proto'
 
   //tiene refencia a otra ggglib 104/ahora la de nubo apunta a la 5.2 y sin support
-     compile parent.ext.dependencies.imageRecognitionImpl //vuforia new nuborisar version
- // compile project(':vuforiaimplementation')
+  compile rootProject.ext.dependencies.imageRecognitionImpl //vuforia new nuborisar version
+
   //flavour dependencies from project, for test(necesary for generate builtsvariants aars)
   play7StagingCompile project(path: ':orchextrasdk', configuration: 'play7Staging')
   play8StagingCompile project(path: ':orchextrasdk', configuration: 'play8Staging')
@@ -129,8 +132,5 @@ dependencies {
   //test noplay, without play services, not work geofecing, segmentacion spatial, schedulable actions
   playnoReleaseCompile project(path: ':orchextrasdk', configuration: 'playnoRelease')
 
-  testCompile parent.ext.testDependencies.junit
-
-  //AppCompatActivity
-  compile 'com.android.support:appcompat-v7:22.1.0'
+  testCompile rootProject.ext.testDependencies.junit
 }

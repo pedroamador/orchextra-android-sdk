@@ -17,8 +17,10 @@
  */
 
 @groovy.transform.Field private java.lang.String checkstyle
-apply from: 'dependencies.gradle'
+apply from: 'common_methods.gradle'
 apply from: 'gradle/jacoco.gradle'
+apply from: 'dependencies.gradle'
+apply from: 'variants.gradle'
 
 
 buildscript {
@@ -42,9 +44,7 @@ buildscript {
 }
 
 allprojects {
-
     ext {
-
         travisBuild = System.getenv("TRAVIS") == "true"
         jenkinsBuild = System.getenv("GRADLE_HOME") == "true"
         // allows for -Dpre-dex=false to be set

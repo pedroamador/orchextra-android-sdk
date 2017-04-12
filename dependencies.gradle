@@ -17,29 +17,37 @@
  */
 
 allprojects {
-    ext {
-        dependencies = [
-                loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
-                daggerCompiler           : 'com.github.GigigoGreenLabs.repackagedLibs:dagger-compiler:2.2.2',
-                dagger                   : 'com.github.GigigoGreenLabs.repackagedLibs:dagger:2.2.2',
-                altBeacon                : 'org.altbeacon:android-beacon-library:2+',
-                barcodescanner           : 'me.dm7.barcodescanner:zbar:1.8.4',
-                gggJavaLib               : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggg-java-lib:3.9',
-                gggLogger                : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggglogger:3.9',
-                gggLib                   : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggglib:3.9',
-                //Image Recognition
-                imageRecognitionInterface: 'com.github.GigigoGreenLabs.imgRecogModule:imagerecognitioninterface:2.6',
-                imageRecognitionImpl     : 'com.github.GigigoGreenLabs.imgRecogModule:vuforiaimplementation:2.6'
-        ]
+  ext {
+    dependencies = [loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
+                    daggerCompiler           : 'com.github.GigigoGreenLabs.repackagedLibs:dagger-compiler:2.2.2',
+                    dagger                   : 'com.github.GigigoGreenLabs.repackagedLibs:dagger:2.2.2',
+                    altBeacon                : 'org.altbeacon:android-beacon-library:2+',
+                    barcodescanner           : 'me.dm7.barcodescanner:zbar:1.8.4',
+                    gggJavaLib               : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggg-java-lib:3.9',
+                    gggLogger                : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggglogger:3.9',
+                    gggLib                   : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggglib:3.9',
 
-        testDependencies = [
-                mockito        : 'org.mockito:mockito-core:1.10.19',
-                junit          : 'junit:junit:4.12',
-                testRunner     : 'com.android.support.test:runner:0.4.1',
-                testRules      : 'com.android.support.test:rules:0.4.1',
-                dexMaker       : 'com.google.dexmaker:dexmaker:1.2',
-                dexMakerMockito: 'com.google.dexmaker:dexmaker-mockito:1.2',
-                espresso       : 'com.android.support.test.espresso:espresso-core:2.2.1',
-                mockWebServer  : 'com.squareup.okhttp:mockwebserver:2.6.0']
-    }
+
+                    gggLibNetwork            : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-network-library-android:ggglib.network:1.0.0',
+                    gggLibNetworkRetrofit    : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-network-library-android:ggglib.network.retrofit:1.0.0',
+
+
+                    //Image Recognition
+                    imageRecognitionInterface: 'com.github.GigigoGreenLabs.imgRecogModule:imagerecognitioninterface:2.6',
+                    imageRecognitionImpl     : 'com.github.GigigoGreenLabs.imgRecogModule:vuforiaimplementation:2.6']
+
+    testDependencies = [mockito        : 'org.mockito:mockito-core:1.10.19',
+                        junit          : 'junit:junit:4.12',
+                        testRunner     : 'com.android.support.test:runner:0.4.1',
+                        testRules      : 'com.android.support.test:rules:0.4.1',
+                        dexMaker       : 'com.google.dexmaker:dexmaker:1.2',
+                        dexMakerMockito: 'com.google.dexmaker:dexmaker-mockito:1.2',
+                        espresso       : 'com.android.support.test.espresso:espresso-core:2.2.1',
+                        mockWebServer  : 'com.squareup.okhttp:mockwebserver:2.6.0']
+
+    modules = [orchextraSdkControl : project(':orchextrasdk-control'),
+               orchextraSdkDomain  : project(':orchextrasdk-domain'),
+               orchextraSdkProvider: project(':orchextrasdk-dataprovision'),
+               orchextraSdkData    : project(':orchextrasdk-data')]
+  }
 }

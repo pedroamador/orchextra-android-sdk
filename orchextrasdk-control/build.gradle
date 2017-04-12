@@ -28,16 +28,13 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
-    compile project(':orchextrasdk-domain')
+    compile parent.ext.modules.orchextraSdkDomain
 
     compile (parent.ext.dependencies.dagger){
         transitive = false
         exclude group:'com.google.dagger', module:'dagger'
         exclude group:'javax.inject'
     }
-
-//    compile rootProject.ext.dependencies.threaddecoratedview
-//    apt rootProject.ext.dependencies.threaddecoratedviewcompiler
 
     testCompile rootProject.ext.testDependencies.junit
     testCompile rootProject.ext.testDependencies.mockito

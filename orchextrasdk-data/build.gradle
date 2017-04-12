@@ -59,7 +59,7 @@ dependencies {
     exclude group:'javax.inject'
   }
 
-  compile project(':orchextrasdk-dataprovision')
+  compile parent.ext.modules.orchextraSdkProvider
 
   compile( parent.ext.dependencies.gggLib)
           {
@@ -77,7 +77,6 @@ dependencies {
   androidTestCompile(parent.ext.testDependencies.dexMakerMockito) {
     exclude group: 'org.hamcrest', module: 'hamcrest-core'
   }
- // compile 'io.realm:realm-android:0.87.0'
 }
 
 tasks.withType(Test) {
