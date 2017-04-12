@@ -27,10 +27,10 @@ allprojects {
                     gggLogger                : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggglogger:3.9',
                     gggLib                   : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggglib:3.9',
 
-
-                    gggLibNetwork            : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-network-library-android:ggglib.network:1.0.0',
+                    gggLibCore               : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-library-android:ggglib.core:1.0.1',
+                    gggLibLogger             : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-library-android:ggglib.logger:1.0.1',
+                    gggLibMappers            : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-library-android:ggglib.mappers:1.0.1',
                     gggLibNetworkRetrofit    : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-network-library-android:ggglib.network.retrofit:1.0.0',
-
 
                     //Image Recognition
                     imageRecognitionInterface: 'com.github.GigigoGreenLabs.imgRecogModule:imagerecognitioninterface:2.6',
