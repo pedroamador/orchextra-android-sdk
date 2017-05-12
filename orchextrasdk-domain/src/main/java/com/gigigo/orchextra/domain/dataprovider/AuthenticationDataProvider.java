@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.domain.dataprovider;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.model.entities.authentication.ClientAuthData;
 import com.gigigo.orchextra.domain.model.entities.authentication.CrmUser;
 import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
