@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.domain.services.status;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.dataprovider.OrchextraStatusDataProvider;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.interactors.error.GenericError;
@@ -31,7 +31,8 @@ public class UpdateOrchextraDomainServiceStatus implements DomainService {
 
   //TODO move CrmUser and Session info update here
 
-  public UpdateOrchextraDomainServiceStatus(OrchextraStatusDataProvider orchextraStatusDataProvider) {
+  public UpdateOrchextraDomainServiceStatus(
+      OrchextraStatusDataProvider orchextraStatusDataProvider) {
     this.orchextraStatusDataProvider = orchextraStatusDataProvider;
   }
 

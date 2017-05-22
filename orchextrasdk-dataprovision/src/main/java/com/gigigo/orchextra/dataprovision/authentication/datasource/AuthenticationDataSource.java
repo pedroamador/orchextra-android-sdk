@@ -18,11 +18,10 @@
 
 package com.gigigo.orchextra.dataprovision.authentication.datasource;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.model.entities.authentication.ClientAuthData;
-import com.gigigo.orchextra.domain.model.entities.credentials.AuthCredentials;
 import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
-
+import com.gigigo.orchextra.domain.model.entities.credentials.AuthCredentials;
 
 public interface AuthenticationDataSource {
 

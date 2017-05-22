@@ -18,11 +18,10 @@
 
 package com.gigigo.orchextra.dataprovision.proximity.datasource;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraBeacon;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraRegion;
 import java.util.List;
-
 
 public interface ProximityDBDataSource {
 

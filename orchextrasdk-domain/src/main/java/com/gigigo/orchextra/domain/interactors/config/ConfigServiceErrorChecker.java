@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.domain.interactors.config;
 
-import com.gigigo.gggjavalib.business.model.BusinessError;
+import com.gigigo.ggglib.core.business.model.BusinessError;
 import com.gigigo.orchextra.domain.abstractions.initialization.OrchextraManagerCompletionCallback;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.interactors.error.GenericError;

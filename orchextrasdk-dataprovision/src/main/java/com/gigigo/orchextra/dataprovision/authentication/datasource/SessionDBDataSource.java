@@ -18,14 +18,13 @@
 
 package com.gigigo.orchextra.dataprovision.authentication.datasource;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
-import com.gigigo.orchextra.domain.model.entities.authentication.CrmUser;
-import com.gigigo.orchextra.domain.model.entities.credentials.ClientAuthCredentials;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.model.entities.authentication.ClientAuthData;
-import com.gigigo.orchextra.domain.model.entities.credentials.SdkAuthCredentials;
+import com.gigigo.orchextra.domain.model.entities.authentication.CrmUser;
 import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
+import com.gigigo.orchextra.domain.model.entities.credentials.ClientAuthCredentials;
+import com.gigigo.orchextra.domain.model.entities.credentials.SdkAuthCredentials;
 import com.gigigo.orchextra.domain.model.vo.Device;
-
 
 public interface SessionDBDataSource {
 

@@ -18,10 +18,9 @@
 
 package com.gigigo.orchextra.dataprovision.config.datasource;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.dataprovision.config.model.strategy.ConfigurationInfoResult;
 import com.gigigo.orchextra.domain.model.config.ConfigRequest;
-
 
 public interface ConfigDataSource {
 

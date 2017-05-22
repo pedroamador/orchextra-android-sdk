@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.domain.services.proximity;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.dataprovider.ConfigDataProvider;
 import com.gigigo.orchextra.domain.dataprovider.ProximityAndGeofencesLocalDataProvider;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
@@ -31,8 +31,9 @@ public class BeaconCheckerDomainService implements DomainService {
   private final ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider;
   private final ConfigDataProvider configDataProvider;
 
-  public BeaconCheckerDomainService(ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider,
-                                    ConfigDataProvider configDataProvider) {
+  public BeaconCheckerDomainService(
+      ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider,
+      ConfigDataProvider configDataProvider) {
     this.proximityAndGeofencesLocalDataProvider = proximityAndGeofencesLocalDataProvider;
     this.configDataProvider = configDataProvider;
   }

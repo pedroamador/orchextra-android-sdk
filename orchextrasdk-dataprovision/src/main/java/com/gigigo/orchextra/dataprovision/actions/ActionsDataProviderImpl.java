@@ -18,12 +18,11 @@
 
 package com.gigigo.orchextra.dataprovision.actions;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.dataprovision.actions.datasource.ActionsDataSource;
 import com.gigigo.orchextra.domain.dataprovider.ActionsDataProvider;
-import com.gigigo.orchextra.domain.model.triggers.strategy.types.Trigger;
 import com.gigigo.orchextra.domain.model.actions.strategy.BasicAction;
-
+import com.gigigo.orchextra.domain.model.triggers.strategy.types.Trigger;
 
 public class ActionsDataProviderImpl implements ActionsDataProvider {
 

@@ -18,8 +18,8 @@
 
 package com.gigigo.orchextra.domain.interactors.error;
 
-import com.gigigo.gggjavalib.business.model.BusinessContentType;
-import com.gigigo.gggjavalib.business.model.BusinessError;
+import com.gigigo.ggglib.core.business.model.BusinessContentType;
+import com.gigigo.ggglib.core.business.model.BusinessError;
 import com.gigigo.orchextra.domain.abstractions.initialization.OrchextraManagerCompletionCallback;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.services.auth.AuthenticationService;
@@ -45,7 +45,7 @@ public abstract class ServiceErrorChecker {
         return response;
       }
       if (this.orchextraCompletionCallback != null) {
-        this.orchextraCompletionCallback.onError(businessError.getCode()+"");
+        this.orchextraCompletionCallback.onError(businessError.getCode() + "");
       }
       return checkConcreteBusinessErrors(businessError);
     } else {
@@ -57,7 +57,7 @@ public abstract class ServiceErrorChecker {
         return response;
       }
       if (this.orchextraCompletionCallback != null) {
-        this.orchextraCompletionCallback.onError(businessError.getCode()+"");
+        this.orchextraCompletionCallback.onError(businessError.getCode() + "");
       }
 
       return checkConcreteException(businessError);

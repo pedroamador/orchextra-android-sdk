@@ -17,7 +17,7 @@
  */
 package com.gigigo.orchextra.domain.services.geofences;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.dataprovider.ProximityAndGeofencesLocalDataProvider;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
@@ -30,13 +30,15 @@ public class ObtainGeofencesDomainService implements DomainService {
 
   private final ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider;
 
-  public ObtainGeofencesDomainService(ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider) {
+  public ObtainGeofencesDomainService(
+      ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider) {
     this.proximityAndGeofencesLocalDataProvider = proximityAndGeofencesLocalDataProvider;
   }
 
   public InteractorResponse obtainGeofencesFromLocalStorage() throws Exception {
 
-    BusinessObject<List<OrchextraGeofence>> bo = proximityAndGeofencesLocalDataProvider.obtainGeofencesForRegister();
+    BusinessObject<List<OrchextraGeofence>> bo =
+        proximityAndGeofencesLocalDataProvider.obtainGeofencesForRegister();
 
     if (bo.isSuccess()) {
       return new InteractorResponse<>(bo.getData());

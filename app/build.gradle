@@ -108,7 +108,7 @@ configurations {
 }
 
 dependencies {
-  compile 'com.android.support:appcompat-v7:22.1.0'
+  compile rootProject.ext.dependencies.androidSupportV7
   compile 'com.github.Gigigo-Android-Devs:fabmenu:proto'
 
   //tiene refencia a otra ggglib 104/ahora la de nubo apunta a la 5.2 y sin support
@@ -132,6 +132,14 @@ dependencies {
   play9ReleaseCompile project(path: ':orchextrasdk', configuration: 'play9Release')
   //test noplay, without play services, not work geofecing, segmentacion spatial, schedulable actions
   playnoReleaseCompile project(path: ':orchextrasdk', configuration: 'playnoRelease')
+
+  compile parent.ext.dependencies.gggLibCore
+  compile parent.ext.dependencies.gggLibDevice
+  compile parent.ext.dependencies.gggLibLogger
+  compile parent.ext.dependencies.gggLibMappers
+  compile parent.ext.dependencies.gggLibUtils
+
+  compile parent.ext.dependencies.gggLibNetworkRetrofit
 
   testCompile rootProject.ext.testDependencies.junit
 }

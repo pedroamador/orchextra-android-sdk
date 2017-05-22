@@ -18,15 +18,13 @@
 
 package com.gigigo.orchextra.dataprovision.config.datasource;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.dataprovision.config.model.strategy.ConfigurationInfoResult;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraRegion;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraUpdates;
 import com.gigigo.orchextra.domain.model.entities.tags.CustomField;
-
 import java.util.List;
-
 
 public interface TriggersConfigurationDBDataSource {
   OrchextraUpdates saveConfigData(ConfigurationInfoResult config);

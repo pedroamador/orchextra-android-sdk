@@ -18,8 +18,8 @@
 
 package com.gigigo.orchextra.dataprovision.imagerecognition;
 
-import com.gigigo.gggjavalib.business.model.BusinessError;
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessError;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.dataprovision.config.datasource.TriggersConfigurationDBDataSource;
 import com.gigigo.orchextra.dataprovision.config.model.strategy.ConfigurationInfoResult;
 import com.gigigo.orchextra.domain.dataprovider.ImageRecognitionLocalDataProvider;
@@ -29,20 +29,23 @@ public class ImageRecognitionLocalDataProviderImp implements ImageRecognitionLoc
 
   private final TriggersConfigurationDBDataSource triggersConfigurationDBDataSource;
 
-  public ImageRecognitionLocalDataProviderImp(TriggersConfigurationDBDataSource triggersConfigurationDBDataSource) {
+  public ImageRecognitionLocalDataProviderImp(
+      TriggersConfigurationDBDataSource triggersConfigurationDBDataSource) {
     this.triggersConfigurationDBDataSource = triggersConfigurationDBDataSource;
   }
 
   @Override public BusinessObject<VuforiaCredentials> obtainVuforiaInfo() {
-    BusinessObject<ConfigurationInfoResult> bo = triggersConfigurationDBDataSource.obtainConfigData();
+    BusinessObject<ConfigurationInfoResult> bo =
+        triggersConfigurationDBDataSource.obtainConfigData();
 
     if (bo.isSuccess()) {
       ConfigurationInfoResult configurationInfoResult = bo.getData();
       if (configurationInfoResult.supportsVuforia()) {
-        return new BusinessObject(configurationInfoResult.getVuforia(), BusinessError.createOKInstance());
+        return new BusinessObject(configurationInfoResult.getVuforia(),
+            BusinessError.createOKInstance());
       } else {
-        return new BusinessObject(null, BusinessError.createKoInstance(
-            "Image Recognition Module" + " configuration credentials not set or not enabled, review dashboard"));
+        return new BusinessObject(null, BusinessError.createKOInstance("Image Recognition Module"
+            + " configuration credentials not set or not enabled, review dashboard"));
       }
     } else {
       return new BusinessObject(null, bo.getBusinessError());

@@ -18,16 +18,15 @@
 
 package com.gigigo.orchextra.dataprovision.authentication;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
-import com.gigigo.gggjavalib.general.utils.ConsistencyUtils;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.dataprovision.authentication.datasource.AuthenticationDataSource;
 import com.gigigo.orchextra.dataprovision.authentication.datasource.SessionDBDataSource;
-import com.gigigo.orchextra.domain.model.entities.credentials.ClientAuthCredentials;
-import com.gigigo.orchextra.domain.model.entities.credentials.AuthCredentials;
+import com.gigigo.orchextra.domain.dataprovider.AuthenticationDataProvider;
+import com.gigigo.orchextra.domain.model.entities.authentication.ClientAuthData;
 import com.gigigo.orchextra.domain.model.entities.authentication.CrmUser;
 import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
-import com.gigigo.orchextra.domain.model.entities.authentication.ClientAuthData;
-import com.gigigo.orchextra.domain.dataprovider.AuthenticationDataProvider;
+import com.gigigo.orchextra.domain.model.entities.credentials.AuthCredentials;
+import com.gigigo.orchextra.domain.model.entities.credentials.ClientAuthCredentials;
 import com.gigigo.orchextra.domain.model.entities.credentials.SdkAuthCredentials;
 import com.gigigo.orchextra.domain.model.vo.Device;
 
@@ -50,22 +49,19 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 
       if (deviceToken.isSuccess()) {
         sessionDBDataSource.saveSdkAuthResponse(deviceToken.getData());
-        SdkAuthCredentials sdkCredentials = ConsistencyUtils.checkInstance(authCredentials,
-            SdkAuthCredentials.class);
+        SdkAuthCredentials sdkCredentials =
+            ConsistencyUtils.checkInstance(authCredentials, SdkAuthCredentials.class);
         sessionDBDataSource.saveSdkAuthCredentials(sdkCredentials);
-      }
-      else
-      {
+      } else {
         System.out.println("ERROR  step1");
       }
-
     }
 
     return deviceToken;
   }
 
-  @Override
-  public BusinessObject<ClientAuthData> authenticateUser(AuthCredentials authCredentials, String crmId) {
+  @Override public BusinessObject<ClientAuthData> authenticateUser(AuthCredentials authCredentials,
+      String crmId) {
     BusinessObject<ClientAuthData> sessionToken = sessionDBDataSource.getSessionToken();
 
     if (!sessionToken.isSuccess() || sessionToken.getData() == null || sessionToken.getData()
@@ -75,8 +71,8 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 
       if (sessionToken.isSuccess()) {
         sessionDBDataSource.saveClientAuthResponse(sessionToken.getData());
-        ClientAuthCredentials clientAuthCredentials = ConsistencyUtils.checkInstance(authCredentials,
-            ClientAuthCredentials.class);
+        ClientAuthCredentials clientAuthCredentials =
+            ConsistencyUtils.checkInstance(authCredentials, ClientAuthCredentials.class);
         sessionDBDataSource.saveClientAuthCredentials(clientAuthCredentials);
         saveCrmId(crmId);
       }
@@ -116,8 +112,7 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
     return sessionDBDataSource.storeCrm(crmUser);
   }
 
-  @Override
-  public BusinessObject<Device> retrieveDevice() {
+  @Override public BusinessObject<Device> retrieveDevice() {
     return sessionDBDataSource.retrieveDevice();
   }
 }

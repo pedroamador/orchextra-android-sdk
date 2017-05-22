@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.domain.services.proximity;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.dataprovider.ProximityAndGeofencesLocalDataProvider;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.interactors.beacons.BeaconBusinessErrorType;
@@ -30,7 +30,8 @@ public class RegionCheckerDomainService implements DomainService {
 
   private final ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider;
 
-  public RegionCheckerDomainService(ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider) {
+  public RegionCheckerDomainService(
+      ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider) {
     this.proximityAndGeofencesLocalDataProvider = proximityAndGeofencesLocalDataProvider;
   }
 
@@ -43,7 +44,8 @@ public class RegionCheckerDomainService implements DomainService {
   }
 
   private InteractorResponse deleteStoredRegion(OrchextraRegion orchextraRegion) {
-    BusinessObject<OrchextraRegion> bo = proximityAndGeofencesLocalDataProvider.deleteRegion(orchextraRegion);
+    BusinessObject<OrchextraRegion> bo =
+        proximityAndGeofencesLocalDataProvider.deleteRegion(orchextraRegion);
     if (!bo.isSuccess()) {
       return new InteractorResponse(
           new BeaconsInteractorError(BeaconBusinessErrorType.NO_SUCH_REGION_IN_ENTER));
@@ -53,7 +55,8 @@ public class RegionCheckerDomainService implements DomainService {
   }
 
   private InteractorResponse storeRegion(OrchextraRegion orchextraRegion) {
-    BusinessObject<OrchextraRegion> bo = proximityAndGeofencesLocalDataProvider.obtainRegion(orchextraRegion);
+    BusinessObject<OrchextraRegion> bo =
+        proximityAndGeofencesLocalDataProvider.obtainRegion(orchextraRegion);
     if (bo.isSuccess()) {
       return new InteractorResponse(
           new BeaconsInteractorError(BeaconBusinessErrorType.ALREADY_IN_ENTER_REGION));

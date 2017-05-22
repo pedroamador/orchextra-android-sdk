@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.domain.services.actions;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.dataprovider.ProximityAndGeofencesLocalDataProvider;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
@@ -29,7 +29,8 @@ public class EventUpdaterDomainService implements DomainService {
 
   private final ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider;
 
-  public EventUpdaterDomainService(ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider) {
+  public EventUpdaterDomainService(
+      ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider) {
     this.proximityAndGeofencesLocalDataProvider = proximityAndGeofencesLocalDataProvider;
   }
 

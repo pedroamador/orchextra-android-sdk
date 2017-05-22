@@ -18,8 +18,8 @@
 
 package com.gigigo.orchextra.domain.services.geofences;
 
-import com.gigigo.gggjavalib.business.model.BusinessError;
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessError;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.dataprovider.ProximityAndGeofencesLocalDataProvider;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.interactors.geofences.errors.DeleteGeofenceEventError;
@@ -34,7 +34,8 @@ public class GeofenceCheckerDomainService implements DomainService {
 
   private final ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider;
 
-  public GeofenceCheckerDomainService(ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider) {
+  public GeofenceCheckerDomainService(
+      ProximityAndGeofencesLocalDataProvider proximityAndGeofencesLocalDataProvider) {
     this.proximityAndGeofencesLocalDataProvider = proximityAndGeofencesLocalDataProvider;
   }
 
@@ -71,7 +72,7 @@ public class GeofenceCheckerDomainService implements DomainService {
       return storeGeofenceEvent(boSavedGeofence.getData());
     } else {
       return new InteractorResponse(new RetrieveGeofenceItemError(
-          BusinessError.createKoInstance(boSavedGeofence.getBusinessError().getMessage())));
+          BusinessError.createKOInstance(boSavedGeofence.getBusinessError().getMessage())));
     }
   }
 
@@ -81,7 +82,7 @@ public class GeofenceCheckerDomainService implements DomainService {
 
     if (boEventGeofence.getData() != null) {
       return new InteractorResponse(new RetrieveGeofenceItemError(
-          BusinessError.createKoInstance(boEventGeofence.getBusinessError().getMessage())));
+          BusinessError.createKOInstance(boEventGeofence.getBusinessError().getMessage())));
     } else {
       boEventGeofence = proximityAndGeofencesLocalDataProvider.storeGeofenceEvent(geofence);
       return new InteractorResponse(boEventGeofence.getData());
@@ -108,7 +109,7 @@ public class GeofenceCheckerDomainService implements DomainService {
         proximityAndGeofencesLocalDataProvider.deleteGeofenceEvent(triggeringGeofenceId);
     if (!bo.isSuccess()) {
       return new InteractorResponse(new DeleteGeofenceEventError(
-          BusinessError.createKoInstance(bo.getBusinessError().getMessage())));
+          BusinessError.createKOInstance(bo.getBusinessError().getMessage())));
     } else {
       return new InteractorResponse(bo.getData());
     }
@@ -123,7 +124,8 @@ public class GeofenceCheckerDomainService implements DomainService {
 
     for (String triggeringGeofenceId : triggeringGeofenceIds) {
       BusinessObject<OrchextraGeofence> boGeofence =
-          proximityAndGeofencesLocalDataProvider.obtainSavedGeofenceInDatabase(triggeringGeofenceId);
+          proximityAndGeofencesLocalDataProvider.obtainSavedGeofenceInDatabase(
+              triggeringGeofenceId);
       if (boGeofence.isSuccess()) {
         orchextraGeofenceList.add(boGeofence.getData());
       }

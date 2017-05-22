@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.dataprovision.status;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.dataprovision.authentication.datasource.OrchextraStatusDBDataSource;
 import com.gigigo.orchextra.domain.dataprovider.OrchextraStatusDataProvider;
 import com.gigigo.orchextra.domain.model.vo.OrchextraStatus;
@@ -38,7 +38,8 @@ public class OrchextraStatusDataProviderImpl implements OrchextraStatusDataProvi
 
   @Override
   public BusinessObject<OrchextraStatus> updateOrchextraStatus(OrchextraStatus orchextraStatus) {
-    BusinessObject<OrchextraStatus> status = orchextraStatusDBDataSource.saveStatus(orchextraStatus);
+    BusinessObject<OrchextraStatus> status =
+        orchextraStatusDBDataSource.saveStatus(orchextraStatus);
     return status;
   }
 }

@@ -18,9 +18,8 @@
 
 package com.gigigo.orchextra.domain.model.entities.proximity;
 
-import com.gigigo.gggjavalib.general.utils.Hashing;
+import com.gigigo.encryptation.Md5Algorithm;
 import com.gigigo.orchextra.domain.model.triggers.params.BeaconDistanceType;
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -28,28 +27,18 @@ import java.util.List;
 public class OrchextraBeacon {
 
   private static final String BEACON_CODE_CONCAT_CHAR = "_";
-
-  private String code;
+  //region eddystone
+  private static final String BEACON_EDDYSTONE_CODE_CONCAT_CHAR = "";
   private final String uuid;
   private final int mayor;
   private final int minor;
   private final BeaconDistanceType beaconDistance;
-
-  //region eddystone
-  private static final String BEACON_EDDYSTONE_CODE_CONCAT_CHAR = "";
+  private String code;
   private String nameSpaceId;
   private String instanceId;
   private boolean isEddyStone = false;
   private OrchextraTLMEddyStoneBeacon tlmEddystone;
   private String strUrl = ""; //not use for now
-
-  public boolean isEddyStone() {
-    return isEddyStone;
-  }
-
-  public OrchextraTLMEddyStoneBeacon getTlmEddystone() {
-    return tlmEddystone;
-  }
 
   public OrchextraBeacon(String namespaceId, String instanceId, BeaconDistanceType beaconDistance,
       OrchextraTLMEddyStoneBeacon tlm) {
@@ -64,7 +53,6 @@ public class OrchextraBeacon {
     this.tlmEddystone = tlm;
     this.isEddyStone = true;
   }
-  //endregion
 
   //BEACONS
   public OrchextraBeacon(String uuid, int mayor, int minor, BeaconDistanceType beaconDistance) {
@@ -73,12 +61,39 @@ public class OrchextraBeacon {
     this.minor = minor;
     this.beaconDistance = beaconDistance;
     try {
-      this.code = Hashing.generateMd5(
-          (uuid + BEACON_CODE_CONCAT_CHAR + String.valueOf(mayor) + BEACON_CODE_CONCAT_CHAR + String
-              .valueOf(minor)).toUpperCase());
+      String md5 = new StringBuilder().append(uuid)
+          .append(BEACON_CODE_CONCAT_CHAR)
+          .append(String.valueOf(mayor))
+          .append(BEACON_CODE_CONCAT_CHAR)
+          .append(String.valueOf(minor))
+          .toString()
+          .toUpperCase();
+      this.code = Md5Algorithm.calculateMD5(md5.getBytes());
     } catch (Exception e) {
       this.code = e.getLocalizedMessage();
     }
+  }
+
+  public static List<OrchextraBeacon> removeFromListElementsWithCodes(List<OrchextraBeacon> beacons,
+      List<String> codes) {
+    List<OrchextraBeacon> list = Collections.synchronizedList(beacons);
+    for (Iterator<OrchextraBeacon> iterator = list.iterator(); iterator.hasNext(); ) {
+      OrchextraBeacon orchextraBeacon = iterator.next();
+      if (codes.contains(orchextraBeacon.getCode())) {
+        iterator.remove();
+      }
+    }
+
+    return list;
+  }
+  //endregion
+
+  public boolean isEddyStone() {
+    return isEddyStone;
+  }
+
+  public OrchextraTLMEddyStoneBeacon getTlmEddystone() {
+    return tlmEddystone;
   }
 
   //fixme
@@ -105,18 +120,5 @@ public class OrchextraBeacon {
 
   public BeaconDistanceType getBeaconDistance() {
     return beaconDistance;
-  }
-
-  public static List<OrchextraBeacon> removeFromListElementsWithCodes(List<OrchextraBeacon> beacons,
-      List<String> codes) {
-    List<OrchextraBeacon> list = Collections.synchronizedList(beacons);
-    for (Iterator<OrchextraBeacon> iterator = list.iterator(); iterator.hasNext(); ) {
-      OrchextraBeacon orchextraBeacon = iterator.next();
-      if (codes.contains(orchextraBeacon.getCode())) {
-        iterator.remove();
-      }
-    }
-
-    return list;
   }
 }

@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.domain.interactors.user;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.abstractions.initialization.OrchextraStatusManager;
 import com.gigigo.orchextra.domain.interactors.base.Interactor;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
@@ -38,8 +38,7 @@ public class SaveCrmUserInteractor implements Interactor<InteractorResponse<Orch
   private boolean hasReloadConfig = false;
 
   public SaveCrmUserInteractor(AuthenticationService authenticationService,
-                               ConfigDomainService configDomainService,
-                               OrchextraStatusManager orchextraStatusManager) {
+      ConfigDomainService configDomainService, OrchextraStatusManager orchextraStatusManager) {
 
     this.authenticationService = authenticationService;
     this.configDomainService = configDomainService;

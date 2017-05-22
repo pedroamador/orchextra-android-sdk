@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.domain.dataprovider;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.model.actions.strategy.BasicAction;
 import com.gigigo.orchextra.domain.model.triggers.strategy.types.Trigger;
 

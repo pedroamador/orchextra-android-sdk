@@ -18,17 +18,19 @@
 
 allprojects {
   ext {
-    dependencies = [loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
+    dependencies = [androidSupportV7         : 'com.android.support:appcompat-v7:23.3.0',
+
+                    loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
                     daggerCompiler           : 'com.github.GigigoGreenLabs.repackagedLibs:dagger-compiler:2.2.2',
                     dagger                   : 'com.github.GigigoGreenLabs.repackagedLibs:dagger:2.2.2',
                     altBeacon                : 'org.altbeacon:android-beacon-library:2.9.2',
                     barcodescanner           : 'me.dm7.barcodescanner:zbar:1.8.4',
 
-                    gggLibCore               : 'com.github.gigigoapps.gigigo-android-lib:ggglib.core:1.0.10',
-                    gggLibDevice             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.10',
-                    gggLibLogger             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.logger:1.0.10',
-                    gggLibMappers            : 'com.github.gigigoapps.gigigo-android-lib:ggglib.mappers:1.0.10',
-                    gggLibUtils              : 'com.github.gigigoapps.gigigo-android-lib:ggglib.utils:1.0.10',
+                    gggLibCore               : 'com.github.gigigoapps.gigigo-android-lib:ggglib.core:1.0.11',
+                    gggLibDevice             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.11',
+                    gggLibLogger             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.logger:1.0.11',
+                    gggLibMappers            : 'com.github.gigigoapps.gigigo-android-lib:ggglib.mappers:1.0.11',
+                    gggLibUtils              : 'com.github.gigigoapps.gigigo-android-lib:ggglib.utils:1.0.11',
 
                     gggLibAndroidEncryptation: 'com.github.Gigigo-Android-Devs.gigigo-encryptation-util:encryptation-android-library:1.0.3',
                     gggLibEncryptation       : 'com.github.Gigigo-Android-Devs.gigigo-encryptation-util:encryptation-java-library:1.0.3',

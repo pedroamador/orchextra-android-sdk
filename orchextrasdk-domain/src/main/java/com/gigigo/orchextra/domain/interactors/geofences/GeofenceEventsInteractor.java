@@ -18,18 +18,17 @@
 
 package com.gigigo.orchextra.domain.interactors.geofences;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.interactors.base.Interactor;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.model.actions.strategy.BasicAction;
-import com.gigigo.orchextra.domain.model.entities.proximity.ActionRelatedWithRegionAndGeofences;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
+import com.gigigo.orchextra.domain.model.entities.proximity.ActionRelatedWithRegionAndGeofences;
 import com.gigigo.orchextra.domain.model.triggers.params.GeoPointEventType;
 import com.gigigo.orchextra.domain.services.actions.EventAccessor;
 import com.gigigo.orchextra.domain.services.actions.EventUpdaterDomainService;
 import com.gigigo.orchextra.domain.services.actions.TriggerActionsFacadeDomainService;
 import com.gigigo.orchextra.domain.services.geofences.GeofenceCheckerDomainService;
-
 import java.util.List;
 
 public class GeofenceEventsInteractor
@@ -42,8 +41,10 @@ public class GeofenceEventsInteractor
   private List<String> triggeringGeofenceIds;
   private GeoPointEventType geofenceTransition;
 
-  public GeofenceEventsInteractor(TriggerActionsFacadeDomainService triggerActionsFacadeDomainService,
-                                  GeofenceCheckerDomainService geofenceCheckerDomainService, EventUpdaterDomainService eventUpdaterDomainService) {
+  public GeofenceEventsInteractor(
+      TriggerActionsFacadeDomainService triggerActionsFacadeDomainService,
+      GeofenceCheckerDomainService geofenceCheckerDomainService,
+      EventUpdaterDomainService eventUpdaterDomainService) {
 
     this.triggerActionsFacadeDomainService = triggerActionsFacadeDomainService;
     this.geofenceCheckerDomainService = geofenceCheckerDomainService;
@@ -57,12 +58,14 @@ public class GeofenceEventsInteractor
 
     List<OrchextraGeofence> orchextraGeofenceList =
         geofenceCheckerDomainService.obtainGeofencesById(triggeringGeofenceIds);
-    return triggerActionsFacadeDomainService.triggerActions(orchextraGeofenceList, geofenceTransition);
+    return triggerActionsFacadeDomainService.triggerActions(orchextraGeofenceList,
+        geofenceTransition);
   }
 
   private void registerEventGeofences() {
     InteractorResponse<List<OrchextraGeofence>> response =
-        geofenceCheckerDomainService.obtainEventGeofences(triggeringGeofenceIds, geofenceTransition);
+        geofenceCheckerDomainService.obtainEventGeofences(triggeringGeofenceIds,
+            geofenceTransition);
 
     if (geofenceTransition == GeoPointEventType.EXIT) {
       for (OrchextraGeofence geofence : response.getResult()) {
@@ -78,8 +81,9 @@ public class GeofenceEventsInteractor
         .getCode()
         .equals(basicAction.getEventCode())) {
       OrchextraGeofence geofence = boGeofence.getData();
-      geofence.setActionRelatedWithRegionAndGeofences(new ActionRelatedWithRegionAndGeofences(basicAction.getScheduledAction().getId(),
-          basicAction.getScheduledAction().isCancelable()));
+      geofence.setActionRelatedWithRegionAndGeofences(
+          new ActionRelatedWithRegionAndGeofences(basicAction.getScheduledAction().getId(),
+              basicAction.getScheduledAction().isCancelable()));
       eventUpdaterDomainService.associateActionToGeofenceEvent(geofence);
     }
   }

@@ -18,8 +18,8 @@
 
 package com.gigigo.orchextra.domain.services.config;
 
-import com.gigigo.gggjavalib.business.model.BusinessError;
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessError;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.abstractions.notificationpush.GcmInstanceIdRegister;
 import com.gigigo.orchextra.domain.dataprovider.AuthenticationDataProvider;
 import com.gigigo.orchextra.domain.dataprovider.ConfigDataProvider;
@@ -48,20 +48,17 @@ public class ConfigDomainService implements DomainService {
   private final ObtainGeoLocationTask obtainGeoLocationTask;
 
   public ConfigDomainService(ConfigDataProvider configDataProvider,
-                             AuthenticationDataProvider authenticationDataProvider,
-                             ServiceErrorChecker serviceErrorChecker, SdkVersionAppInfo sdkVersionAppInfo,
-                             ObtainGeoLocationTask obtainGeoLocationTask,
-                             GcmInstanceIdRegister gcmInstanceIdRegister) {
+      AuthenticationDataProvider authenticationDataProvider,
+      ServiceErrorChecker serviceErrorChecker, SdkVersionAppInfo sdkVersionAppInfo,
+      ObtainGeoLocationTask obtainGeoLocationTask, GcmInstanceIdRegister gcmInstanceIdRegister) {
 
     this.configDataProvider = configDataProvider;
     this.authenticationDataProvider = authenticationDataProvider;
     this.serviceErrorChecker = serviceErrorChecker;
 
-
     this.sdkVersionAppInfo = sdkVersionAppInfo;
     this.obtainGeoLocationTask = obtainGeoLocationTask;
     this.gcmInstanceIdRegister = gcmInstanceIdRegister;
-
   }
 
   public InteractorResponse<OrchextraUpdates> refreshConfig() {
@@ -74,7 +71,8 @@ public class ConfigDomainService implements DomainService {
     NotificationPush notificationPush = gcmInstanceIdRegister.getGcmNotification();
     ConfigRequest configRequest = generateConfig(geolocation, device, crmUser, notificationPush);
 
-    BusinessObject<OrchextraUpdates> boOrchextraUpdates = configDataProvider.sendConfigInfo(configRequest);
+    BusinessObject<OrchextraUpdates> boOrchextraUpdates =
+        configDataProvider.sendConfigInfo(configRequest);
 
     if (boOrchextraUpdates.isSuccess()) {
       return new InteractorResponse<>(boOrchextraUpdates.getData());
@@ -110,7 +108,8 @@ public class ConfigDomainService implements DomainService {
     }
   }
 
-  private ConfigRequest generateConfig(GeoLocation geoLocation, Device device, CrmUser crmUser, NotificationPush notificationPush) {
+  private ConfigRequest generateConfig(GeoLocation geoLocation, Device device, CrmUser crmUser,
+      NotificationPush notificationPush) {
     ConfigRequest configRequest = new ConfigRequest();
     configRequest.setSdkAppInfo(sdkVersionAppInfo);
     configRequest.setDevice(device);
