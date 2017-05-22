@@ -21,17 +21,19 @@ apply from: rootProject.file('gradle/checkstyle.gradle')
 apply plugin: 'maven'
 
 dependencies {
-    compile parent.ext.dependencies.gggJavaLib
+  compile parent.ext.dependencies.gggLibCore
+  compile parent.ext.dependencies.gggLibMappers
+  compile parent.ext.dependencies.gggLibEncryptation
 
-    testCompile parent.ext.testDependencies.junit
-    testCompile parent.ext.testDependencies.mockito
+  testCompile parent.ext.testDependencies.junit
+  testCompile parent.ext.testDependencies.mockito
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+  classifier = 'sources'
+  from sourceSets.main.allSource
 }
 
 artifacts {
-    archives sourcesJar
+  archives sourcesJar
 }

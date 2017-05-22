@@ -48,24 +48,25 @@ android {
   testOptions {
     unitTests.returnDefaultValues = true
   }
-
 }
 
 dependencies {
 
-  compile (parent.ext.dependencies.dagger){
+  compile(parent.ext.dependencies.dagger) {
     transitive = false
-    exclude group:'com.google.dagger', module:'dagger'
-    exclude group:'javax.inject'
+    exclude group: 'com.google.dagger', module: 'dagger'
+    exclude group: 'javax.inject'
   }
 
   compile parent.ext.modules.orchextraSdkProvider
 
-  compile( parent.ext.dependencies.gggLib)
-          {
-            //transitive = true
-            changing = true
-          }
+  compile parent.ext.dependencies.gggLibCore
+  compile parent.ext.dependencies.gggLibDevice
+  compile parent.ext.dependencies.gggLibLogger
+  compile parent.ext.dependencies.gggLibMappers
+  compile parent.ext.dependencies.gggLibUtils
+
+  compile parent.ext.dependencies.gggLibNetworkRetrofit
 
   testCompile parent.ext.testDependencies.junit
   testCompile parent.ext.testDependencies.mockito

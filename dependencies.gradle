@@ -21,18 +21,20 @@ allprojects {
     dependencies = [loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
                     daggerCompiler           : 'com.github.GigigoGreenLabs.repackagedLibs:dagger-compiler:2.2.2',
                     dagger                   : 'com.github.GigigoGreenLabs.repackagedLibs:dagger:2.2.2',
-                    altBeacon                : 'org.altbeacon:android-beacon-library:2+',
+                    altBeacon                : 'org.altbeacon:android-beacon-library:2.9.2',
                     barcodescanner           : 'me.dm7.barcodescanner:zbar:1.8.4',
-                    gggJavaLib               : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggg-java-lib:3.9',
-                    gggLogger                : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggglogger:3.9',
-                    gggLib                   : 'com.github.GigigoGreenLabs.gggUtilsSuite:ggglib:3.9',
 
-                    gggLibCore               : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-library-android:ggglib.core:1.0.1',
-                    gggLibLogger             : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-library-android:ggglib.logger:1.0.1',
-                    gggLibMappers            : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-library-android:ggglib.mappers:1.0.1',
-                    gggLibNetworkRetrofit    : 'com.github.Gigigo-Android-Devs.gigigo-ggglib-network-library-android:ggglib.network.retrofit:1.0.0',
+                    gggLibCore               : 'com.github.gigigoapps.gigigo-android-lib:ggglib.core:1.0.10',
+                    gggLibDevice             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.10',
+                    gggLibLogger             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.logger:1.0.10',
+                    gggLibMappers            : 'com.github.gigigoapps.gigigo-android-lib:ggglib.mappers:1.0.10',
+                    gggLibUtils              : 'com.github.gigigoapps.gigigo-android-lib:ggglib.utils:1.0.10',
 
-                    //Image Recognition
+                    gggLibAndroidEncryptation: 'com.github.Gigigo-Android-Devs.gigigo-encryptation-util:encryptation-android-library:1.0.3',
+                    gggLibEncryptation       : 'com.github.Gigigo-Android-Devs.gigigo-encryptation-util:encryptation-java-library:1.0.3',
+
+                    gggLibNetworkRetrofit    : 'com.github.gigigoapps.gigigo-android-network:ggglib.network.retrofit:1.0.7',
+
                     imageRecognitionInterface: 'com.github.GigigoGreenLabs.imgRecogModule:imagerecognitioninterface:2.6',
                     imageRecognitionImpl     : 'com.github.GigigoGreenLabs.imgRecogModule:vuforiaimplementation:2.6']
 

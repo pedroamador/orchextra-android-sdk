@@ -25,7 +25,8 @@ android {
 
   defaultConfig {
     applicationId "com.gigigo.orchextrasdk.demoapp"
-    minSdkVersion 11 //parent.ext.androidMinSdkVersion (you can change that, but you need API >=10 for fabmenu)
+    minSdkVersion 11
+    //parent.ext.androidMinSdkVersion (you can change that, but you need API >=10 for fabmenu)
     targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
     //for VuforiaCredentials,VuforiaCredentials Only work with armv7 lib.so, in this case we exclude all

@@ -76,15 +76,20 @@ android {
 
       def flavorData = rootProject.ext
 
-      setVariantBuildConfigField(variant, flavorData.beacons.minRaggingTime, BACKGROUND_BEACONS_RANGING_TIME, INT)
-      setVariantBuildConfigField(variant, flavorData.beacons.backgroundScanTime, BACKGROUND_BEACONS_SCAN_TIME, LONG)
-      setVariantBuildConfigField(variant, flavorData.beacons.backgroundBetweenScanTime, BACKGROUND_BEACONS_BEETWEEN_SCAN_TIME, LONG)
-      setVariantBuildConfigField(variant, flavorData.beacons.layoutParsing, IBEACON_LAYOUT_PARSING, STRING)
+      setVariantBuildConfigField(variant, flavorData.beacons.minRaggingTime,
+          BACKGROUND_BEACONS_RANGING_TIME, INT)
+      setVariantBuildConfigField(variant, flavorData.beacons.backgroundScanTime,
+          BACKGROUND_BEACONS_SCAN_TIME, LONG)
+      setVariantBuildConfigField(variant, flavorData.beacons.backgroundBetweenScanTime,
+          BACKGROUND_BEACONS_BEETWEEN_SCAN_TIME, LONG)
+      setVariantBuildConfigField(variant, flavorData.beacons.layoutParsing, IBEACON_LAYOUT_PARSING,
+          STRING)
 
       setVariantBuildConfigField(variant, flavorData.apiUrl, API_URL, STRING)
 
       setVariantBuildConfigField(variant, flavorData.apiVersion, API_VERSION, STRING)
-      setVariantBuildConfigField(variant, flavorData.concurrentInteractors, CONCURRENT_INTERACTORS, INT)
+      setVariantBuildConfigField(variant, flavorData.concurrentInteractors, CONCURRENT_INTERACTORS,
+          INT)
       setVariantBuildConfigField(variant, flavorData.headers.xAppSdk, X_APP_SDK, STRING)
       setVariantBuildConfigField(variant, flavorData.session.bearerToken, TOKEN_TYPE_BEARER, STRING)
     }

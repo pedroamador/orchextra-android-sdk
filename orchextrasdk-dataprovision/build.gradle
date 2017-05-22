@@ -24,17 +24,18 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
-    compile parent.ext.modules.orchextraSdkDomain
+  compile parent.ext.dependencies.gggLibUtils
+  compile parent.ext.modules.orchextraSdkDomain
 
-    testCompile parent.ext.testDependencies.junit
-    testCompile parent.ext.testDependencies.mockito
+  testCompile parent.ext.testDependencies.junit
+  testCompile parent.ext.testDependencies.mockito
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+  classifier = 'sources'
+  from sourceSets.main.allSource
 }
 
 artifacts {
-    archives sourcesJar
+  archives sourcesJar
 }
