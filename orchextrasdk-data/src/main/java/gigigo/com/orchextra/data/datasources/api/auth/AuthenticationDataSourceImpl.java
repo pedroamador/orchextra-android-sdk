@@ -19,7 +19,7 @@
 package gigigo.com.orchextra.data.datasources.api.auth;
 
 import com.gigigo.ggglib.core.business.model.BusinessObject;
-import com.gigigo.ggglib.network.executors.ApiServiceExecutor;
+import com.gigigo.ggglib.network.executors.NetworkExecutor;
 import com.gigigo.ggglib.network.mappers.ApiGenericResponseMapper;
 import com.gigigo.ggglib.network.responses.ApiGenericResponse;
 import com.gigigo.orchextra.dataprovision.authentication.datasource.AuthenticationDataSource;
@@ -36,14 +36,14 @@ import orchextra.javax.inject.Provider;
 public class AuthenticationDataSourceImpl implements AuthenticationDataSource {
 
   private final OrchextraApiService orchextraApiService;
-  private final Provider<ApiServiceExecutor> serviceExecutorProvider;
+  private final Provider<NetworkExecutor> serviceExecutorProvider;
 
   private final ApiGenericResponseMapper sdkResponseMapper;
   private final ApiGenericResponseMapper clientResponseMapper;
 
   public AuthenticationDataSourceImpl(OrchextraApiService orchextraApiService,
-      Provider<ApiServiceExecutor> serviceExecutorProvider,
-      ApiGenericResponseMapper sdkResponseMapper, ApiGenericResponseMapper clientResponseMapper) {
+      Provider<NetworkExecutor> serviceExecutorProvider, ApiGenericResponseMapper sdkResponseMapper,
+      ApiGenericResponseMapper clientResponseMapper) {
     this.orchextraApiService = orchextraApiService;
     this.serviceExecutorProvider = serviceExecutorProvider;
     this.sdkResponseMapper = sdkResponseMapper;
@@ -51,26 +51,24 @@ public class AuthenticationDataSourceImpl implements AuthenticationDataSource {
   }
 
   @Override public BusinessObject<SdkAuthData> authenticateSdk(AuthCredentials authCredentials) {
-    ApiServiceExecutor serviceExecutor = serviceExecutorProvider.get();
+    NetworkExecutor serviceExecutor = serviceExecutorProvider.get();
 
     ApiAuthRequest request = new ApiSdkAuthRequest(GrantType.AUTH_SDK, authCredentials);
 
     ApiGenericResponse apiGenericResponse =
-        serviceExecutor.executeNetworkServiceConnection(SdkAuthData.class,
-            orchextraApiService.sdkAuthentication(request));
+        serviceExecutor.call(orchextraApiService.sdkAuthentication(request)); //SdkAuthData
 
     return sdkResponseMapper.mapApiGenericResponseToBusiness(apiGenericResponse);
   }
 
   @Override
   public BusinessObject<ClientAuthData> authenticateUser(AuthCredentials authCredentials) {
-    ApiServiceExecutor serviceExecutor = serviceExecutorProvider.get();
+    NetworkExecutor serviceExecutor = serviceExecutorProvider.get();
 
     ApiAuthRequest request = new ApiClientAuthRequest(GrantType.AUTH_USER, authCredentials);
 
     ApiGenericResponse apiGenericResponse =
-        serviceExecutor.executeNetworkServiceConnection(SdkAuthData.class,
-            orchextraApiService.clientAuthentication(request));
+        serviceExecutor.call(orchextraApiService.clientAuthentication(request)); //SdkAuthData
 
     return clientResponseMapper.mapApiGenericResponseToBusiness(apiGenericResponse);
   }

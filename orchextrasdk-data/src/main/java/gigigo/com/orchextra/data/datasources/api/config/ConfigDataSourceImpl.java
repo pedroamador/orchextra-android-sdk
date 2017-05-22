@@ -20,28 +20,27 @@ package gigigo.com.orchextra.data.datasources.api.config;
 
 import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.ggglib.mappers.ModelToExternalClassMapper;
-import com.gigigo.ggglib.network.executors.ApiServiceExecutor;
+import com.gigigo.ggglib.network.executors.NetworkExecutor;
 import com.gigigo.ggglib.network.mappers.ApiGenericResponseMapper;
 import com.gigigo.ggglib.network.responses.ApiGenericResponse;
 import com.gigigo.orchextra.dataprovision.config.datasource.ConfigDataSource;
 import com.gigigo.orchextra.dataprovision.config.model.strategy.ConfigurationInfoResult;
 import com.gigigo.orchextra.domain.model.config.ConfigRequest;
 import gigigo.com.orchextra.data.datasources.api.model.requests.ApiConfigRequest;
-import gigigo.com.orchextra.data.datasources.api.model.responses.ApiConfigData;
 import gigigo.com.orchextra.data.datasources.api.service.OrchextraApiService;
 import orchextra.javax.inject.Provider;
 
 public class ConfigDataSourceImpl implements ConfigDataSource {
 
   private final OrchextraApiService orchextraApiService;
-  private final Provider<ApiServiceExecutor> serviceExecutorProvider;
+  private final Provider<NetworkExecutor> serviceExecutorProvider;
 
   private final ModelToExternalClassMapper<ConfigRequest, ApiConfigRequest>
       configModelToExternalClassMapper;
   private final ApiGenericResponseMapper configResponseMapper;
 
   public ConfigDataSourceImpl(OrchextraApiService orchextraApiService,
-      Provider<ApiServiceExecutor> serviceExecutorProvider,
+      Provider<NetworkExecutor> serviceExecutorProvider,
       ApiGenericResponseMapper configResponseMapper,
       ModelToExternalClassMapper configModelToExternalClassMapper) {
 
@@ -53,13 +52,12 @@ public class ConfigDataSourceImpl implements ConfigDataSource {
 
   @Override
   public BusinessObject<ConfigurationInfoResult> sendConfigInfo(ConfigRequest configRequest) {
-    ApiServiceExecutor serviceExecutor = serviceExecutorProvider.get();
+    NetworkExecutor serviceExecutor = serviceExecutorProvider.get();
 
     ApiConfigRequest request = configModelToExternalClassMapper.modelToExternalClass(configRequest);
 
     ApiGenericResponse apiGenericResponse =
-        serviceExecutor.executeNetworkServiceConnection(ApiConfigData.class,
-            orchextraApiService.sendSdkConfig(request));
+        serviceExecutor.call(orchextraApiService.sendSdkConfig(request)); //ApiConfigData
 
     return configResponseMapper.mapApiGenericResponseToBusiness(apiGenericResponse);
   }

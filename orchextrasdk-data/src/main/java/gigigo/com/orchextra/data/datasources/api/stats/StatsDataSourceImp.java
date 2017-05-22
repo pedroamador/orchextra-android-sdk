@@ -18,29 +18,25 @@
 
 package gigigo.com.orchextra.data.datasources.api.stats;
 
-import com.gigigo.ggglib.network.executors.ApiServiceExecutor;
-
-import gigigo.com.orchextra.data.datasources.api.model.responses.ApiActionConfirmationResponse;
-import orchextra.javax.inject.Provider;
-
-import gigigo.com.orchextra.data.datasources.api.model.responses.ApiActionResponse;
+import com.gigigo.ggglib.network.executors.NetworkExecutor;
 import gigigo.com.orchextra.data.datasources.api.service.OrchextraApiService;
+import orchextra.javax.inject.Provider;
 
 public class StatsDataSourceImp {
 
-    private final OrchextraApiService orchextraApiService;
-    private final Provider<ApiServiceExecutor> serviceExecutorProvider;
+  private final OrchextraApiService orchextraApiService;
+  private final Provider<NetworkExecutor> serviceExecutorProvider;
 
-    public StatsDataSourceImp(OrchextraApiService orchextraApiService,
-                              Provider<ApiServiceExecutor> serviceExecutorProvider) {
-        this.orchextraApiService = orchextraApiService;
-        this.serviceExecutorProvider = serviceExecutorProvider;
-    }
+  public StatsDataSourceImp(OrchextraApiService orchextraApiService,
+      Provider<NetworkExecutor> serviceExecutorProvider) {
+    this.orchextraApiService = orchextraApiService;
+    this.serviceExecutorProvider = serviceExecutorProvider;
+  }
 
-    public void sendCompletedAction(String trackId) {
-        ApiServiceExecutor serviceExecutor = serviceExecutorProvider.get();
+  public void sendCompletedAction(String trackId) {
+    NetworkExecutor serviceExecutor = serviceExecutorProvider.get();
 
-        serviceExecutor.executeNetworkServiceConnection(ApiActionConfirmationResponse.class,
-                orchextraApiService.sendCompletedAction(trackId));
-    }
+    serviceExecutor.call(
+        orchextraApiService.sendCompletedAction(trackId)); //ApiActionConfirmationResponse
+  }
 }
