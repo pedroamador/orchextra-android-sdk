@@ -18,11 +18,11 @@
 
 package gigigo.com.orchextra.data.datasources.db.geofences;
 
-import com.gigigo.gggjavalib.business.model.BusinessError;
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessError;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.ggglib.mappers.Mapper;
-import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
+import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
 import gigigo.com.orchextra.data.datasources.db.model.GeofenceEventRealm;
 import io.realm.Realm;
@@ -69,7 +69,8 @@ public class GeofenceEventsReader {
         .findAll();
 
     if (results.size() > 1) {
-      orchextraLogger.log("More than one geofence Event with same Code stored", OrchextraSDKLogLevel.ERROR);
+      orchextraLogger.log("More than one geofence Event with same Code stored",
+          OrchextraSDKLogLevel.ERROR);
     } else if (results.size() == 0) {
 
       orchextraLogger.log("No geofence events found with code"
@@ -77,7 +78,7 @@ public class GeofenceEventsReader {
           + " and id "
           + orchextraGeofence.getGeofenceId());
 
-      return new BusinessObject<>(null, BusinessError.createKoInstance("No geofence events found"));
+      return new BusinessObject<>(null, BusinessError.createKOInstance("No geofence events found"));
     } else {
       orchextraLogger.log("Retrieved geofence event found with code"
           + orchextraGeofence.getCode()

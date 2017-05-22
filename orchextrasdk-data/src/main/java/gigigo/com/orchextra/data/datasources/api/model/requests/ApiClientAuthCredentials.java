@@ -18,12 +18,11 @@
 
 package gigigo.com.orchextra.data.datasources.api.model.requests;
 
-import com.gigigo.gggjavalib.general.utils.ConsistencyUtils;
+import com.gigigo.ggglib.utils.ConsistencyUtils;
 import com.gigigo.orchextra.domain.model.entities.credentials.AuthCredentials;
 import com.gigigo.orchextra.domain.model.entities.credentials.ClientAuthCredentials;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 
 public class ApiClientAuthCredentials implements ApiCredentials {
 
@@ -38,8 +37,11 @@ public class ApiClientAuthCredentials implements ApiCredentials {
 
   public ApiClientAuthCredentials(AuthCredentials authCredentials) {
 
-    ClientAuthCredentials clientCredentials =
-        ConsistencyUtils.checkInstance(authCredentials, ClientAuthCredentials.class);
+    ClientAuthCredentials clientCredentials = new ClientAuthCredentials("", "");
+
+    if (ConsistencyUtils.isInstanceOf(authCredentials, ClientAuthCredentials.class)) {
+      clientCredentials = (ClientAuthCredentials) authCredentials;
+    }
 
     this.clientToken = clientCredentials.getClientToken();
     this.instanceId = clientCredentials.getInstanceId();

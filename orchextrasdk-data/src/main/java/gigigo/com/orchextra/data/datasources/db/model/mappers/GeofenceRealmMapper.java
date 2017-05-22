@@ -18,75 +18,70 @@
 
 package gigigo.com.orchextra.data.datasources.db.model.mappers;
 
-import com.gigigo.gggjavalib.general.utils.DateFormatConstants;
-import com.gigigo.gggjavalib.general.utils.DateUtils;
 import com.gigigo.ggglib.mappers.Mapper;
 import com.gigigo.ggglib.mappers.MapperUtils;
+import com.gigigo.ggglib.utils.DateFormatConstants;
+import com.gigigo.ggglib.utils.DateUtils;
 import com.gigigo.orchextra.domain.model.ProximityItemType;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
 import com.gigigo.orchextra.domain.model.vo.OrchextraLocationPoint;
-
 import gigigo.com.orchextra.data.datasources.db.model.GeofenceRealm;
 import gigigo.com.orchextra.data.datasources.db.model.RealmPoint;
 
-
 public class GeofenceRealmMapper implements Mapper<OrchextraGeofence, GeofenceRealm> {
 
-    private final Mapper<OrchextraLocationPoint, RealmPoint> realmPointMapper;
+  private final Mapper<OrchextraLocationPoint, RealmPoint> realmPointMapper;
 
+  public GeofenceRealmMapper(Mapper realmPointMapper) {
+    this.realmPointMapper = realmPointMapper;
+  }
 
-    public GeofenceRealmMapper(Mapper realmPointMapper) {
-        this.realmPointMapper = realmPointMapper;
+  @Override public GeofenceRealm modelToExternalClass(OrchextraGeofence geofence) {
+    GeofenceRealm geofenceRealm = new GeofenceRealm();
+
+    geofenceRealm.setRadius(geofence.getRadius());
+    geofenceRealm.setPoint(MapperUtils.checkNullDataRequest(realmPointMapper, geofence.getPoint()));
+
+    geofenceRealm.setCode(geofence.getCode());
+    geofenceRealm.setId(geofence.getId());
+    geofenceRealm.setName(geofence.getName());
+    geofenceRealm.setNotifyOnEntry(geofence.isNotifyOnEntry());
+    geofenceRealm.setNotifyOnExit(geofence.isNotifyOnExit());
+    geofenceRealm.setStayTime(geofence.getStayTime());
+
+    if (geofence.getType() != null) {
+      geofenceRealm.setType(geofence.getType().getStringValue());
     }
 
-    @Override
-    public GeofenceRealm modelToExternalClass(OrchextraGeofence geofence) {
-        GeofenceRealm geofenceRealm = new GeofenceRealm();
+    geofenceRealm.setCreatedAt(DateUtils.dateToStringWithFormat(geofence.getCreatedAt(),
+        DateFormatConstants.DATE_TIME_FORMAT));
 
-        geofenceRealm.setRadius(geofence.getRadius());
-        geofenceRealm.setPoint(MapperUtils.checkNullDataRequest(realmPointMapper, geofence.getPoint()));
+    geofenceRealm.setUpdatedAt(DateUtils.dateToStringWithFormat(geofence.getUpdatedAt(),
+        DateFormatConstants.DATE_TIME_FORMAT));
 
-        geofenceRealm.setCode(geofence.getCode());
-        geofenceRealm.setId(geofence.getId());
-        geofenceRealm.setName(geofence.getName());
-        geofenceRealm.setNotifyOnEntry(geofence.isNotifyOnEntry());
-        geofenceRealm.setNotifyOnExit(geofence.isNotifyOnExit());
-        geofenceRealm.setStayTime(geofence.getStayTime());
+    return geofenceRealm;
+  }
 
-        if (geofence.getType() != null) {
-            geofenceRealm.setType(geofence.getType().getStringValue());
-        }
+  @Override public OrchextraGeofence externalClassToModel(GeofenceRealm geofenceRealm) {
+    OrchextraGeofence geofence = new OrchextraGeofence();
 
-        geofenceRealm.setCreatedAt(
-                DateUtils.dateToStringWithFormat(geofence.getCreatedAt(), DateFormatConstants.DATE_FORMAT_TIME));
+    geofence.setRadius(geofenceRealm.getRadius());
+    geofence.setPoint(
+        MapperUtils.checkNullDataResponse(realmPointMapper, geofenceRealm.getPoint()));
 
-        geofenceRealm.setUpdatedAt(
-                DateUtils.dateToStringWithFormat(geofence.getUpdatedAt(), DateFormatConstants.DATE_FORMAT_TIME));
+    geofence.setCode(geofenceRealm.getCode());
+    geofence.setId(geofenceRealm.getId());
+    geofence.setName(geofenceRealm.getName());
+    geofence.setNotifyOnEntry(geofenceRealm.getNotifyOnEntry());
+    geofence.setNotifyOnExit(geofenceRealm.getNotifyOnExit());
+    geofence.setStayTime(geofenceRealm.getStayTime());
+    geofence.setType(ProximityItemType.getProximityPointTypeValue(geofenceRealm.getType()));
 
-        return geofenceRealm;
-    }
+    geofence.setCreatedAt(DateUtils.stringToDateWithFormat(geofenceRealm.getCreatedAt(),
+        DateFormatConstants.DATE_TIME_FORMAT));
+    geofence.setUpdatedAt(DateUtils.stringToDateWithFormat(geofenceRealm.getUpdatedAt(),
+        DateFormatConstants.DATE_TIME_FORMAT));
 
-    @Override
-    public OrchextraGeofence externalClassToModel(GeofenceRealm geofenceRealm) {
-        OrchextraGeofence geofence = new OrchextraGeofence();
-
-        geofence.setRadius(geofenceRealm.getRadius());
-        geofence.setPoint(
-                MapperUtils.checkNullDataResponse(realmPointMapper, geofenceRealm.getPoint()));
-
-        geofence.setCode(geofenceRealm.getCode());
-        geofence.setId(geofenceRealm.getId());
-        geofence.setName(geofenceRealm.getName());
-        geofence.setNotifyOnEntry(geofenceRealm.getNotifyOnEntry());
-        geofence.setNotifyOnExit(geofenceRealm.getNotifyOnExit());
-        geofence.setStayTime(geofenceRealm.getStayTime());
-        geofence.setType(ProximityItemType.getProximityPointTypeValue(geofenceRealm.getType()));
-
-        geofence.setCreatedAt(DateUtils.stringToDateWithFormat(geofenceRealm.getCreatedAt(),
-                DateFormatConstants.DATE_FORMAT_TIME));
-        geofence.setUpdatedAt(DateUtils.stringToDateWithFormat(geofenceRealm.getUpdatedAt(),
-                DateFormatConstants.DATE_FORMAT_TIME));
-
-        return geofence;
-    }
+    return geofence;
+  }
 }

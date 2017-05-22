@@ -19,17 +19,10 @@
 package gigigo.com.orchextra.data.datasources.db.geofences;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.gigigo.gggjavalib.business.model.BusinessError;
-import com.gigigo.gggjavalib.business.model.BusinessObject;
-import com.gigigo.orchextra.dataprovision.config.model.strategy.ConfigurationInfoResult;
+import com.gigigo.ggglib.core.business.model.BusinessError;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.dataprovision.proximity.datasource.GeofenceDBDataSource;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
-import com.gigigo.orchextra.domain.model.entities.tags.CustomField;
-
-import java.util.ArrayList;
-
 import gigigo.com.orchextra.data.datasources.db.RealmDefaultInstance;
 import io.realm.Realm;
 
@@ -41,14 +34,13 @@ public class GeofenceDBDataSourceImpl implements GeofenceDBDataSource {
   private final RealmDefaultInstance realmDefaultInstance;
 
   public GeofenceDBDataSourceImpl(Context context, GeofenceEventsReader geofenceEventsReader,
-                                  GeofenceEventsUpdater geofenceEventsUpdater, RealmDefaultInstance realmDefaultInstance) {
+      GeofenceEventsUpdater geofenceEventsUpdater, RealmDefaultInstance realmDefaultInstance) {
     this.context = context;
     this.geofenceEventsReader = geofenceEventsReader;
     this.geofenceEventsUpdater = geofenceEventsUpdater;
     this.realmDefaultInstance = realmDefaultInstance;
 
     //fixme REALM
-
 
   }
 
@@ -60,7 +52,7 @@ public class GeofenceDBDataSourceImpl implements GeofenceDBDataSource {
           geofenceEventsUpdater.storeGeofenceEvent(realm, orchextraGeofence);
       return new BusinessObject<>(geofence, BusinessError.createOKInstance());
     } catch (Exception e) {
-      return new BusinessObject<>(null, BusinessError.createKoInstance(e.getMessage()));
+      return new BusinessObject<>(null, BusinessError.createKOInstance(e.getMessage()));
     } finally {
       if (realm != null) {
         realm.close();
@@ -76,7 +68,7 @@ public class GeofenceDBDataSourceImpl implements GeofenceDBDataSource {
           geofenceEventsUpdater.deleteGeofenceEvent(realm, orchextraGeofence);
       return new BusinessObject<>(geofence, BusinessError.createOKInstance());
     } catch (Exception e) {
-      return new BusinessObject<>(null, BusinessError.createKoInstance(e.getMessage()));
+      return new BusinessObject<>(null, BusinessError.createKOInstance(e.getMessage()));
     } finally {
       if (realm != null) {
         realm.close();
@@ -90,7 +82,7 @@ public class GeofenceDBDataSourceImpl implements GeofenceDBDataSource {
     try {
       return geofenceEventsReader.obtainGeofenceEvent(realm, orchextraGeofence);
     } catch (Exception e) {
-      return new BusinessObject<>(null, BusinessError.createKoInstance(e.getMessage()));
+      return new BusinessObject<>(null, BusinessError.createKOInstance(e.getMessage()));
     } finally {
       if (realm != null) {
         realm.close();
@@ -107,7 +99,7 @@ public class GeofenceDBDataSourceImpl implements GeofenceDBDataSource {
 
       return new BusinessObject<>(orchextraGeofence, BusinessError.createOKInstance());
     } catch (Exception e) {
-      return new BusinessObject<>(null, BusinessError.createKoInstance(e.getMessage()));
+      return new BusinessObject<>(null, BusinessError.createKOInstance(e.getMessage()));
     } finally {
       if (realm != null) {
         realm.close();

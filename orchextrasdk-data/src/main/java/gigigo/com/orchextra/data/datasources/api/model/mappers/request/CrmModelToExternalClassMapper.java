@@ -18,60 +18,57 @@
 
 package gigigo.com.orchextra.data.datasources.api.model.mappers.request;
 
-import com.gigigo.gggjavalib.general.utils.DateFormatConstants;
-import com.gigigo.gggjavalib.general.utils.DateUtils;
 import com.gigigo.ggglib.mappers.ModelToExternalClassMapper;
+import com.gigigo.ggglib.utils.DateFormatConstants;
+import com.gigigo.ggglib.utils.DateUtils;
 import com.gigigo.orchextra.domain.model.entities.authentication.CrmUser;
 import com.gigigo.orchextra.domain.model.entities.tags.CustomField;
-
+import gigigo.com.orchextra.data.datasources.api.model.requests.ApiCrmUser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import gigigo.com.orchextra.data.datasources.api.model.requests.ApiCrmUser;
+public class CrmModelToExternalClassMapper
+    implements ModelToExternalClassMapper<CrmUser, ApiCrmUser> {
 
-public class CrmModelToExternalClassMapper implements ModelToExternalClassMapper<CrmUser, ApiCrmUser> {
+  @Override public ApiCrmUser modelToExternalClass(CrmUser crmUser) {
 
-    @Override
-    public ApiCrmUser modelToExternalClass(CrmUser crmUser) {
+    ApiCrmUser apiCrmUser = new ApiCrmUser();
 
-        ApiCrmUser apiCrmUser = new ApiCrmUser();
+    apiCrmUser.setBirthDate(DateUtils.dateToStringWithFormat(crmUser.getBirthDate(),
+        DateFormatConstants.DATE_NO_TIME_FORMAT));
+    apiCrmUser.setCrmId(crmUser.getCrmId());
 
-        apiCrmUser.setBirthDate(
-                DateUtils.dateToStringWithFormat(crmUser.getBirthDate(), DateFormatConstants.DATE_FORMAT_NO_TIME));
-        apiCrmUser.setCrmId(crmUser.getCrmId());
-
-        //TODO change all if null with Checker from utils
-        if (crmUser.getGender() != null) {
-            apiCrmUser.setGender(crmUser.getGender().getStringValue());
-        }
-
-        if (crmUser.getTags() != null && crmUser.getTags().size() > 0) {
-            List<String> apiTagList = new ArrayList<>();
-            for (String tag : crmUser.getTags()) {
-                apiTagList.add(tag);
-            }
-            apiCrmUser.setTags(apiTagList);
-        }
-
-        if (crmUser.getBusinessUnits() != null && crmUser.getBusinessUnits().size() > 0) {
-            List<String> apiBUList = new ArrayList<>();
-            for (String bu : crmUser.getBusinessUnits()) {
-                apiBUList.add(bu);
-            }
-            apiCrmUser.setBusinessUnits(apiBUList);
-        }
-
-        if (crmUser.getCustomFields() != null && crmUser.getCustomFields().size() > 0) {
-            Map<String, String> apiCustomFieldList = new HashMap<>();
-            for (CustomField customField : crmUser.getCustomFields()) {
-                apiCustomFieldList.put(customField.getKey(), customField.getValue());
-            }
-            apiCrmUser.setCustomFields(apiCustomFieldList);
-        }
-
-        return apiCrmUser;
+    //TODO change all if null with Checker from utils
+    if (crmUser.getGender() != null) {
+      apiCrmUser.setGender(crmUser.getGender().getStringValue());
     }
 
+    if (crmUser.getTags() != null && crmUser.getTags().size() > 0) {
+      List<String> apiTagList = new ArrayList<>();
+      for (String tag : crmUser.getTags()) {
+        apiTagList.add(tag);
+      }
+      apiCrmUser.setTags(apiTagList);
+    }
+
+    if (crmUser.getBusinessUnits() != null && crmUser.getBusinessUnits().size() > 0) {
+      List<String> apiBUList = new ArrayList<>();
+      for (String bu : crmUser.getBusinessUnits()) {
+        apiBUList.add(bu);
+      }
+      apiCrmUser.setBusinessUnits(apiBUList);
+    }
+
+    if (crmUser.getCustomFields() != null && crmUser.getCustomFields().size() > 0) {
+      Map<String, String> apiCustomFieldList = new HashMap<>();
+      for (CustomField customField : crmUser.getCustomFields()) {
+        apiCustomFieldList.put(customField.getKey(), customField.getValue());
+      }
+      apiCrmUser.setCustomFields(apiCustomFieldList);
+    }
+
+    return apiCrmUser;
+  }
 }

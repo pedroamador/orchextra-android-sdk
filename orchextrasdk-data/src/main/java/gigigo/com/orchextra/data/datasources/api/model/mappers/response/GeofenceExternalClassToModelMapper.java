@@ -18,15 +18,14 @@
 
 package gigigo.com.orchextra.data.datasources.api.model.mappers.response;
 
-import com.gigigo.gggjavalib.general.utils.DateFormatConstants;
-import com.gigigo.gggjavalib.general.utils.DateUtils;
 import com.gigigo.ggglib.mappers.ExternalClassToModelMapper;
 import com.gigigo.ggglib.mappers.MapperUtils;
+import com.gigigo.ggglib.utils.DateFormatConstants;
+import com.gigigo.ggglib.utils.DateUtils;
 import com.gigigo.orchextra.domain.model.ProximityItemType;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
 import gigigo.com.orchextra.data.datasources.api.model.mappers.PointMapper;
 import gigigo.com.orchextra.data.datasources.api.model.responses.ApiGeofence;
-
 
 public class GeofenceExternalClassToModelMapper
     implements ExternalClassToModelMapper<ApiGeofence, OrchextraGeofence> {
@@ -49,9 +48,9 @@ public class GeofenceExternalClassToModelMapper
     geofence.setType(ProximityItemType.getProximityPointTypeValue(apiGeofence.getType()));
 
     geofence.setCreatedAt(DateUtils.stringToDateWithFormat(apiGeofence.getCreatedAt(),
-        DateFormatConstants.DATE_FORMAT_TIME));
+        DateFormatConstants.DATE_TIME_FORMAT));
     geofence.setUpdatedAt(DateUtils.stringToDateWithFormat(apiGeofence.getUpdatedAt(),
-        DateFormatConstants.DATE_FORMAT_TIME));
+        DateFormatConstants.DATE_TIME_FORMAT));
 
     geofence.setPoint(MapperUtils.checkNullDataResponse(pointMapper, apiGeofence.getPoint()));
 

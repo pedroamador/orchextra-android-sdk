@@ -19,6 +19,7 @@
 package com.gigigo.orchextra.dataprovision.authentication;
 
 import com.gigigo.ggglib.core.business.model.BusinessObject;
+import com.gigigo.ggglib.utils.ConsistencyUtils;
 import com.gigigo.orchextra.dataprovision.authentication.datasource.AuthenticationDataSource;
 import com.gigigo.orchextra.dataprovision.authentication.datasource.SessionDBDataSource;
 import com.gigigo.orchextra.domain.dataprovider.AuthenticationDataProvider;
@@ -49,9 +50,9 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 
       if (deviceToken.isSuccess()) {
         sessionDBDataSource.saveSdkAuthResponse(deviceToken.getData());
-        SdkAuthCredentials sdkCredentials =
-            ConsistencyUtils.checkInstance(authCredentials, SdkAuthCredentials.class);
-        sessionDBDataSource.saveSdkAuthCredentials(sdkCredentials);
+        if (ConsistencyUtils.isInstanceOf(authCredentials, SdkAuthCredentials.class)) {
+          sessionDBDataSource.saveSdkAuthCredentials((SdkAuthCredentials) authCredentials);
+        }
       } else {
         System.out.println("ERROR  step1");
       }
@@ -71,10 +72,10 @@ public class AuthenticationDataProviderImpl implements AuthenticationDataProvide
 
       if (sessionToken.isSuccess()) {
         sessionDBDataSource.saveClientAuthResponse(sessionToken.getData());
-        ClientAuthCredentials clientAuthCredentials =
-            ConsistencyUtils.checkInstance(authCredentials, ClientAuthCredentials.class);
-        sessionDBDataSource.saveClientAuthCredentials(clientAuthCredentials);
-        saveCrmId(crmId);
+        if (ConsistencyUtils.isInstanceOf(authCredentials, ClientAuthCredentials.class)) {
+          sessionDBDataSource.saveClientAuthCredentials((ClientAuthCredentials) authCredentials);
+          saveCrmId(crmId);
+        }
       }
     }
 
