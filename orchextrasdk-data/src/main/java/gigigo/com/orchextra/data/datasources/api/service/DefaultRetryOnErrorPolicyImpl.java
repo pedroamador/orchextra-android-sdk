@@ -18,11 +18,10 @@
 
 package gigigo.com.orchextra.data.datasources.api.service;
 
-import com.gigigo.ggglib.network.defaultelements.RetryOnErrorPolicy;
 import com.gigigo.ggglib.network.responses.HttpResponse;
+import com.gigigo.ggglib.network.retry.RetryOnErrorPolicy;
 import com.gigigo.orchextra.domain.interactors.error.OrchextraBusinessErrors;
 import gigigo.com.orchextra.data.datasources.api.model.responses.base.OrchextraApiErrorResponse;
-
 
 public class DefaultRetryOnErrorPolicyImpl
     implements RetryOnErrorPolicy<OrchextraApiErrorResponse> {

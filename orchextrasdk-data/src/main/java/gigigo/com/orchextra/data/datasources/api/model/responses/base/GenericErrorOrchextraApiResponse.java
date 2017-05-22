@@ -17,5 +17,5 @@
  */
 package gigigo.com.orchextra.data.datasources.api.model.responses.base;
 
-public class GenericErrorOrchextraApiResponse extends BaseOrchextraApiResponse<ErrorData[]> {
+public class GenericErrorOrchextraApiResponse extends BaseOrchextraApiErrorResponse<ErrorData[]> {
 }

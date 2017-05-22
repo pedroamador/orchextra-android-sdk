@@ -18,8 +18,7 @@
 
 package gigigo.com.orchextra.data.datasources.api.model.responses;
 
-import gigigo.com.orchextra.data.datasources.api.model.responses.base.BaseOrchextraApiResponse;
+import gigigo.com.orchextra.data.datasources.api.model.responses.base.BaseOrchextraApiResultResponse;
 
-
-public class ApiClientAuthResponse extends BaseOrchextraApiResponse<ApiClientAuthData> {
+public class ApiClientAuthResponse extends BaseOrchextraApiResultResponse<ApiClientAuthData> {
 }

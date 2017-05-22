@@ -39,7 +39,7 @@ public class BaseOrchextraApiErrorResponse<JSONData>
     return this.error;
   }
 
-  @Override public void setError(OrchextraApiErrorResponse orchextraApiErrorResponse) {
+  @Override public void setError(OrchextraApiErrorResponse error) {
     this.error = error;
   }
 }

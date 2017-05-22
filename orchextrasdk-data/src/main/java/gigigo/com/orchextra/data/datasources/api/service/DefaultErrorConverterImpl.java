@@ -24,12 +24,12 @@ import java.io.IOException;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
-public class DefatultErrorConverterImpl<ErrorResponse>
+public class DefaultErrorConverterImpl<ErrorResponse>
     implements ErrorConverter<ErrorResponse, ResponseBody> {
 
   RetrofitErrorConverter retrofitErrorConverter;
 
-  public DefatultErrorConverterImpl(Retrofit retrofit, Class<ErrorResponse> errorResponse) {
+  public DefaultErrorConverterImpl(Retrofit retrofit, Class<ErrorResponse> errorResponse) {
     this.retrofitErrorConverter = new RetrofitErrorConverter(retrofit, errorResponse);
   }
 

@@ -133,13 +133,5 @@ dependencies {
   //test noplay, without play services, not work geofecing, segmentacion spatial, schedulable actions
   playnoReleaseCompile project(path: ':orchextrasdk', configuration: 'playnoRelease')
 
-  compile parent.ext.dependencies.gggLibCore
-  compile parent.ext.dependencies.gggLibDevice
-  compile parent.ext.dependencies.gggLibLogger
-  compile parent.ext.dependencies.gggLibMappers
-  compile parent.ext.dependencies.gggLibUtils
-
-  compile parent.ext.dependencies.gggLibNetworkRetrofit
-
   testCompile rootProject.ext.testDependencies.junit
 }
