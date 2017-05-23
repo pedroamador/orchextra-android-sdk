@@ -33,18 +33,6 @@ def API_VERSION = "API_VERSION";
 def X_APP_SDK = "X_APP_SDK";
 def TOKEN_TYPE_BEARER = "TOKEN_TYPE_BEARER";
 
-
-buildscript {
-  repositories {
-    mavenCentral()
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:2.1.2'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-  }
-}
-
 android {
   compileSdkVersion rootProject.ext.androidCompileSdkVersion
   buildToolsVersion rootProject.ext.androidBuildToolsVersion
@@ -179,13 +167,12 @@ dependencies {
     exclude group: 'javax.inject'
   }
 
-  compile rootProject.ext.dependencies.loggingInterceptor
-  compile rootProject.ext.dependencies.altBeacon
-  compile(rootProject.ext.dependencies.barcodescanner) {
-    exclude module: 'support-v4'
-    // com.android.support:support-annotations:23.1.1
-  }
-
+  compile parent.ext.dependencies.loggingInterceptor
+  compile parent.ext.dependencies.altBeacon
+  compile(parent.ext.dependencies.barcodescanner)
+          { exclude module: 'support-v4'
+            // com.android.support:support-annotations:23.1.1
+          }
 
   compile rootProject.ext.dependencies.imageRecognitionInterface
 

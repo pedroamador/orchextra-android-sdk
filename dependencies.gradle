@@ -20,11 +20,11 @@ allprojects {
   ext {
     dependencies = [androidSupportV7         : 'com.android.support:appcompat-v7:23.3.0',
 
-                    loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
                     daggerCompiler           : 'com.github.GigigoGreenLabs.repackagedLibs:dagger-compiler:2.2.2',
                     dagger                   : 'com.github.GigigoGreenLabs.repackagedLibs:dagger:2.2.2',
                     altBeacon                : 'org.altbeacon:android-beacon-library:2.9.2',
                     barcodescanner           : 'me.dm7.barcodescanner:zbar:1.8.4',
+                    loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
 
                     gggLibCore               : 'com.github.gigigoapps.gigigo-android-lib:ggglib.core:1.0.11',
                     gggLibDevice             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.11',
