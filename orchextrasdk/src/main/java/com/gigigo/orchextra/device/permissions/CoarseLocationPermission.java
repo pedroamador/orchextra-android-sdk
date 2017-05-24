@@ -20,8 +20,8 @@ package com.gigigo.orchextra.device.permissions;
 
 import android.Manifest;
 import android.content.Context;
-import com.gigigo.ggglib.permissions.Permission;
 import com.gigigo.orchextra.R;
+import com.gigigo.permissions.interfaces.Permission;
 
 public class CoarseLocationPermission implements Permission {
   Context mContext;

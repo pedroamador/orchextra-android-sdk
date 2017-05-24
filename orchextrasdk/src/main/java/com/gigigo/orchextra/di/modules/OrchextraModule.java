@@ -19,10 +19,7 @@
 package com.gigigo.orchextra.di.modules;
 
 import android.content.Context;
-
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.AndroidPermissionCheckerImpl;
-import com.gigigo.ggglib.permissions.PermissionChecker;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.OrchextraLoggerImpl;
 import com.gigigo.orchextra.device.permissions.PermissionCameraImp;
 import com.gigigo.orchextra.di.modules.control.ControlModule;
@@ -49,7 +46,7 @@ import com.gigigo.orchextra.sdk.application.applifecycle.OrchextraContextProvide
 import com.gigigo.orchextra.sdk.model.CrmUserDomainToCrmUserSdkConverter;
 import com.gigigo.orchextra.sdk.model.CrmUserGenderConverter;
 import com.gigigo.orchextra.sdk.scanner.ScannerManager;
-
+import com.gigigo.permissions.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 import orchextra.javax.inject.Singleton;
@@ -57,128 +54,100 @@ import orchextra.javax.inject.Singleton;
 /**
  * module refers dagger module object
  */
-@Module(includes = {ControlModule.class, DeviceModule.class, DelegateModule.class, UiModule.class})
-public class OrchextraModule {
+@Module(includes = {
+    ControlModule.class, DeviceModule.class, DelegateModule.class, UiModule.class
+}) public class OrchextraModule {
 
-    private final Context context;
-    private final OrchextraManagerCompletionCallback orchextraCompletionCallback;
-    private final String notificationActivityClass ;
-    private CustomSchemeReceiverContainer customSchemeReceiverContainer;
+  private final Context context;
+  private final OrchextraManagerCompletionCallback orchextraCompletionCallback;
+  private final String notificationActivityClass;
+  private CustomSchemeReceiverContainer customSchemeReceiverContainer;
 
-    public OrchextraModule(Context context, OrchextraManagerCompletionCallback orchextraCompletionCallback, String notificationActivityClass) {
-        this.context = context;
-        this.orchextraCompletionCallback = orchextraCompletionCallback;
-        this.notificationActivityClass = notificationActivityClass;
-    }
+  public OrchextraModule(Context context,
+      OrchextraManagerCompletionCallback orchextraCompletionCallback,
+      String notificationActivityClass) {
+    this.context = context;
+    this.orchextraCompletionCallback = orchextraCompletionCallback;
+    this.notificationActivityClass = notificationActivityClass;
+  }
 
-    @Provides
-    @Singleton
-    OrchextraActivityLifecycle provideOrchextraActivityLifecycle(
-            AppRunningMode appRunningMode,
-            OrchextraContextProvider contextProvider,
-            AppStatusEventsListener appStatusEventsListener,
-            OrchextraLogger orchextraLogger) {
+  @Provides @Singleton OrchextraActivityLifecycle provideOrchextraActivityLifecycle(
+      AppRunningMode appRunningMode, OrchextraContextProvider contextProvider,
+      AppStatusEventsListener appStatusEventsListener, OrchextraLogger orchextraLogger) {
 
-        OrchextraActivityLifecycle orchextraActivityLifecycle =
-                new OrchextraActivityLifecycle(appStatusEventsListener,
-                        orchextraLogger,this.notificationActivityClass);
-        contextProvider.setOrchextraActivityLifecycle(orchextraActivityLifecycle);
-        appRunningMode.setOrchextraActivityLifecycle(orchextraActivityLifecycle);
-        return orchextraActivityLifecycle;
-    }
+    OrchextraActivityLifecycle orchextraActivityLifecycle =
+        new OrchextraActivityLifecycle(appStatusEventsListener, orchextraLogger,
+            this.notificationActivityClass);
+    contextProvider.setOrchextraActivityLifecycle(orchextraActivityLifecycle);
+    appRunningMode.setOrchextraActivityLifecycle(orchextraActivityLifecycle);
+    return orchextraActivityLifecycle;
+  }
 
-    @Provides
-    @Singleton
-    ContextProvider provideContextProvider(OrchextraLogger orchextraLogger) {
-        return new ContextProviderImpl(context.getApplicationContext(), orchextraLogger);
-    }
+  @Provides @Singleton ContextProvider provideContextProvider(OrchextraLogger orchextraLogger) {
+    return new ContextProviderImpl(context.getApplicationContext(), orchextraLogger);
+  }
 
-    @Provides
-    @Singleton
-    OrchextraContextProvider provideOrchextraContextProvider(
-            ContextProvider contextProvider) {
-        return (OrchextraContextProvider) contextProvider;
-    }
+  @Provides @Singleton OrchextraContextProvider provideOrchextraContextProvider(
+      ContextProvider contextProvider) {
+    return (OrchextraContextProvider) contextProvider;
+  }
 
-    @Provides
-    @Singleton
-    AppStatusEventsListener provideAppStatusEventsListener(
-            ForegroundTasksManager foregroundTasksManager,
-            OrchextraStatusAccessor orchextraStatusAccessor,
-            OrchextraLogger orchextraLogger) {
-        return new AppStatusEventsListenerImpl(context, foregroundTasksManager, orchextraStatusAccessor,
-                orchextraLogger);
-    }
+  @Provides @Singleton AppStatusEventsListener provideAppStatusEventsListener(
+      ForegroundTasksManager foregroundTasksManager,
+      OrchextraStatusAccessor orchextraStatusAccessor, OrchextraLogger orchextraLogger) {
+    return new AppStatusEventsListenerImpl(context, foregroundTasksManager, orchextraStatusAccessor,
+        orchextraLogger);
+  }
 
-    @Provides
-    @Singleton
-    AppRunningMode provideAppRunningMode() {
-        return new AppRunningModeImpl();
-    }
+  @Provides @Singleton AppRunningMode provideAppRunningMode() {
+    return new AppRunningModeImpl();
+  }
 
-    @Singleton
-    @Provides
-    FeatureList provideFeatureList() {
-        return new FeatureList(orchextraCompletionCallback);
-    }
+  @Singleton @Provides FeatureList provideFeatureList() {
+    return new FeatureList(orchextraCompletionCallback);
+  }
 
-    @Singleton
-    @Provides
-    FeatureListener provideFeatureListener(FeatureList featureList) {
-        return featureList;
-    }
+  @Singleton @Provides FeatureListener provideFeatureListener(FeatureList featureList) {
+    return featureList;
+  }
 
-    @Singleton
-    @Provides
-    FeatureStatus provideFeatureStatus(FeatureList featureList) {
-        return featureList;
-    }
+  @Singleton @Provides FeatureStatus provideFeatureStatus(FeatureList featureList) {
+    return featureList;
+  }
 
-    @Singleton
-    @Provides
-    CustomSchemeReceiverContainer provideCustomSchemeReceiverContainer() {
-        customSchemeReceiverContainer = new CustomSchemeReceiverContainer();
-        return customSchemeReceiverContainer;
-    }
+  @Singleton @Provides CustomSchemeReceiverContainer provideCustomSchemeReceiverContainer() {
+    customSchemeReceiverContainer = new CustomSchemeReceiverContainer();
+    return customSchemeReceiverContainer;
+  }
 
-    @Singleton
-    @Provides
-    OrchextraModule provideOrchextraModule() {
-        return this;
-    }
+  @Singleton @Provides OrchextraModule provideOrchextraModule() {
+    return this;
+  }
 
-    @Singleton
-    @Provides
-    CrmUserGenderConverter provideCrmGenderConverter() {
-        return new CrmUserGenderConverter();
-    }
+  @Singleton @Provides CrmUserGenderConverter provideCrmGenderConverter() {
+    return new CrmUserGenderConverter();
+  }
 
-    @Singleton
-    @Provides
-    CrmUserDomainToCrmUserSdkConverter provideSdkUserToDomainConverter(CrmUserGenderConverter crmUserGenderConverter) {
-        return new CrmUserDomainToCrmUserSdkConverter(crmUserGenderConverter);
-    }
+  @Singleton @Provides CrmUserDomainToCrmUserSdkConverter provideSdkUserToDomainConverter(
+      CrmUserGenderConverter crmUserGenderConverter) {
+    return new CrmUserDomainToCrmUserSdkConverter(crmUserGenderConverter);
+  }
 
-    @Singleton
-    @Provides
-    ScannerManager provideScannerManager(ContextProvider contextProvider, PermissionChecker androidPermission) {
-        return new ScannerManager(contextProvider,androidPermission,
-            new PermissionCameraImp(contextProvider.getApplicationContext()));
-    }
+  @Singleton @Provides ScannerManager provideScannerManager(ContextProvider contextProvider,
+      PermissionChecker androidPermission) {
+    return new ScannerManager(contextProvider, androidPermission,
+        new PermissionCameraImp(contextProvider.getApplicationContext()));
+  }
 
-    public void setCustomSchemeReceiver(CustomOrchextraSchemeReceiver customSchemeReceiver) {
-        customSchemeReceiverContainer.setCustomSchemeReceiver(customSchemeReceiver);
-    }
+  public void setCustomSchemeReceiver(CustomOrchextraSchemeReceiver customSchemeReceiver) {
+    customSchemeReceiverContainer.setCustomSchemeReceiver(customSchemeReceiver);
+  }
 
-    @Provides
-    @Singleton
-    OrchextraLogger provideOrchextraLogger() {
-        return new OrchextraLoggerImpl();
-    }
+  @Provides @Singleton OrchextraLogger provideOrchextraLogger() {
+    return new OrchextraLoggerImpl();
+  }
 
-    @Provides
-    @Singleton
-    ConfigChangeObservable provideConfigChangeObservable() {
-        return new ConfigChangeObservable();
-    }
+  @Provides @Singleton ConfigChangeObservable provideConfigChangeObservable() {
+    return new ConfigChangeObservable();
+  }
 }

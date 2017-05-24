@@ -18,39 +18,35 @@
 
 package com.gigigo.orchextra.di.modules.device;
 
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.PermissionChecker;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.geolocation.geofencing.AndroidGeofenceIntentServiceHandler;
 import com.gigigo.orchextra.device.geolocation.geofencing.mapper.LocationMapper;
 import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
 import com.gigigo.orchextra.di.scopes.PerService;
 import com.gigigo.orchextra.domain.abstractions.background.BackgroundTasksManager;
-import com.gigigo.orchextra.domain.abstractions.initialization.OrchextraStatusAccessor;
 import com.gigigo.orchextra.sdk.OrchextraTasksManager;
 import com.gigigo.orchextra.sdk.application.BackgroundTasksManagerImpl;
-
+import com.gigigo.permissions.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 
-
-@Module
-public class ServicesModule {
+@Module public class ServicesModule {
 
   @PerService @Provides BackgroundTasksManager provideBackgroundTasksManager(
-      OrchextraTasksManager orchextraTasksManager,
-      PermissionChecker permissionChecker,ContextProvider contextProvider){
+      OrchextraTasksManager orchextraTasksManager, PermissionChecker permissionChecker,
+      ContextProvider contextProvider) {
 
-    return new BackgroundTasksManagerImpl(orchextraTasksManager, permissionChecker,new PermissionLocationImp(contextProvider.getApplicationContext()));
+    return new BackgroundTasksManagerImpl(orchextraTasksManager, permissionChecker,
+        new PermissionLocationImp(contextProvider.getApplicationContext()));
   }
 
-  @PerService
-  @Provides
-  LocationMapper provideLocationMapper() {
+  @PerService @Provides LocationMapper provideLocationMapper() {
     return new LocationMapper();
   }
 
   @PerService @Provides
-  AndroidGeofenceIntentServiceHandler provideAndroidGeofenceIntentServiceHandler(LocationMapper locationMapper) {
+  AndroidGeofenceIntentServiceHandler provideAndroidGeofenceIntentServiceHandler(
+      LocationMapper locationMapper) {
     return new AndroidGeofenceIntentServiceHandler(locationMapper);
   }
 }

@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.di.modules.device;
 
-import com.gigigo.ggglib.ContextProvider;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.control.controllers.action.scheduler.ActionsSchedulerControllerImpl;
 import com.gigigo.orchextra.control.controllers.action.scheduler.ActionsSchedulerPersistorNullImpl;
 import com.gigigo.orchextra.device.actions.ActionExecutionImp;
@@ -48,79 +48,74 @@ import com.gigigo.orchextra.domain.interactors.actions.ActionDispatcherImpl;
 import com.gigigo.orchextra.domain.interactors.actions.CustomSchemeReceiverContainer;
 import com.gigigo.orchextra.sdk.scanner.ScannerManager;
 import com.google.gson.Gson;
-
 import gigigo.com.orchextra.data.datasources.api.stats.StatsDataSourceImp;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 import orchextra.javax.inject.Singleton;
 
+@Module public class ActionsModule {
 
-@Module
-public class ActionsModule {
-
-  @Provides @Singleton
-  BrowserActionExecutor provideBrowserActionExecutor(ContextProvider contextProvider) {
+  @Provides @Singleton BrowserActionExecutor provideBrowserActionExecutor(
+      ContextProvider contextProvider) {
     return new BrowserActionExecutor(contextProvider.getApplicationContext());
   }
 
-  @Provides
-  @Singleton WebViewActionExecutor provideWebViewActionExecutor(ContextProvider contextProvider) {
+  @Provides @Singleton WebViewActionExecutor provideWebViewActionExecutor(
+      ContextProvider contextProvider) {
     return new WebViewActionExecutor(contextProvider.getApplicationContext());
   }
 
-  @Provides
-  @Singleton ScanActionExecutor provideScanActionExecutor(ScannerManager scannerManager) {
+  @Provides @Singleton ScanActionExecutor provideScanActionExecutor(ScannerManager scannerManager) {
     return new ScanActionExecutor(scannerManager);
   }
 
-  @Provides
-  @Singleton VuforiaActionExecutor provideVuforiaActionExecutor() {
+  @Provides @Singleton VuforiaActionExecutor provideVuforiaActionExecutor() {
     return new VuforiaActionExecutor();
   }
 
-  @Provides
-  @Singleton ActionExecution provideActionExecution(BrowserActionExecutor browserActionExecutor,
-      WebViewActionExecutor webViewActionExecutor,
-      ScanActionExecutor scanActionExecutor,
-      VuforiaActionExecutor vuforiaActionExecutor) {
+  @Provides @Singleton ActionExecution provideActionExecution(
+      BrowserActionExecutor browserActionExecutor, WebViewActionExecutor webViewActionExecutor,
+      ScanActionExecutor scanActionExecutor, VuforiaActionExecutor vuforiaActionExecutor) {
 
-    ActionExecution aux =new ActionExecutionImp(browserActionExecutor, webViewActionExecutor, scanActionExecutor,
+    ActionExecution aux =
+        new ActionExecutionImp(browserActionExecutor, webViewActionExecutor, scanActionExecutor,
             vuforiaActionExecutor);
     return aux;
   }
 
-  @Provides
-  @Singleton ActionDispatcher provideActionDispatcher(ActionExecution actionExecution, NotificationBehavior notificationBehavior,
-      CustomSchemeReceiverContainer customSchemeReceiverContainer, StatsDispatcher statsDispatcher) {
-    return new ActionDispatcherImpl(actionExecution, notificationBehavior, customSchemeReceiverContainer, statsDispatcher);
+  @Provides @Singleton ActionDispatcher provideActionDispatcher(ActionExecution actionExecution,
+      NotificationBehavior notificationBehavior,
+      CustomSchemeReceiverContainer customSchemeReceiverContainer,
+      StatsDispatcher statsDispatcher) {
+    return new ActionDispatcherImpl(actionExecution, notificationBehavior,
+        customSchemeReceiverContainer, statsDispatcher);
   }
 
-  @Provides
-  @Singleton
-  AndroidBasicActionMapper provideAndroidBasicActionMapper(AndroidNotificationMapper androidNotificationMapper) {
+  @Provides @Singleton AndroidBasicActionMapper provideAndroidBasicActionMapper(
+      AndroidNotificationMapper androidNotificationMapper) {
     return new AndroidBasicActionMapper(androidNotificationMapper);
   }
 
-  @Singleton @Provides ActionsScheduler provideActionsScheduler(ContextProvider contextProvider, Gson gson,
-      AndroidBasicActionMapper androidBasicActionMapper, GoogleApiPermissionChecker googleApiPermissionChecker,
-      OrchextraLogger orchextraLogger){
+  @Singleton @Provides ActionsScheduler provideActionsScheduler(ContextProvider contextProvider,
+      Gson gson, AndroidBasicActionMapper androidBasicActionMapper,
+      GoogleApiPermissionChecker googleApiPermissionChecker, OrchextraLogger orchextraLogger) {
     return new ActionsSchedulerGcmImpl(contextProvider.getApplicationContext(), gson,
         androidBasicActionMapper, googleApiPermissionChecker, orchextraLogger);
   }
 
-  @Singleton @Provides Gson gson(){
+  @Singleton @Provides Gson gson() {
     return new Gson();
   }
 
-  @Singleton @Provides ActionsSchedulerPersistor provideActionsSchedulerPersistorNull(){
+  @Singleton @Provides ActionsSchedulerPersistor provideActionsSchedulerPersistorNull() {
     return new ActionsSchedulerPersistorNullImpl();
   }
 
   @Singleton @Provides ActionsSchedulerController provideActionsSchedulerController(
-      ActionsScheduler actionsScheduler, ActionsSchedulerPersistor actionsSchedulerPersistor){
+      ActionsScheduler actionsScheduler, ActionsSchedulerPersistor actionsSchedulerPersistor) {
 
-    if (actionsScheduler.hasPersistence() &&
-        !(actionsSchedulerPersistor instanceof ActionsSchedulerPersistorNullImpl)){
+    if (actionsScheduler.hasPersistence()
+        && !(actionsSchedulerPersistor instanceof ActionsSchedulerPersistorNullImpl)) {
       throw new IllegalArgumentException("Param ActionsSchedulerPersistor in"
           + " ActionsSchedulerControllerImpl MUST be NullObject when ActionsScheduler "
           + "already supports persistence ");
@@ -129,17 +124,15 @@ public class ActionsModule {
     return new ActionsSchedulerControllerImpl(actionsScheduler, actionsSchedulerPersistor);
   }
 
-  @Provides
-  @Singleton ActionRecovery providesActionRecovery(ContextProvider contextProvider,
-                                                   AndroidBasicActionMapper androidBasicActionMapper,
-                                                   ActionDispatcher actionDispatcher,
-                                                   @MainThread ThreadSpec mainThreadSpec){
-    return new AndroidActionRecovery(contextProvider.getApplicationContext(), actionDispatcher, androidBasicActionMapper, mainThreadSpec);
+  @Provides @Singleton ActionRecovery providesActionRecovery(ContextProvider contextProvider,
+      AndroidBasicActionMapper androidBasicActionMapper, ActionDispatcher actionDispatcher,
+      @MainThread ThreadSpec mainThreadSpec) {
+    return new AndroidActionRecovery(contextProvider.getApplicationContext(), actionDispatcher,
+        androidBasicActionMapper, mainThreadSpec);
   }
 
-    @Provides
-    @Singleton StatsDispatcher provideStatsDispatcher(StatsDataSourceImp statsDataSourceImp,
-                                                      @BackThread ThreadSpec bacThreadSpec) {
-        return new StatsDispatcherImp(statsDataSourceImp, bacThreadSpec);
-    }
+  @Provides @Singleton StatsDispatcher provideStatsDispatcher(StatsDataSourceImp statsDataSourceImp,
+      @BackThread ThreadSpec bacThreadSpec) {
+    return new StatsDispatcherImp(statsDataSourceImp, bacThreadSpec);
+  }
 }

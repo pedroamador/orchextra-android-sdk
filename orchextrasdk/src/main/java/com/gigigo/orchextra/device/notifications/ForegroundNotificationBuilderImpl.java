@@ -20,7 +20,7 @@ package com.gigigo.orchextra.device.notifications;
 
 import android.content.DialogInterface;
 
-import com.gigigo.ggglib.ContextProvider;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.R;
 import com.gigigo.orchextra.domain.abstractions.actions.ActionDispatcherListener;
 import com.gigigo.orchextra.domain.abstractions.notifications.ForegroundNotificationBuilder;

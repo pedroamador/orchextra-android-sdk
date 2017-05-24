@@ -18,17 +18,13 @@
 
 package com.gigigo.orchextra.sdk.scanner;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.PermissionChecker;
-import com.gigigo.ggglib.permissions.UserPermissionRequestResponseListener;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.permissions.PermissionCameraImp;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.ui.scanner.OxScannerActivity;
-
+import com.gigigo.permissions.interfaces.PermissionChecker;
+import com.gigigo.permissions.interfaces.UserPermissionRequestResponseListener;
 import orchextra.javax.inject.Inject;
 
 public class ScannerManager {
@@ -37,6 +33,14 @@ public class ScannerManager {
   @Inject OrchextraLogger orchextraLogger;
   PermissionChecker permissionChecker;
   PermissionCameraImp cameraPermissionImp;
+  private UserPermissionRequestResponseListener cameraPermissionResponseListener =
+      new UserPermissionRequestResponseListener() {
+        @Override public void onPermissionAllowed(boolean permissionAllowed, int i) {
+          if (permissionAllowed) {
+            openActivity();
+          }
+        }
+      };
 
   public ScannerManager(ContextProvider context, PermissionChecker permissionChecker1,
       PermissionCameraImp cameraPermissionImp1) {
@@ -56,21 +60,12 @@ public class ScannerManager {
   private void checkCameraPermission() {
     boolean isGranted = permissionChecker.isGranted(cameraPermissionImp);
     if (!isGranted) {
-      permissionChecker.askForPermission(cameraPermissionImp, cameraPermissionResponseListener,
-          (Activity) context.getCurrentActivity());
+      permissionChecker.askForPermission(cameraPermissionResponseListener,
+          cameraPermissionImp); //(Activity) context.getCurrentActivity());
     } else {
       openActivity();
     }
   }
-
-  private UserPermissionRequestResponseListener cameraPermissionResponseListener =
-      new UserPermissionRequestResponseListener() {
-        @Override public void onPermissionAllowed(boolean permissionAllowed) {
-          if (permissionAllowed) {
-            openActivity();
-          }
-        }
-      };
 
   private void openActivity() {
 

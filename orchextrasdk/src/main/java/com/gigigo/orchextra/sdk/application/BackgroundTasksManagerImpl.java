@@ -18,11 +18,10 @@
 
 package com.gigigo.orchextra.sdk.application;
 
-import com.gigigo.ggglib.permissions.Permission;
-import com.gigigo.ggglib.permissions.PermissionChecker;
-import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
 import com.gigigo.orchextra.domain.abstractions.background.BackgroundTasksManager;
 import com.gigigo.orchextra.sdk.OrchextraTasksManager;
+import com.gigigo.permissions.interfaces.Permission;
+import com.gigigo.permissions.interfaces.PermissionChecker;
 
 public class BackgroundTasksManagerImpl implements BackgroundTasksManager {
 
@@ -31,7 +30,7 @@ public class BackgroundTasksManagerImpl implements BackgroundTasksManager {
   private final Permission permission;
 
   public BackgroundTasksManagerImpl(OrchextraTasksManager orchextraTasksManager,
-      PermissionChecker permissionChecker,Permission permissionParam) {
+      PermissionChecker permissionChecker, Permission permissionParam) {
     this.orchextraTasksManager = orchextraTasksManager;
     this.permissionChecker = permissionChecker;
 
@@ -41,17 +40,17 @@ public class BackgroundTasksManagerImpl implements BackgroundTasksManager {
   @Override public void startBackgroundTasks() {
     boolean granted = permissionChecker.isGranted(permission);
     if (granted) {
-        orchextraTasksManager.initBackgroundTasks(granted);
-      }
+      orchextraTasksManager.initBackgroundTasks(granted);
+    }
   }
+
   @Override public void reStartBackgroundTasks() {
     if (permissionChecker.isGranted(permission)) {
       orchextraTasksManager.reStartBackgroundTasks();
     }
   }
 
-  @Override
-  public void pauseBackgroundTasks() {
+  @Override public void pauseBackgroundTasks() {
     orchextraTasksManager.pauseBackgroundTasks();
   }
 

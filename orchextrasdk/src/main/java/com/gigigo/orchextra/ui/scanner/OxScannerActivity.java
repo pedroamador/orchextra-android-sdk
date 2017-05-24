@@ -19,157 +19,142 @@
 package com.gigigo.orchextra.ui.scanner;
 
 import android.os.Bundle;
-
-import com.gigigo.ggglib.permissions.PermissionChecker;
-import com.gigigo.ggglib.permissions.UserPermissionRequestResponseListener;
-import com.gigigo.ggglogger.GGGLogImpl;
 import com.gigigo.orchextra.R;
 import com.gigigo.orchextra.control.presenters.scanner.OxCodeScannerPresenter;
 import com.gigigo.orchextra.control.presenters.scanner.OxCodeScannerView;
 import com.gigigo.orchextra.control.presenters.scanner.entities.ScannerResultPresenter;
-import com.gigigo.orchextra.device.permissions.PermissionCameraImp;
 import com.gigigo.orchextra.di.injector.InjectorImpl;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.interactors.actions.ActionDispatcher;
 import com.gigigo.orchextra.sdk.OrchextraManager;
 import com.gigigo.orchextra.ui.OxToolbarActivity;
-
+import me.dm7.barcodescanner.zbar.Result;
 import orchextra.javax.inject.Inject;
 
-import me.dm7.barcodescanner.zbar.Result;
+public class OxScannerActivity extends OxToolbarActivity
+    implements OxCodeScannerView, OxZBarScannerView.ResultHandler {
 
-public class OxScannerActivity extends OxToolbarActivity implements OxCodeScannerView, OxZBarScannerView.ResultHandler {
+  //@Inject PermissionChecker permissionChecker;
+  //@Inject PermissionCameraImp cameraPermissionImp;
+  @Inject OxCodeScannerPresenter presenter;
+  @Inject ActionDispatcher actionDispatcher;
+  @Inject OrchextraLogger orchextraLogger;
+  boolean isClosingActivity = false;
+  private OxZBarScannerView scannerView;
 
-    //@Inject PermissionChecker permissionChecker;
-    //@Inject PermissionCameraImp cameraPermissionImp;
-    @Inject OxCodeScannerPresenter presenter;
-    @Inject ActionDispatcher actionDispatcher;
-    @Inject OrchextraLogger orchextraLogger;
+  @Override public void onCreate(Bundle state) {
+    super.onCreate(state);
+    setContentView(R.layout.ox_activity_scanner_layout);
 
-    private OxZBarScannerView scannerView;
+    initDI();
+    presenter.attachView(this);
+  }
 
-    @Override
-    public void onCreate(Bundle state) {
-        super.onCreate(state);
-        setContentView(R.layout.ox_activity_scanner_layout);
-
-        initDI();
-        presenter.attachView(this);
+  private void initDI() {
+    InjectorImpl injector = OrchextraManager.getInjector();
+    if (injector != null) {
+      injector.injectCodeScannerActivity(this);
+    } else {
+      finish();
     }
+  }
 
-    private void initDI() {
-        InjectorImpl injector = OrchextraManager.getInjector();
-        if (injector != null) {
-            injector.injectCodeScannerActivity(this);
-        } else {
-            finish();
-        }
+  @Override public void initUi() {
+    initViews();
+    //initScannerCamera();
+    openScanner();
+  }
+
+  public void initViews() {
+    super.initMainViews();
+    scannerView = (OxZBarScannerView) findViewById(R.id.cameraPreview);
+    scannerView.setLogger(orchextraLogger);
+  }
+
+  //private void initScannerCamera() {
+  //    checkCameraPermission();
+  //}
+  //
+  //private void checkCameraPermission() {
+  //    boolean isGranted = permissionChecker.isGranted(cameraPermissionImp);
+  //    if (!isGranted) {
+  //        permissionChecker.askForPermission(cameraPermissionImp, cameraPermissionResponseListener, this);
+  //    } else {
+  //        openScanner();
+  //    }
+  //}
+  //
+  //private UserPermissionRequestResponseListener cameraPermissionResponseListener =
+  //    new UserPermissionRequestResponseListener() {
+  //        @Override
+  //        public void onPermissionAllowed(boolean permissionAllowed) {
+  //            if (permissionAllowed) {
+  //                openScanner();
+  //            }
+  //        }
+  //    };
+
+  @Override protected int getToolbarTitle() {
+    return R.string.ox_scanner_toolbar_title;
+  }
+
+  private void openScanner() {
+    scannerView.setupScanner();
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    startCamera();
+  }
+
+  @Override public void onPause() {
+    super.onPause();
+    stopCamera();
+  }
+
+  private void startCamera() {
+    if (scannerView != null) {
+      scannerView.startCamera();
+      scannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
     }
+  }
 
-    @Override
-    public void initUi() {
-        initViews();
-        //initScannerCamera();
-        openScanner();
+  private void stopCamera() {
+    try {
+      if (scannerView != null) {
+        scannerView.stopCamera();
+      }
+    } catch (Exception e) {
+      orchextraLogger.log("Error al parar la camara del scanner");
     }
+  }
 
-    public void initViews() {
-        super.initMainViews();
-        scannerView = (OxZBarScannerView) findViewById(R.id.cameraPreview);
-        scannerView.setLogger(orchextraLogger);
-    }
+  private void closeActivity() {
+    isClosingActivity = true;
 
-    @Override
-    protected int getToolbarTitle() {
-        return R.string.ox_scanner_toolbar_title;
-    }
+    stopCamera();
 
-    //private void initScannerCamera() {
-    //    checkCameraPermission();
-    //}
-    //
-    //private void checkCameraPermission() {
-    //    boolean isGranted = permissionChecker.isGranted(cameraPermissionImp);
-    //    if (!isGranted) {
-    //        permissionChecker.askForPermission(cameraPermissionImp, cameraPermissionResponseListener, this);
-    //    } else {
-    //        openScanner();
-    //    }
-    //}
-    //
-    //private UserPermissionRequestResponseListener cameraPermissionResponseListener =
-    //    new UserPermissionRequestResponseListener() {
-    //        @Override
-    //        public void onPermissionAllowed(boolean permissionAllowed) {
-    //            if (permissionAllowed) {
-    //                openScanner();
-    //            }
-    //        }
-    //    };
+    finish();
+  }
 
-    private void openScanner() {
-        scannerView.setupScanner();
-    }
+  @Override public void handleResult(Result rawResult) {
+    orchextraLogger.log(rawResult.toString());
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        startCamera();
-    }
+    final ScannerResultPresenter scanResult = new ScannerResultPresenter();
+    scanResult.setContent(rawResult.getContents());
+    scanResult.setType(rawResult.getBarcodeFormat().getName());
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        stopCamera();
-    }
+    orchextraLogger.log("Scanner Code: " + rawResult.getContents());
+    orchextraLogger.log("Scanner Type: " + rawResult.getBarcodeFormat().getName());
 
-    private void startCamera() {
-        if (scannerView != null) {
-            scannerView.startCamera();
-            scannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-        }
-    }
+    presenter.sendScannerResult(scanResult);
 
-    private void stopCamera() {
-        try {
-            if (scannerView != null) {
-                scannerView.stopCamera();
-            }
-        } catch (Exception e) {
-            orchextraLogger.log("Error al parar la camara del scanner");
-        }
-    }
+    closeActivity();
+  }
 
-    boolean isClosingActivity = false;
+  @Override protected void onDestroy() {
+    super.onDestroy();
 
-    private void closeActivity() {
-        isClosingActivity=true;
-
-        stopCamera();
-
-        finish();
-    }
-
-    @Override
-    public void handleResult(Result rawResult) {
-        orchextraLogger.log(rawResult.toString());
-
-        final ScannerResultPresenter scanResult = new ScannerResultPresenter();
-        scanResult.setContent(rawResult.getContents());
-        scanResult.setType(rawResult.getBarcodeFormat().getName());
-
-        orchextraLogger.log("Scanner Code: " + rawResult.getContents());
-        orchextraLogger.log("Scanner Type: " + rawResult.getBarcodeFormat().getName());
-
-        presenter.sendScannerResult(scanResult);
-
-        closeActivity();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        presenter.detachView();
-    }
+    presenter.detachView();
+  }
 }

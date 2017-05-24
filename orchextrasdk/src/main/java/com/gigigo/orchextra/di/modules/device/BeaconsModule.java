@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.di.modules.device;
 
-import com.gigigo.ggglib.ContextProvider;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.BuildConfig;
 import com.gigigo.orchextra.control.controllers.config.ConfigObservable;
 import com.gigigo.orchextra.control.controllers.proximity.beacons.BeaconsController;
@@ -44,29 +44,24 @@ import com.gigigo.orchextra.domain.abstractions.error.ErrorLogger;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.AppRunningMode;
 import com.gigigo.orchextra.domain.abstractions.threads.ThreadSpec;
 import com.gigigo.orchextra.domain.interactors.actions.ActionDispatcher;
-
+import orchextra.dagger.Module;
+import orchextra.dagger.Provides;
+import orchextra.javax.inject.Provider;
+import orchextra.javax.inject.Singleton;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.logging.LogManager;
 import org.altbeacon.beacon.logging.Loggers;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 
-import orchextra.dagger.Module;
-import orchextra.dagger.Provides;
-import orchextra.javax.inject.Provider;
-import orchextra.javax.inject.Singleton;
-
-
-@Module
-public class BeaconsModule {
+@Module public class BeaconsModule {
 
   @Provides @Singleton BeaconManager provideBeaconManager(ContextProvider contextProvider,
-      OrchextraLogger orchextraLogger){
-    BeaconManager beaconManager = BeaconManager.getInstanceForApplication(
-        contextProvider.getApplicationContext());
+      OrchextraLogger orchextraLogger) {
+    BeaconManager beaconManager =
+        BeaconManager.getInstanceForApplication(contextProvider.getApplicationContext());
 
     setBeaconsLogLevel(orchextraLogger);
-
 
     BeaconParser bp = new BeaconParser().setBeaconLayout(BuildConfig.IBEACON_LAYOUT_PARSING);
     bp.addExtraDataParser(new BeaconParser().setBeaconLayout(BeaconParser.EDDYSTONE_TLM_LAYOUT));
@@ -86,23 +81,23 @@ public class BeaconsModule {
   }
 
   private void setBeaconsLogLevel(OrchextraLogger orchextraLogger) {
-    if (orchextraLogger.getOrchextraSDKLogLevel() == OrchextraSDKLogLevel.ALL){
+    if (orchextraLogger.getOrchextraSDKLogLevel() == OrchextraSDKLogLevel.ALL) {
       LogManager.setVerboseLoggingEnabled(true);
       LogManager.setLogger(Loggers.verboseLogger());
-    }else{
+    } else {
       LogManager.setVerboseLoggingEnabled(false);
       LogManager.setLogger(Loggers.empty());
     }
   }
 
-  @Provides @Singleton BackgroundPowerSaver BackgroundPowerSaver(ContextProvider contextProvider){
+  @Provides @Singleton BackgroundPowerSaver BackgroundPowerSaver(ContextProvider contextProvider) {
     return new BackgroundPowerSaver(contextProvider.getApplicationContext());
   }
 
-  @Provides @Singleton BeaconScanner provideBeaconScanner(RegionMonitoringScanner regionMonitoringScanner,
-      BeaconRangingScanner beaconRangingScanner, AppRunningMode appRunningMode,
-      BluetoothStatusInfo bluetoothStatusInfo, ConfigObservable configObservable,
-      OrchextraLogger orchextraLogger){
+  @Provides @Singleton BeaconScanner provideBeaconScanner(
+      RegionMonitoringScanner regionMonitoringScanner, BeaconRangingScanner beaconRangingScanner,
+      AppRunningMode appRunningMode, BluetoothStatusInfo bluetoothStatusInfo,
+      ConfigObservable configObservable, OrchextraLogger orchextraLogger) {
 
     return new BeaconScannerImpl(regionMonitoringScanner, beaconRangingScanner, bluetoothStatusInfo,
         appRunningMode, configObservable, orchextraLogger);
@@ -110,14 +105,15 @@ public class BeaconsModule {
 
   @Provides @Singleton BeaconRangingScanner provideBeaconRangingScanner(BeaconManager beaconManager,
       BeaconsController beaconsController, BeaconRegionAndroidMapper beaconRegionControlMapper,
-      BeaconAndroidMapper beaconAndroidMapper, OrchextraLogger orchextraLogger){
+      BeaconAndroidMapper beaconAndroidMapper, OrchextraLogger orchextraLogger) {
     return new BeaconRangingScannerImpl(beaconManager, beaconsController, beaconRegionControlMapper,
         beaconAndroidMapper, orchextraLogger);
   }
 
-  @Provides @Singleton RegionMonitoringScanner provideRegionMonitoringScanner(ContextProvider contextProvider,
-    BeaconManager beaconManager, MonitoringListener monitoringListener, BeaconsController beaconsController,
-      BeaconRegionAndroidMapper beaconRegionControlMapper, OrchextraLogger orchextraLogger){
+  @Provides @Singleton RegionMonitoringScanner provideRegionMonitoringScanner(
+      ContextProvider contextProvider, BeaconManager beaconManager,
+      MonitoringListener monitoringListener, BeaconsController beaconsController,
+      BeaconRegionAndroidMapper beaconRegionControlMapper, OrchextraLogger orchextraLogger) {
     return new RegionMonitoringScannerImpl(contextProvider, beaconManager, monitoringListener,
         beaconsController, beaconRegionControlMapper, orchextraLogger);
   }
@@ -125,25 +121,26 @@ public class BeaconsModule {
   @Provides @Singleton BeaconsController provideBeaconsController(
       InteractorInvoker interactorInvoker, ActionDispatcher actionDispatcher,
       @BeaconEventsInteractorExecution
-      Provider<InteractorExecution> beaconsInteractorExecutionProvider,
-      @RegionsProviderInteractorExecution Provider<InteractorExecution> regionsProviderInteractorExecutionProvider,
-      ErrorLogger errorLogger, @MainThread ThreadSpec mainThreadSpec){
+          Provider<InteractorExecution> beaconsInteractorExecutionProvider,
+      @RegionsProviderInteractorExecution
+          Provider<InteractorExecution> regionsProviderInteractorExecutionProvider,
+      ErrorLogger errorLogger, @MainThread ThreadSpec mainThreadSpec) {
 
-    return new BeaconsController(interactorInvoker, actionDispatcher, beaconsInteractorExecutionProvider,
-        regionsProviderInteractorExecutionProvider, errorLogger, mainThreadSpec);
+    return new BeaconsController(interactorInvoker, actionDispatcher,
+        beaconsInteractorExecutionProvider, regionsProviderInteractorExecutionProvider, errorLogger,
+        mainThreadSpec);
   }
 
   @Provides @Singleton MonitoringListener provideMonitoringListener(AppRunningMode appRunningMode,
-      BeaconRangingScanner beaconRangingScanner, OrchextraLogger orchextraLogger){
+      BeaconRangingScanner beaconRangingScanner, OrchextraLogger orchextraLogger) {
     return new MonitoringListenerImpl(appRunningMode, beaconRangingScanner, orchextraLogger);
   }
 
-  @Provides @Singleton BeaconRegionAndroidMapper provideBeaconRegionAndroidMapper(){
+  @Provides @Singleton BeaconRegionAndroidMapper provideBeaconRegionAndroidMapper() {
     return new BeaconRegionAndroidMapper();
   }
 
-  @Provides @Singleton BeaconAndroidMapper provideBeaconAndroidMapper(){
+  @Provides @Singleton BeaconAndroidMapper provideBeaconAndroidMapper() {
     return new BeaconAndroidMapper();
   }
-
 }

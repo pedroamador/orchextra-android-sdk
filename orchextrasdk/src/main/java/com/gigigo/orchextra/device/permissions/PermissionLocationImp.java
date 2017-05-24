@@ -19,17 +19,14 @@
 package com.gigigo.orchextra.device.permissions;
 
 import android.Manifest;
-
 import android.content.Context;
-import android.widget.Toast;
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.Permission;
 import com.gigigo.orchextra.R;
+import com.gigigo.permissions.interfaces.Permission;
 
 public class PermissionLocationImp implements Permission {
   Context mContext;
 
-  public PermissionLocationImp(Context  context) {
+  public PermissionLocationImp(Context context) {
     mContext = context;
   }
 

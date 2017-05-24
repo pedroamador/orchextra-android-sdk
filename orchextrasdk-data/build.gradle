@@ -60,14 +60,11 @@ dependencies {
 
   compile parent.ext.modules.orchextraSdkProvider
 
-  //compile parent.ext.dependencies.gggLibDevice
-  //compile parent.ext.dependencies.gggLibLogger
-  //compile parent.ext.dependencies.gggLibNetworkRetrofit
+  compile parent.ext.dependencies.loggingInterceptor
 
-  compile 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.11'
-  compile 'com.github.gigigoapps.gigigo-android-lib:ggglib.logger:1.0.11'
-  compile 'com.github.gigigoapps.gigigo-android-network:ggglib.network.retrofit:1.0.7'
-
+  compile parent.ext.dependencies.gggLibDevice
+  compile parent.ext.dependencies.gggLibLogger
+  compile parent.ext.dependencies.gggLibNetworkRetrofit
 
   testCompile parent.ext.testDependencies.junit
   testCompile parent.ext.testDependencies.mockito

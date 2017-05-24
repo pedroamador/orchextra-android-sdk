@@ -18,29 +18,32 @@
 
 package com.gigigo.orchextra.di.modules.device;
 
-import com.gigigo.ggglib.permissions.PermissionChecker;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
-import com.gigigo.orchextra.device.information.AndroidSdkVersionAppInfo;
 import com.gigigo.orchextra.device.information.AndroidDevice;
+import com.gigigo.orchextra.device.information.AndroidSdkVersionAppInfo;
 import com.gigigo.orchextra.device.permissions.PermissionCameraImp;
 import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.abstractions.initialization.OrchextraStatusAccessor;
+import com.gigigo.permissions.interfaces.PermissionChecker;
 
-public interface DeviceModuleProvider extends
-    BluetoothModuleProvider,
-    ActionsModuleProvider,
-    NotificationsModuleProvider,
-    GeolocationModuleProvider,
-    ImageRecognitionModuleProvider{
+public interface DeviceModuleProvider
+    extends BluetoothModuleProvider, ActionsModuleProvider, NotificationsModuleProvider,
+    GeolocationModuleProvider, ImageRecognitionModuleProvider {
 
-    AndroidSdkVersionAppInfo provideAndroidApp();
-    AndroidDevice provideAndroidDevice();
-    OrchextraLogger provideOrchextraLogger();
-    GoogleApiClientConnector provideGoogleApiClientConnector();
-    PermissionChecker providePermissionChecker();
-    PermissionLocationImp providePermissionLocationImp();
-    PermissionCameraImp providePermissionCameraImp();
-    OrchextraStatusAccessor provideOrchextraStatusAccessor();
+  AndroidSdkVersionAppInfo provideAndroidApp();
 
+  AndroidDevice provideAndroidDevice();
+
+  OrchextraLogger provideOrchextraLogger();
+
+  GoogleApiClientConnector provideGoogleApiClientConnector();
+
+  PermissionChecker providePermissionChecker();
+
+  PermissionLocationImp providePermissionLocationImp();
+
+  PermissionCameraImp providePermissionCameraImp();
+
+  OrchextraStatusAccessor provideOrchextraStatusAccessor();
 }

@@ -18,7 +18,7 @@
 
 package com.gigigo.orchextra.device.notifications;
 
-import com.gigigo.ggglib.ContextProvider;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.domain.abstractions.actions.ActionDispatcherListener;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.AppRunningMode;
 import com.gigigo.orchextra.domain.abstractions.notifications.ForegroundNotificationBuilder;

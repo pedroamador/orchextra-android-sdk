@@ -25,10 +25,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.gigigo.ggglib.device.AndroidSdkVersion;
-import com.gigigo.ggglogger.GGGLogImpl;
-import com.gigigo.ggglogger.LogLevel;
+import com.gigigo.ggglib.logger.GGGLogImpl;
+import com.gigigo.ggglib.logger.LogLevel;
 import com.gigigo.imagerecognitioninterface.ImageRecognition;
 import com.gigigo.orchextra.BuildConfig;
 import com.gigigo.orchextra.CrmUser;
@@ -63,12 +62,10 @@ import com.gigigo.orchextra.domain.model.triggers.params.AppRunningModeType;
 import com.gigigo.orchextra.sdk.application.applifecycle.OrchextraActivityLifecycle;
 import com.gigigo.orchextra.sdk.model.CrmUserDomainToCrmUserSdkConverter;
 import com.gigigo.orchextra.sdk.scanner.ScannerManager;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import orchextra.javax.inject.Inject;
 
 public class OrchextraManager implements Observer {
@@ -83,12 +80,8 @@ public class OrchextraManager implements Observer {
       (BuildConfig.DEBUG) ? OrchextraSDKLogLevel.ALL : OrchextraSDKLogLevel.NONE;
 
   private static OrchextraManager instance;
-
-  private InjectorImpl injector;
   private static OrchextraManagerCompletionCallback orchextraCompletionCallback;
-  private String gcmSenderId;
-  private long backgroundModeScan = BeaconBackgroundModeScan.NORMAL.getIntensity();
-
+  private static String notificationActivityClass = "";
   @Inject OrchextraActivityLifecycle orchextraActivityLifecycle;
   @Inject OrchextraTasksManager orchextraTasksManager;
   @Inject CrmUserDomainToCrmUserSdkConverter crmUserDomainToCrmUserSdkConverter;
@@ -100,12 +93,11 @@ public class OrchextraManager implements Observer {
   @Inject ImageRecognitionManager imageRecognitionManager;
   @Inject OrchextraLogger orchextraLogger;
   @Inject BeaconRangingScanner beaconRangingScanner;
-
   @Inject Session session;
-
   @Inject ConfigChangeObservable configObservable;
-
-  private static String notificationActivityClass = "";
+  private InjectorImpl injector;
+  private String gcmSenderId;
+  private long backgroundModeScan = BeaconBackgroundModeScan.NORMAL.getIntensity();
 
   public static OrchextraManagerCompletionCallback getOrchextraCompletionCallback() {
     return orchextraCompletionCallback;
@@ -260,9 +252,9 @@ public class OrchextraManager implements Observer {
    */
   public static synchronized void sdkStop() {
     OrchextraManager orchextraManager = OrchextraManager.instance;
-    if (orchextraManager != null &&
-        orchextraManager.orchextraStatusAccessor != null &&
-        orchextraManager.orchextraStatusAccessor.isStarted()) {
+    if (orchextraManager != null
+        && orchextraManager.orchextraStatusAccessor != null
+        && orchextraManager.orchextraStatusAccessor.isStarted()) {
 
       orchextraManager.orchextraStatusAccessor.setStoppedStatus();
       instance.stopOrchextraTasks();
@@ -284,18 +276,227 @@ public class OrchextraManager implements Observer {
     return null;//todo maybe -> InjectorFakeNullImpl, for avoid nullpointerexception
   }
 
+  public static OrchextraSDKLogLevel getLogLevel() {
+    return orchextraSDKLogLevel;
+  }
+
   public static void setLogLevel(OrchextraLogLevel logLevel) {
     if (logLevel != null) {
       orchextraSDKLogLevel = logLevel.getSDKLogLevel();
     }
   }
 
-  public static OrchextraSDKLogLevel getLogLevel() {
-    return orchextraSDKLogLevel;
-  }
-
   public static void setNotificationActivityClass(String notificationActivityClass) {
     OrchextraManager.notificationActivityClass = notificationActivityClass;
+  }
+
+  public static void openScannerView() {
+    OrchextraManager orchextraManager = OrchextraManager.instance;
+    OrchextraModule orchextraModule = getOrchextraModule();
+    if (orchextraModule != null) {
+      ScannerManager scannerManager = orchextraManager.scannerManager;
+      scannerManager.open();
+    }
+  }
+
+  private static OrchextraModule getOrchextraModule() {
+    InjectorImpl injector = getInjector();
+    if (injector != null) {
+      OrchextraComponent orchextraComponent = injector.getOrchextraComponent();
+      return orchextraComponent.getOrchextraModule();
+    } else {
+      return null;
+    }
+  }
+
+  public static void setImageRecognition(ImageRecognition imageRecognition) {
+
+    if (OrchextraManager.instance != null && imageRecognition != null) {
+      OrchextraManager.instance.imageRecognitionManager.setImplementation(imageRecognition);
+    } else {
+      GGGLogImpl.log("Orchextra is not initialized when image recognition was setted",
+          LogLevel.ERROR);
+    }
+  }
+
+  public static void startImageRecognition() {
+    if (OrchextraManager.instance != null
+        && OrchextraManager.instance.imageRecognitionManager != null) {
+      OrchextraManager.instance.imageRecognitionManager.startImageRecognition();
+    } else {
+      GGGLogImpl.log("Orchextra is not initialized when image recognition was started",
+          LogLevel.ERROR);
+    }
+  }
+
+  public static void saveApiKeyAndSecret(String apiKey, String apiSecret) {
+    if (AndroidSdkVersion.hasJellyBean18()) {
+      saveCredentials(apiKey, apiSecret);
+    }
+  }
+
+  private static void saveCredentials(String apiKey, String apiSecret) {
+    if (!TextUtils.isEmpty(apiKey) && !TextUtils.isEmpty(apiSecret)) {
+      OrchextraManager.instance.orchextraStatusAccessor.saveCredentials(apiKey, apiSecret);
+    }
+  }
+
+  public static void setGcmSendId(Application application, String gcmSenderId) {
+    if (OrchextraManager.instance != null) {
+      OrchextraManager.instance.gcmSenderId = gcmSenderId;
+      enabledOrchextraNotificationPush(application, gcmSenderId);
+    } else {
+      GGGLogImpl.log("Orchextra is not initialized when GCM Sender Id was setted", LogLevel.ERROR);
+    }
+  }
+
+  /**
+   * this method enabled or disabled the service with the intent-filter for RECEIVER the push, this
+   * is necesary
+   * //because you must to declare always in the manifest file, you can not do it with code.
+   * Beacause that we
+   * //keep the service OrchextraGcmListenerService and the intent filter in manifest, but
+   * weenabled
+   * or disabled
+   * the service if the sender ID in Orchextra are not setted
+   */
+  private static void enabledOrchextraNotificationPush(Application application,
+      String gcmSenderId) {
+    int componentEnabledState;
+    if (gcmSenderId == null) {
+      componentEnabledState = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+    } else {
+      componentEnabledState = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+    }
+    ComponentName component = new ComponentName(application, OrchextraGcmListenerService.class);
+    application.getPackageManager()
+        .setComponentEnabledSetting(component, componentEnabledState, PackageManager.DONT_KILL_APP);
+  }
+
+  public static String getGcmSenderId() {
+    return OrchextraManager.instance.gcmSenderId;
+  }
+
+  public static void updateBackgroundPeriodBetweenScan(long intensity) {
+    if (OrchextraManager.instance != null) {
+      OrchextraManager.instance.beaconRangingScanner.updateBackgroundScanPeriodBetweenScans(
+          intensity);
+    } else {
+      GGGLogImpl.log("Orchextra is not initialized when background period between scan was updated",
+          LogLevel.ERROR);
+    }
+  }
+
+  public static void updateBackgroundModeScan(long intensity) {
+    if (OrchextraManager.instance != null) {
+      OrchextraManager.instance.backgroundModeScan = intensity;
+      GGGLogImpl.log("Orchextra set to HARDCORE background Scan Mode", LogLevel.INFO);
+    } else {
+      GGGLogImpl.log("Orchextra is not initialized when background period between scan was updated",
+          LogLevel.ERROR);
+    }
+  }
+
+  public static long getBackgroundModeScan() {
+    return OrchextraManager.instance.backgroundModeScan;
+  }
+
+  public static synchronized void sdkPause() {
+
+    OrchextraManager orchextraManager = OrchextraManager.instance;
+    if (orchextraManager != null
+        && orchextraManager.orchextraStatusAccessor != null
+        && orchextraManager.orchextraStatusAccessor.isStarted()) {
+      //fixme new pause status
+      //    orchextraManager.orchextraStatusAccessor.setStoppedStatus();
+      instance.pauseOrchextraTasks();
+      System.out.println("\n\n\n\n\n\n\n\n\n\n\n\npauseOrchextraTasks");
+    }
+  }
+
+  public static List<String> getDeviceTags() {
+    if (OrchextraManager.instance != null) {
+      return OrchextraManager.instance.crmUserController.getDeviceTags();
+    }
+    return null;
+  }
+
+  public static void setDeviceTags(List<String> deviceTagList) {
+    if (OrchextraManager.instance != null) {
+      OrchextraManager.instance.crmUserController.setDeviceTags(deviceTagList);
+    }
+  }
+
+  public static List<String> getDeviceBusinessUnits() {
+    if (OrchextraManager.instance != null) {
+      return OrchextraManager.instance.crmUserController.getDeviceBusinessUnits();
+    }
+    return null;
+  }
+
+  public static void setDeviceBusinessUnits(List<String> deviceBusinessUnits) {
+    if (OrchextraManager.instance != null) {
+      OrchextraManager.instance.crmUserController.setDeviceBusinessUnits(deviceBusinessUnits);
+    }
+  }
+
+  public static List<String> getUserTags() {
+    if (OrchextraManager.instance != null) {
+      return OrchextraManager.instance.crmUserController.getUserTags();
+    }
+    return null;
+  }
+
+  public static void setUserTags(List<String> userTagList) {
+    if (OrchextraManager.instance != null) {
+      OrchextraManager.instance.crmUserController.setUserTags(userTagList);
+    }
+  }
+
+  public static List<String> getUserBusinessUnits() {
+    if (OrchextraManager.instance != null) {
+      return OrchextraManager.instance.crmUserController.getUserBusinessUnits();
+    }
+    return null;
+  }
+
+  public static void setUserBusinessUnits(List<String> userBusinessUnits) {
+    if (OrchextraManager.instance != null) {
+      OrchextraManager.instance.crmUserController.setUserBusinessUnits(userBusinessUnits);
+    }
+  }
+
+  public static Map<String, String> getUserCustomFields() {
+    if (OrchextraManager.instance != null) {
+
+      List<CustomField> userCustomFieldList =
+          OrchextraManager.instance.crmUserController.getUserCustomFields();
+
+      Map<String, String> customFieldMap = new HashMap<>();
+
+      for (CustomField customField : userCustomFieldList) {
+        customFieldMap.put(customField.getKey(), customField.getValue());
+      }
+
+      return customFieldMap;
+    }
+    return null;
+  }
+
+  public static void setUserCustomFields(Map<String, String> userCustomFields) {
+    if (OrchextraManager.instance != null) {
+
+      List<CustomField> customFieldList = new ArrayList<>();
+
+      for (String key : userCustomFields.keySet()) {
+        CustomField customField = new CustomField();
+        customField.setKey(key);
+        customField.setValue(userCustomFields.get(key));
+        customFieldList.add(customField);
+      }
+
+      OrchextraManager.instance.crmUserController.setUserCustomFields(customFieldList);
+    }
   }
 
   private void stopOrchextraTasks() {
@@ -435,217 +636,8 @@ public class OrchextraManager implements Observer {
     app.registerActivityLifecycleCallbacks(orchextraActivityLifecycle);
   }
 
-  public static void openScannerView() {
-    OrchextraManager orchextraManager = OrchextraManager.instance;
-    OrchextraModule orchextraModule = getOrchextraModule();
-    if (orchextraModule != null) {
-      ScannerManager scannerManager = orchextraManager.scannerManager;
-      scannerManager.open();
-    }
-  }
-
-  private static OrchextraModule getOrchextraModule() {
-    InjectorImpl injector = getInjector();
-    if (injector != null) {
-      OrchextraComponent orchextraComponent = injector.getOrchextraComponent();
-      return orchextraComponent.getOrchextraModule();
-    } else {
-      return null;
-    }
-  }
-
-  public static void setImageRecognition(ImageRecognition imageRecognition) {
-
-    if (OrchextraManager.instance != null && imageRecognition != null) {
-      OrchextraManager.instance.imageRecognitionManager.setImplementation(imageRecognition);
-    } else {
-      GGGLogImpl.log("Orchextra is not initialized when image recognition was setted",
-          LogLevel.ERROR);
-    }
-  }
-
-  public static void startImageRecognition() {
-    if (OrchextraManager.instance != null
-        && OrchextraManager.instance.imageRecognitionManager != null) {
-      OrchextraManager.instance.imageRecognitionManager.startImageRecognition();
-    } else {
-      GGGLogImpl.log("Orchextra is not initialized when image recognition was started",
-          LogLevel.ERROR);
-    }
-  }
-
-  public static void saveApiKeyAndSecret(String apiKey, String apiSecret) {
-    if (AndroidSdkVersion.hasJellyBean18()) {
-      saveCredentials(apiKey, apiSecret);
-    }
-  }
-
-  private static void saveCredentials(String apiKey, String apiSecret) {
-    if (!TextUtils.isEmpty(apiKey) && !TextUtils.isEmpty(apiSecret)) {
-      OrchextraManager.instance.orchextraStatusAccessor.saveCredentials(apiKey, apiSecret);
-    }
-  }
-
-  public static void setGcmSendId(Application application, String gcmSenderId) {
-    if (OrchextraManager.instance != null) {
-      OrchextraManager.instance.gcmSenderId = gcmSenderId;
-      enabledOrchextraNotificationPush(application, gcmSenderId);
-    } else {
-      GGGLogImpl.log("Orchextra is not initialized when GCM Sender Id was setted", LogLevel.ERROR);
-    }
-  }
-
-  /**
-   * this method enabled or disabled the service with the intent-filter for RECEIVER the push, this
-   * is necesary
-   * //because you must to declare always in the manifest file, you can not do it with code.
-   * Beacause that we
-   * //keep the service OrchextraGcmListenerService and the intent filter in manifest, but
-   * weenabled
-   * or disabled
-   * the service if the sender ID in Orchextra are not setted
-   */
-  private static void enabledOrchextraNotificationPush(Application application,
-      String gcmSenderId) {
-    int componentEnabledState;
-    if (gcmSenderId == null) {
-      componentEnabledState = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-    } else {
-      componentEnabledState = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-    }
-    ComponentName component = new ComponentName(application, OrchextraGcmListenerService.class);
-    application.getPackageManager()
-        .setComponentEnabledSetting(component, componentEnabledState, PackageManager.DONT_KILL_APP);
-  }
-
-  public static String getGcmSenderId() {
-    return OrchextraManager.instance.gcmSenderId;
-  }
-
-   public static void updateBackgroundPeriodBetweenScan(long intensity) {
-    if (OrchextraManager.instance != null) {
-      OrchextraManager.instance.beaconRangingScanner.updateBackgroundScanPeriodBetweenScans(
-          intensity);
-    } else {
-      GGGLogImpl.log("Orchextra is not initialized when background period between scan was updated",
-          LogLevel.ERROR);
-    }
-  }
-
-  public static void updateBackgroundModeScan(long intensity) {
-    if (OrchextraManager.instance != null) {
-      OrchextraManager.instance.backgroundModeScan = intensity;
-      GGGLogImpl.log("Orchextra set to HARDCORE background Scan Mode", LogLevel.INFO);
-    } else {
-      GGGLogImpl.log("Orchextra is not initialized when background period between scan was updated",
-          LogLevel.ERROR);
-    }
-  }
-
-  public static long getBackgroundModeScan() {
-    return OrchextraManager.instance.backgroundModeScan;
-  }
-
   private void pauseOrchextraTasks() {
     orchextraTasksManager.pauseBackgroundTasks();
-  }
-
-  public static synchronized void sdkPause() {
-
-    OrchextraManager orchextraManager = OrchextraManager.instance;
-    if (orchextraManager != null &&
-        orchextraManager.orchextraStatusAccessor != null &&
-        orchextraManager.orchextraStatusAccessor.isStarted()) {
-      //fixme new pause status
-      //    orchextraManager.orchextraStatusAccessor.setStoppedStatus();
-      instance.pauseOrchextraTasks();
-      System.out.println("\n\n\n\n\n\n\n\n\n\n\n\npauseOrchextraTasks");
-    }
-  }
-
-  public static List<String> getDeviceTags() {
-    if (OrchextraManager.instance != null) {
-      return OrchextraManager.instance.crmUserController.getDeviceTags();
-    }
-    return null;
-  }
-
-  public static void setDeviceTags(List<String> deviceTagList) {
-    if (OrchextraManager.instance != null) {
-      OrchextraManager.instance.crmUserController.setDeviceTags(deviceTagList);
-    }
-  }
-
-  public static List<String> getDeviceBusinessUnits() {
-    if (OrchextraManager.instance != null) {
-      return OrchextraManager.instance.crmUserController.getDeviceBusinessUnits();
-    }
-    return null;
-  }
-
-  public static void setDeviceBusinessUnits(List<String> deviceBusinessUnits) {
-    if (OrchextraManager.instance != null) {
-      OrchextraManager.instance.crmUserController.setDeviceBusinessUnits(deviceBusinessUnits);
-    }
-  }
-
-  public static List<String> getUserTags() {
-    if (OrchextraManager.instance != null) {
-      return OrchextraManager.instance.crmUserController.getUserTags();
-    }
-    return null;
-  }
-
-  public static void setUserTags(List<String> userTagList) {
-    if (OrchextraManager.instance != null) {
-      OrchextraManager.instance.crmUserController.setUserTags(userTagList);
-    }
-  }
-
-  public static List<String> getUserBusinessUnits() {
-    if (OrchextraManager.instance != null) {
-      return OrchextraManager.instance.crmUserController.getUserBusinessUnits();
-    }
-    return null;
-  }
-
-  public static void setUserBusinessUnits(List<String> userBusinessUnits) {
-    if (OrchextraManager.instance != null) {
-      OrchextraManager.instance.crmUserController.setUserBusinessUnits(userBusinessUnits);
-    }
-  }
-
-  public static Map<String, String> getUserCustomFields() {
-    if (OrchextraManager.instance != null) {
-
-      List<CustomField> userCustomFieldList =
-          OrchextraManager.instance.crmUserController.getUserCustomFields();
-
-      Map<String, String> customFieldMap = new HashMap<>();
-
-      for (CustomField customField : userCustomFieldList) {
-        customFieldMap.put(customField.getKey(), customField.getValue());
-      }
-
-      return customFieldMap;
-    }
-    return null;
-  }
-
-  public static void setUserCustomFields(Map<String, String> userCustomFields) {
-    if (OrchextraManager.instance != null) {
-
-      List<CustomField> customFieldList = new ArrayList<>();
-
-      for (String key : userCustomFields.keySet()) {
-        CustomField customField = new CustomField();
-        customField.setKey(key);
-        customField.setValue(userCustomFields.get(key));
-        customFieldList.add(customField);
-      }
-
-      OrchextraManager.instance.crmUserController.setUserCustomFields(customFieldList);
-    }
   }
 
   @Override public void update(OrchextraChanges observable, Object data) {

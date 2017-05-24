@@ -17,122 +17,104 @@
  */
 package com.gigigo.orchextra.di.modules.device;
 
-import com.gigigo.gggjavalib.business.model.BusinessError;
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.AndroidPermissionCheckerImpl;
-import com.gigigo.ggglib.permissions.PermissionChecker;
+import com.gigigo.ggglib.core.business.model.BusinessError;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.delegates.ConfigDelegateImpl;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
 import com.gigigo.orchextra.device.GoogleApiClientConnectorImpl;
-import com.gigigo.orchextra.device.information.AndroidSdkVersionAppInfo;
 import com.gigigo.orchextra.device.information.AndroidDevice;
 import com.gigigo.orchextra.device.information.AndroidInstanceIdProvider;
+import com.gigigo.orchextra.device.information.AndroidSdkVersionAppInfo;
 import com.gigigo.orchextra.device.permissions.GoogleApiPermissionChecker;
 import com.gigigo.orchextra.device.permissions.PermissionCameraImp;
 import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
 import com.gigigo.orchextra.domain.abstractions.beacons.BeaconScanner;
-import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
+import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.abstractions.error.ErrorLogger;
 import com.gigigo.orchextra.domain.abstractions.foreground.ForegroundTasksManager;
 import com.gigigo.orchextra.domain.abstractions.geofences.GeofenceRegister;
+import com.gigigo.orchextra.domain.abstractions.initialization.features.FeatureListener;
 import com.gigigo.orchextra.sdk.OrchextraTasksManager;
 import com.gigigo.orchextra.sdk.OrchextraTasksManagerImpl;
-import com.gigigo.orchextra.domain.abstractions.initialization.features.FeatureListener;
 import com.gigigo.orchextra.sdk.application.ForegroundTasksManagerImpl;
-
-import orchextra.javax.inject.Singleton;
-
+import com.gigigo.permissions.PermissionCheckerImpl;
+import com.gigigo.permissions.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
+import orchextra.javax.inject.Singleton;
 
+@Module(includes = {
+    BluetoothModule.class, ActionsModule.class, NotificationsModule.class, GeolocationModule.class,
+    ImageRecognitionModule.class
+}) public class DeviceModule {
 
-@Module(includes = {BluetoothModule.class, ActionsModule.class, NotificationsModule.class, GeolocationModule.class, ImageRecognitionModule.class})
-public class DeviceModule {
+  @Singleton @Provides ForegroundTasksManager provideBackgroundTasksManager(
+      OrchextraTasksManager orchextraTasksManager, PermissionChecker permissionChecker,
+      ContextProvider contextProvider) {
+    return new ForegroundTasksManagerImpl(orchextraTasksManager, permissionChecker, contextProvider,
+        new PermissionLocationImp(contextProvider.getApplicationContext()));
+  }
 
-    @Singleton
-    @Provides
-    ForegroundTasksManager provideBackgroundTasksManager(OrchextraTasksManager orchextraTasksManager,
-                                                         PermissionChecker permissionChecker, ContextProvider contextProvider) {
-        return new ForegroundTasksManagerImpl(orchextraTasksManager, permissionChecker, contextProvider, new PermissionLocationImp(contextProvider.getApplicationContext()));
-    }
+  @Singleton @Provides OrchextraTasksManager provideOrchextraTasksManager(
+      BeaconScanner beaconScanner, ConfigDelegateImpl configDelegateImpl,
+      GeofenceRegister geofenceRegister, OrchextraLogger orchextraLogger) {
+    return new OrchextraTasksManagerImpl(beaconScanner, configDelegateImpl, geofenceRegister,
+        orchextraLogger);
+  }
 
-    @Singleton
-    @Provides
-    OrchextraTasksManager provideOrchextraTasksManager(BeaconScanner beaconScanner,
-                                                       ConfigDelegateImpl configDelegateImpl, GeofenceRegister geofenceRegister, OrchextraLogger orchextraLogger) {
-        return new OrchextraTasksManagerImpl(beaconScanner, configDelegateImpl, geofenceRegister, orchextraLogger);
-    }
+  @Singleton @Provides GoogleApiPermissionChecker provideGoogleApiPermissionChecker(
+      ContextProvider contextProvider, FeatureListener featureListener) {
+    return new GoogleApiPermissionChecker(contextProvider.getApplicationContext(), featureListener);
+  }
 
-    @Singleton
-    @Provides
-    GoogleApiPermissionChecker provideGoogleApiPermissionChecker(ContextProvider contextProvider,
-                                                                 FeatureListener featureListener) {
-        return new GoogleApiPermissionChecker(contextProvider.getApplicationContext(), featureListener);
-    }
-
-    @Provides
-    PermissionChecker providePermissionChecker(ContextProvider contextProvider) {
-        return new AndroidPermissionCheckerImpl(contextProvider.getApplicationContext(), contextProvider);
-    }
-
-  //  @Singleton
-    @Provides
-    PermissionLocationImp providePermissionLocationImp(ContextProvider contextProvider) {
-        return new PermissionLocationImp(contextProvider.getApplicationContext());
-    }
+  @Provides PermissionChecker providePermissionChecker(ContextProvider contextProvider) {
+    return new PermissionCheckerImpl(contextProvider.getCurrentActivity());
+  }
 
   //  @Singleton
-    @Provides
-    PermissionCameraImp providePermissionCameraImp(ContextProvider contextProvider) {
-        return new PermissionCameraImp(contextProvider.getApplicationContext());
-    }
+  @Provides PermissionLocationImp providePermissionLocationImp(ContextProvider contextProvider) {
+    return new PermissionLocationImp(contextProvider.getApplicationContext());
+  }
 
-    @Singleton
-    @Provides
-    GoogleApiClientConnector provideGoogleApiClientConnector(ContextProvider contextProvider,
-                                                             GoogleApiPermissionChecker googleApiPermissionChecker,
-                                                             OrchextraLogger orchextraLogger) {
+  //  @Singleton
+  @Provides PermissionCameraImp providePermissionCameraImp(ContextProvider contextProvider) {
+    return new PermissionCameraImp(contextProvider.getApplicationContext());
+  }
 
-        return new GoogleApiClientConnectorImpl(contextProvider, googleApiPermissionChecker,
-                orchextraLogger);
-    }
+  @Singleton @Provides GoogleApiClientConnector provideGoogleApiClientConnector(
+      ContextProvider contextProvider, GoogleApiPermissionChecker googleApiPermissionChecker,
+      OrchextraLogger orchextraLogger) {
 
-    @Singleton
-    @Provides
-    AndroidSdkVersionAppInfo provideAndroidApp() {
-        return new AndroidSdkVersionAppInfo();
-    }
+    return new GoogleApiClientConnectorImpl(contextProvider, googleApiPermissionChecker,
+        orchextraLogger);
+  }
 
-    @Singleton
-    @Provides
-    AndroidDevice provideAndroidDevice(ContextProvider contextProvider,
-                                       AndroidInstanceIdProvider androidInstanceIdProvider) {
-        return new AndroidDevice(contextProvider.getApplicationContext(), androidInstanceIdProvider);
-    }
+  @Singleton @Provides AndroidSdkVersionAppInfo provideAndroidApp() {
+    return new AndroidSdkVersionAppInfo();
+  }
 
-    @Singleton
-    @Provides
-    ErrorLogger provideErrorLogger(final OrchextraLogger orchextraLogger) {
-        return new ErrorLogger() {
-            @Override
-            public void log(BusinessError businessError) {
-                //When we change the credentials the server say {"status":false,"error":{"code":401}}
-                // instead {"status":false,"error":{"message":"Error.","code":403}}
-                //no error messages come from server
-                if (businessError.getMessage() != null)
-                    orchextraLogger.log(businessError.getMessage(), OrchextraSDKLogLevel.ERROR);
-                else
-                    orchextraLogger.log("Error: " + businessError.getCode(), OrchextraSDKLogLevel.ERROR);
+  @Singleton @Provides AndroidDevice provideAndroidDevice(ContextProvider contextProvider,
+      AndroidInstanceIdProvider androidInstanceIdProvider) {
+    return new AndroidDevice(contextProvider.getApplicationContext(), androidInstanceIdProvider);
+  }
 
-            }
+  @Singleton @Provides ErrorLogger provideErrorLogger(final OrchextraLogger orchextraLogger) {
+    return new ErrorLogger() {
+      @Override public void log(BusinessError businessError) {
+        //When we change the credentials the server say {"status":false,"error":{"code":401}}
+        // instead {"status":false,"error":{"message":"Error.","code":403}}
+        //no error messages come from server
+        if (businessError.getMessage() != null) {
+          orchextraLogger.log(businessError.getMessage(), OrchextraSDKLogLevel.ERROR);
+        } else {
+          orchextraLogger.log("Error: " + businessError.getCode(), OrchextraSDKLogLevel.ERROR);
+        }
+      }
 
-            @Override
-            public void log(String message) {
-                orchextraLogger.log(message, OrchextraSDKLogLevel.ERROR);
-            }
-        };
-    }
-
-
+      @Override public void log(String message) {
+        orchextraLogger.log(message, OrchextraSDKLogLevel.ERROR);
+      }
+    };
+  }
 }

@@ -18,8 +18,7 @@
 
 package com.gigigo.orchextra.di.modules.device;
 
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.PermissionChecker;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.control.controllers.config.ConfigObservable;
 import com.gigigo.orchextra.control.controllers.proximity.geofence.GeofenceController;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
@@ -35,18 +34,19 @@ import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
 import com.gigigo.orchextra.domain.abstractions.device.GeolocationManager;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.abstractions.geofences.GeofenceRegister;
+import com.gigigo.permissions.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 import orchextra.javax.inject.Singleton;
 
 @Module public class GeolocationModule {
 
-
   @Singleton @Provides RetrieveLastKnownLocation provideRetrieveLastKnownLocation(
       ContextProvider contextProvider, GoogleApiClientConnector googleApiClientConnector,
       PermissionChecker permissionChecker, PermissionLocationImp permissionLocationImp) {
 
-    RetrieveLocationByGpsOrNetworkProvider retrieveLocationByGpsOrNetworkProvider = new RetrieveLocationByGpsOrNetworkProvider(contextProvider.getApplicationContext());
+    RetrieveLocationByGpsOrNetworkProvider retrieveLocationByGpsOrNetworkProvider =
+        new RetrieveLocationByGpsOrNetworkProvider(contextProvider.getApplicationContext());
 
     return new RetrieveLastKnownLocation(contextProvider, googleApiClientConnector,
         retrieveLocationByGpsOrNetworkProvider, permissionChecker, permissionLocationImp);

@@ -1,9 +1,9 @@
 package com.gigigo.orchextra.device;
 
-import com.gigigo.ggglogger.GGGLogImpl;
-import com.gigigo.ggglogger.LogLevel;
-import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
+import com.gigigo.ggglib.logger.GGGLogImpl;
+import com.gigigo.ggglib.logger.LogLevel;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
+import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.sdk.OrchextraManager;
 
 public class OrchextraLoggerImpl implements OrchextraLogger {
@@ -12,14 +12,16 @@ public class OrchextraLoggerImpl implements OrchextraLogger {
 
   public OrchextraLoggerImpl() {
     this.orchextraSDKLogLevel = OrchextraManager.getLogLevel();
-    GGGLogImpl.log("log Level is :: " + orchextraSDKLogLevel.getStringValue(), LogLevel.DEBUG, "OrchextraSDK");
+    GGGLogImpl.log("log Level is :: " + orchextraSDKLogLevel.getStringValue(), LogLevel.DEBUG,
+        "OrchextraSDK");
   }
 
-  @Override public synchronized void  log(String message) {
+  @Override public synchronized void log(String message) {
     logLibCall(message, OrchextraSDKLogLevel.DEBUG);
   }
 
-  @Override public synchronized void log(String message, OrchextraSDKLogLevel orchextraSDKLogLevel) {
+  @Override
+  public synchronized void log(String message, OrchextraSDKLogLevel orchextraSDKLogLevel) {
     logLibCall(message, orchextraSDKLogLevel);
   }
 
@@ -38,8 +40,8 @@ public class OrchextraLoggerImpl implements OrchextraLogger {
     return orchextraSDKLogLevel;
   }
 
-  private LogLevel orchextraLogLevelToGGGLogLevel(OrchextraSDKLogLevel orchextraSDKLogLevel){
-    switch (orchextraSDKLogLevel){
+  private LogLevel orchextraLogLevelToGGGLogLevel(OrchextraSDKLogLevel orchextraSDKLogLevel) {
+    switch (orchextraSDKLogLevel) {
       case ERROR:
         return LogLevel.ERROR;
       case WARN:
@@ -50,5 +52,4 @@ public class OrchextraLoggerImpl implements OrchextraLogger {
         return LogLevel.DEBUG;
     }
   }
-
 }

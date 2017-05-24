@@ -18,20 +18,19 @@
 
 package com.gigigo.orchextra.device.bluetooth;
 
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.Permission;
-import com.gigigo.ggglib.permissions.PermissionChecker;
-import com.gigigo.ggglib.permissions.UserPermissionRequestResponseListener;
+import com.gigigo.ggglib.device.providers.ContextProvider;
+import com.gigigo.orchextra.device.permissions.CoarseLocationPermission;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothAvailability;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothStatus;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothStatusInfo;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothStatusListener;
-import com.gigigo.orchextra.device.permissions.CoarseLocationPermission;
+import com.gigigo.orchextra.domain.abstractions.initialization.features.FeatureListener;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.AppRunningMode;
 import com.gigigo.orchextra.domain.model.triggers.params.AppRunningModeType;
-import com.gigigo.orchextra.domain.abstractions.initialization.features.FeatureListener;
 import com.gigigo.orchextra.sdk.features.BeaconFeature;
-
+import com.gigigo.permissions.interfaces.Permission;
+import com.gigigo.permissions.interfaces.PermissionChecker;
+import com.gigigo.permissions.interfaces.UserPermissionRequestResponseListener;
 
 public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
 
@@ -41,7 +40,6 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
   private final AppRunningMode appRunningMode;
   private final FeatureListener featureListener;
   private BluetoothStatusListener bluetoothStatusListener;
-
 
   public BluetoothStatusInfoImpl(PermissionChecker permissionChecker,
       BluetoothAvailability bluetoothAvailability, ContextProvider contextProvider,
@@ -56,53 +54,52 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
 
   @Override public void obtainBluetoothStatus() {
 
-    if (!checkBlteSupported()){
+    if (!checkBlteSupported()) {
       return;
     }
 
     hasBltePermissions();
-
   }
 
   private void checkEnabled() {
 
-    if (bluetoothAvailability.isBlteEnabled()){
+    if (bluetoothAvailability.isBlteEnabled()) {
       informBluetoothStatus(BluetoothStatus.READY_FOR_SCAN);
-    }else{
+    } else {
       informBluetoothStatus(BluetoothStatus.NOT_ENABLED);
     }
-
   }
 
   private void hasBltePermissions() {
-    final Permission permission = new CoarseLocationPermission(this.contextProvider.getApplicationContext());
+    final Permission permission =
+        new CoarseLocationPermission(this.contextProvider.getApplicationContext());
 
     boolean allowed = permissionChecker.isGranted(permission);
-    if (allowed){
+    if (allowed) {
       onPermissionResponse(allowed);
-    }else{
-    if (appRunningMode.getRunningModeType() == AppRunningModeType.FOREGROUND){
-      permissionChecker.askForPermission(permission, new UserPermissionRequestResponseListener() {
-        @Override public void onPermissionAllowed(boolean permissionAllowed) {
-          onPermissionResponse(permissionAllowed);
-        }
-      }, contextProvider.getCurrentActivity());
-    }else{
-      onPermissionResponse(false);
-    }
+    } else {
+      if (appRunningMode.getRunningModeType() == AppRunningModeType.FOREGROUND) {
+        permissionChecker.askForPermission(new UserPermissionRequestResponseListener() {
+          @Override public void onPermissionAllowed(boolean permissionAllowed, int i) {
+            onPermissionResponse(permissionAllowed);
+          }
+        }, permission); //, contextProvider.getCurrentActivity()
+      } else {
+        onPermissionResponse(false);
+      }
     }
   }
 
   private void onPermissionResponse(boolean allowed) {
-    if (allowed){
+    if (allowed) {
       checkEnabled();
-    }else{
+    } else {
       informBluetoothStatus(BluetoothStatus.NO_PERMISSIONS);
     }
   }
 
   private boolean checkBlteSupported() {
-    if (!bluetoothAvailability.isBlteSupported()){
+    if (!bluetoothAvailability.isBlteSupported()) {
       informBluetoothStatus(BluetoothStatus.NO_BLTE_SUPPORTED);
       return false;
     }
@@ -115,10 +112,9 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
   }
 
   private void informBluetoothStatus(BluetoothStatus status) {
-    if (bluetoothStatusListener!=null){
+    if (bluetoothStatusListener != null) {
       bluetoothStatusListener.onBluetoothStatus(status);
     }
     featureListener.onFeatureStatusChanged(new BeaconFeature(status));
   }
-
 }

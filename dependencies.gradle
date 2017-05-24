@@ -18,7 +18,7 @@
 
 allprojects {
   ext {
-    dependencies = [androidSupportV7         : 'com.android.support:appcompat-v7:23.3.0',
+    dependencies = [androidSupportV7         : 'com.android.support:appcompat-v7:24.2.1',
 
                     daggerCompiler           : 'com.github.GigigoGreenLabs.repackagedLibs:dagger-compiler:2.2.2',
                     dagger                   : 'com.github.GigigoGreenLabs.repackagedLibs:dagger:2.2.2',
@@ -26,16 +26,18 @@ allprojects {
                     barcodescanner           : 'me.dm7.barcodescanner:zbar:1.8.4',
                     loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
 
-                    gggLibCore               : 'com.github.gigigoapps.gigigo-android-lib:ggglib.core:1.0.11',
-                    gggLibDevice             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.11',
-                    gggLibLogger             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.logger:1.0.11',
-                    gggLibMappers            : 'com.github.gigigoapps.gigigo-android-lib:ggglib.mappers:1.0.11',
-                    gggLibUtils              : 'com.github.gigigoapps.gigigo-android-lib:ggglib.utils:1.0.11',
+                    gggLibCore               : 'com.github.gigigoapps.gigigo-android-lib:ggglib.core:1.0.12',
+                    gggLibDevice             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.12',
+                    gggLibLogger             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.logger:1.0.12',
+                    gggLibMappers            : 'com.github.gigigoapps.gigigo-android-lib:ggglib.mappers:1.0.12',
+                    gggLibUtils              : 'com.github.gigigoapps.gigigo-android-lib:ggglib.utils:1.0.12',
 
                     gggLibAndroidEncryptation: 'com.github.Gigigo-Android-Devs.gigigo-encryptation-util:encryptation-android-library:1.0.3',
                     gggLibEncryptation       : 'com.github.Gigigo-Android-Devs.gigigo-encryptation-util:encryptation-java-library:1.0.3',
 
-                    gggLibNetworkRetrofit    : 'com.github.gigigoapps.gigigo-android-network:ggglib.network.retrofit:1.0.7',
+                    gggLibNetworkRetrofit    : 'com.github.gigigoapps.gigigo-android-network:ggglib.network.retrofit:1.0.8',
+
+                    gggLibPermissions        : 'com.github.GigigoGreenLabs:permissionsModule:3.0',
 
                     imageRecognitionInterface: 'com.github.GigigoGreenLabs.imgRecogModule:imagerecognitioninterface:2.6',
                     imageRecognitionImpl     : 'com.github.GigigoGreenLabs.imgRecogModule:vuforiaimplementation:2.6']

@@ -19,35 +19,33 @@
 package com.gigigo.orchextra.device;
 
 import android.os.Bundle;
-import com.gigigo.ggglib.ContextProvider;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.permissions.GoogleApiPermissionChecker;
-import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
+import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.sdk.features.GooglePlayServicesStatus;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-public class GoogleApiClientConnectorImpl
-    implements GoogleApiClientConnector {
+public class GoogleApiClientConnectorImpl implements GoogleApiClientConnector {
 
   private final ContextProvider contextProvider;
   private final GoogleApiPermissionChecker googleApiPermissionChecker;
   private final OrchextraLogger orchextraLogger;
 
-   private GoogleApiClient client;
+  private GoogleApiClient client;
   private OnConnectedListener onConnectedListener;
 
   public GoogleApiClientConnectorImpl(ContextProvider contextProvider,
-                                      GoogleApiPermissionChecker googleApiPermissionChecker, OrchextraLogger orchextraLogger) {
+      GoogleApiPermissionChecker googleApiPermissionChecker, OrchextraLogger orchextraLogger) {
     this.contextProvider = contextProvider;
     this.googleApiPermissionChecker = googleApiPermissionChecker;
     this.orchextraLogger = orchextraLogger;
   }
 
-  @Override
-  public void connect() {
+  @Override public void connect() {
     if (contextProvider.getApplicationContext() != null
         && googleApiPermissionChecker.checkPlayServicesStatus() == ConnectionResult.SUCCESS) {
       client = new GoogleApiClient.Builder(
@@ -81,29 +79,26 @@ public class GoogleApiClientConnectorImpl
     }
   }
 
-  @Override
-  public GoogleApiClient getGoogleApiClient() {
+  @Override public GoogleApiClient getGoogleApiClient() {
     return client;
   }
 
-  @Override
-  public boolean isConnected() {
+  @Override public boolean isConnected() {
     return client != null && client.isConnected();
   }
 
-  @Override
-  public void disconnected() {
+  @Override public void disconnected() {
     if (client != null) {
       client.disconnect();
     }
   }
 
-  @Override
-  public boolean isGoogleApiClientAvailable() {
+  @Override public boolean isGoogleApiClientAvailable() {
 
     GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
 
-    int status = googleApiAvailability.isGooglePlayServicesAvailable(contextProvider.getApplicationContext());
+    int status = googleApiAvailability.isGooglePlayServicesAvailable(
+        contextProvider.getApplicationContext());
 
     GooglePlayServicesStatus gpss = GooglePlayServicesStatus.getGooglePlayServicesStatus(status);
 
@@ -123,8 +118,7 @@ public class GoogleApiClientConnectorImpl
     }
   }
 
-  @Override
-  public void setOnConnectedListener(OnConnectedListener onConnectedListener) {
+  @Override public void setOnConnectedListener(OnConnectedListener onConnectedListener) {
     this.onConnectedListener = onConnectedListener;
   }
 }

@@ -18,14 +18,12 @@
 
 package com.gigigo.orchextra.sdk.application;
 
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.Permission;
-import com.gigigo.ggglib.permissions.PermissionChecker;
-import com.gigigo.ggglib.permissions.UserPermissionRequestResponseListener;
-import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.domain.abstractions.foreground.ForegroundTasksManager;
-import com.gigigo.orchextra.domain.abstractions.initialization.OrchextraStatusAccessor;
 import com.gigigo.orchextra.sdk.OrchextraTasksManager;
+import com.gigigo.permissions.interfaces.Permission;
+import com.gigigo.permissions.interfaces.PermissionChecker;
+import com.gigigo.permissions.interfaces.UserPermissionRequestResponseListener;
 
 public class ForegroundTasksManagerImpl implements ForegroundTasksManager {
 
@@ -33,6 +31,14 @@ public class ForegroundTasksManagerImpl implements ForegroundTasksManager {
   private final PermissionChecker permissionChecker;
   private final ContextProvider contextProvider;
   private final Permission permission;
+  private UserPermissionRequestResponseListener userPermissionRequestResponseListener =
+      new UserPermissionRequestResponseListener() {
+        @Override public void onPermissionAllowed(boolean permissionAllowed, int i) {
+          //if (permissionAllowed){
+          orchextraTasksManager.initForegroundTasks(permissionAllowed);
+          //}
+        }
+      };
 
   public ForegroundTasksManagerImpl(OrchextraTasksManager orchextraTasksManager,
       PermissionChecker permissionChecker, ContextProvider contextProvider,
@@ -48,21 +54,12 @@ public class ForegroundTasksManagerImpl implements ForegroundTasksManager {
     if (granted) {
       orchextraTasksManager.initForegroundTasks(granted);
     } else {
-      permissionChecker.askForPermission(permission, userPermissionRequestResponseListener,
-          contextProvider.getCurrentActivity());
+      permissionChecker.askForPermission(userPermissionRequestResponseListener,
+          permission); //contextProvider.getCurrentActivity());
     }
   }
 
   @Override public void finalizeForegroundTasks() {
     orchextraTasksManager.stopForegroundTasks();
   }
-
-  private UserPermissionRequestResponseListener userPermissionRequestResponseListener =
-      new UserPermissionRequestResponseListener() {
-        @Override public void onPermissionAllowed(boolean permissionAllowed) {
-          //if (permissionAllowed){
-          orchextraTasksManager.initForegroundTasks(permissionAllowed);
-          //}
-        }
-      };
 }
