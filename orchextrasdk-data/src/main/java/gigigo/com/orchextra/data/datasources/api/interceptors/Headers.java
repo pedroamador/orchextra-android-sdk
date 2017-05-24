@@ -18,13 +18,14 @@
 
 package gigigo.com.orchextra.data.datasources.api.interceptors;
 
+import com.gigigo.ggglib.network.retrofit.RetrofitNetworkInterceptor;
 import com.gigigo.orchextra.domain.model.entities.authentication.Session;
 import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class Headers implements Interceptor {
+public class Headers extends RetrofitNetworkInterceptor {
 
   private final String X_APP_SDK = "X-orx-version";
   private final String ACCEPT_LANGUAGE = "Accept-Language";

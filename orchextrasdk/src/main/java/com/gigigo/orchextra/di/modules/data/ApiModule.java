@@ -18,8 +18,13 @@
 
 package com.gigigo.orchextra.di.modules.data;
 
+import com.gigigo.ggglib.network.client.NetworkClient;
 import com.gigigo.ggglib.network.converters.ErrorConverter;
-import com.gigigo.ggglib.network.executors.RetrofitApiServiceExcecutor;
+import com.gigigo.ggglib.network.executors.NetworkExecutor;
+import com.gigigo.ggglib.network.retrofit.RetrofitNetworkInterceptor;
+import com.gigigo.ggglib.network.retrofit.client.RetrofitNetworkClient;
+import com.gigigo.ggglib.network.retrofit.client.RetrofitNetworkClientBuilder;
+import com.gigigo.ggglib.network.retrofit.executors.RetrofitNetworkExecutorBuilder;
 import com.gigigo.ggglib.network.retry.RetryOnErrorPolicy;
 import com.gigigo.orchextra.BuildConfig;
 import com.gigigo.orchextra.di.modules.data.qualifiers.AcceptLanguage;
@@ -30,19 +35,14 @@ import com.gigigo.orchextra.di.modules.data.qualifiers.XAppSdk;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.model.entities.authentication.Session;
 import gigigo.com.orchextra.data.datasources.api.interceptors.Headers;
+import gigigo.com.orchextra.data.datasources.api.interceptors.Logging;
 import gigigo.com.orchextra.data.datasources.api.model.responses.base.GenericErrorOrchextraApiResponse;
-import gigigo.com.orchextra.data.datasources.api.service.DefaultErrorConverterImpl;
 import gigigo.com.orchextra.data.datasources.api.service.DefaultRetryOnErrorPolicyImpl;
 import gigigo.com.orchextra.data.datasources.api.service.OrchextraApiService;
 import java.util.Locale;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 import orchextra.javax.inject.Singleton;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module public class ApiModule {
 
@@ -64,60 +64,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
     return Locale.getDefault().toString();
   }
 
-  @Provides @Singleton Retrofit provideOrchextraRetrofitObject(@Endpoint String enpoint,
-      @ApiVersion String version, GsonConverterFactory gsonConverterFactory,
-      OkHttpClient okClient) {
-
-    Retrofit retrofit = new Retrofit.Builder().baseUrl(enpoint + version)
-        .client(okClient)
-        .addConverterFactory(gsonConverterFactory)
-        .build();
-
-    return retrofit;
+  @Provides @Singleton OrchextraApiService provideOrchextraApiService(
+      RetrofitNetworkClient<OrchextraApiService> networkClient) {
+    return networkClient.getApiClient();
   }
 
-  @Provides @Singleton OrchextraApiService provideOrchextraApiService(Retrofit retrofit) {
-    return retrofit.create(OrchextraApiService.class);
+  @Provides @Singleton RetrofitNetworkInterceptor provideLoggingInterceptor() {
+    return new Logging();
   }
 
-  @Provides @Singleton HttpLoggingInterceptor provideLoggingInterceptor() {
-    HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-    interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-    return interceptor;
-  }
-
-  @Provides @Singleton @HeadersInterceptor Interceptor provideHeadersInterceptor(
+  @Provides @Singleton @HeadersInterceptor RetrofitNetworkInterceptor provideHeadersInterceptor(
       @XAppSdk String xAppSdk, @AcceptLanguage String acceptLanguage, Session session) {
     return new Headers(xAppSdk, acceptLanguage, session);
   }
 
-  @Provides @Singleton OkHttpClient provideOkClient(
-      @HeadersInterceptor Interceptor headersInterceptor, HttpLoggingInterceptor loggingInterceptor,
-      OrchextraLogger orchextraLogger) {
+  @Provides NetworkClient provideNetworkClient(@Endpoint String enpoint, @ApiVersion String version,
+      @HeadersInterceptor RetrofitNetworkInterceptor headersInterceptor,
+      RetrofitNetworkInterceptor loggingInterceptor, OrchextraLogger orchextraLogger) {
 
-    OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
-    okHttpClientBuilder.addInterceptor(headersInterceptor);
+    RetrofitNetworkClientBuilder retrofitNetworkClientBuilder =
+        new RetrofitNetworkClientBuilder(enpoint + version, OrchextraApiService.class);
 
     if (orchextraLogger.isNetworkLoggingLevelEnabled()) {
-      okHttpClientBuilder.addInterceptor(loggingInterceptor);
+      retrofitNetworkClientBuilder.loggingInterceptor(loggingInterceptor);
     }
 
-    return okHttpClientBuilder.build();
+    return retrofitNetworkClientBuilder.headersInterceptor(headersInterceptor).build();
   }
 
-  @Provides @Singleton GsonConverterFactory provideGsonConverterFactory() {
-    return GsonConverterFactory.create();
-  }
-
-  @Provides ApiServiceExecutor provideApiServiceExecutor(ErrorConverter errorConverter,
-      RetryOnErrorPolicy retryOnErrorPolicy) {
-    return new RetrofitApiServiceExcecutor.Builder().errorConverter(errorConverter)
+  @Provides NetworkExecutor provideNetworkExecutor(NetworkClient networkClient,
+      ErrorConverter errorConverter, RetryOnErrorPolicy retryOnErrorPolicy) {
+    return new RetrofitNetworkExecutorBuilder(networkClient, GenericErrorOrchextraApiResponse.class)
+        .errorConverter(errorConverter)
         .retryOnErrorPolicy(retryOnErrorPolicy)
         .build();
-  }
-
-  @Provides @Singleton ErrorConverter provideErrorConverter(Retrofit retrofit) {
-    return new DefaultErrorConverterImpl(retrofit, GenericErrorOrchextraApiResponse.class);
   }
 
   @Provides @Singleton RetryOnErrorPolicy provideRetryOnErrorPolicy() {
