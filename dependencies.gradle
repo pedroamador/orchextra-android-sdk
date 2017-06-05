@@ -26,21 +26,20 @@ allprojects {
                     barcodescanner           : 'me.dm7.barcodescanner:zbar:1.8.4',
                     loggingInterceptor       : 'com.squareup.okhttp3:logging-interceptor:3.2.0',
 
-                    gggLibCore               : 'com.github.gigigoapps.gigigo-android-lib:ggglib.core:1.0.12',
-                    gggLibDevice             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.12',
-                    gggLibLogger             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.logger:1.0.12',
-                    gggLibMappers            : 'com.github.gigigoapps.gigigo-android-lib:ggglib.mappers:1.0.12',
-                    gggLibUtils              : 'com.github.gigigoapps.gigigo-android-lib:ggglib.utils:1.0.12',
-
+                    gggLibCore               : 'com.github.gigigoapps.gigigo-android-lib:ggglib.core:1.0.13',
+                    gggLibDevice             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.device:1.0.13',
+                    gggLibLogger             : 'com.github.gigigoapps.gigigo-android-lib:ggglib.logger:1.0.13',
+                    gggLibMappers            : 'com.github.gigigoapps.gigigo-android-lib:ggglib.mappers:1.0.13',
+                    gggLibUtils              : 'com.github.gigigoapps.gigigo-android-lib:ggglib.utils:1.0.13',
                     gggLibAndroidEncryptation: 'com.github.Gigigo-Android-Devs.gigigo-encryptation-util:encryptation-android-library:1.0.3',
                     gggLibEncryptation       : 'com.github.Gigigo-Android-Devs.gigigo-encryptation-util:encryptation-java-library:1.0.3',
 
-                    gggLibNetworkRetrofit    : 'com.github.gigigoapps.gigigo-android-network:ggglib.network.retrofit:1.0.8',
+                    gggLibNetworkRetrofit    : 'com.github.gigigoapps.gigigo-android-network:ggglib.network.retrofit:1.0.9',
 
-                    gggLibPermissions        : 'com.github.GigigoGreenLabs:permissionsModule:3.0',
+                    gggLibPermissions        : 'com.github.Gigigo-Android-Devs:gigigo-permissions-library-android:3.1',
 
-                    imageRecognitionInterface: 'com.github.GigigoGreenLabs.imgRecogModule:imagerecognitioninterface:2.6',
-                    imageRecognitionImpl     : 'com.github.GigigoGreenLabs.imgRecogModule:vuforiaimplementation:2.6']
+                    imageRecognitionCore     : 'com.github.Gigigo-Android-Devs.gigigo-imageRecognizer-library-android:imagerecognition.core:2.9',
+                    imageRecognitionVuforia  : 'com.github.Gigigo-Android-Devs.gigigo-imageRecognizer-library-android:imagerecognition.vuforia:2.9']
 
     testDependencies = [mockito        : 'org.mockito:mockito-core:1.10.19',
                         junit          : 'junit:junit:4.12',

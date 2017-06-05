@@ -20,10 +20,10 @@ package com.gigigo.orchextra.device.geolocation.location;
 
 import android.location.Location;
 import android.os.Bundle;
-import com.gigigo.ggglib.ContextProvider;
-import com.gigigo.ggglib.permissions.PermissionChecker;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
 import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
+import com.gigigo.permissions.interfaces.PermissionChecker;
 
 public class RetrieveLastKnownLocation {
 

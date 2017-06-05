@@ -65,8 +65,8 @@ import orchextra.javax.inject.Singleton;
   }
 
   @Provides @Singleton OrchextraApiService provideOrchextraApiService(
-      RetrofitNetworkClient<OrchextraApiService> networkClient) {
-    return networkClient.getApiClient();
+      NetworkClient networkClient) {
+    return (OrchextraApiService)networkClient.getApiClient();
   }
 
   @Provides @Singleton RetrofitNetworkInterceptor provideLoggingInterceptor() {
@@ -92,10 +92,8 @@ import orchextra.javax.inject.Singleton;
     return retrofitNetworkClientBuilder.headersInterceptor(headersInterceptor).build();
   }
 
-  @Provides NetworkExecutor provideNetworkExecutor(NetworkClient networkClient,
-      ErrorConverter errorConverter, RetryOnErrorPolicy retryOnErrorPolicy) {
+  @Provides NetworkExecutor provideNetworkExecutor(NetworkClient networkClient, RetryOnErrorPolicy retryOnErrorPolicy) {
     return new RetrofitNetworkExecutorBuilder(networkClient, GenericErrorOrchextraApiResponse.class)
-        .errorConverter(errorConverter)
         .retryOnErrorPolicy(retryOnErrorPolicy)
         .build();
   }

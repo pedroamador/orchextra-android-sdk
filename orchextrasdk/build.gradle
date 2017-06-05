@@ -177,7 +177,7 @@ dependencies {
           }
 
   compile rootProject.ext.dependencies.gggLibPermissions
-  compile rootProject.ext.dependencies.imageRecognitionInterface
+  compile rootProject.ext.dependencies.imageRecognitionCore
 
   compile rootProject.ext.modules.orchextraSdkControl
   compile rootProject.ext.modules.orchextraSdkData

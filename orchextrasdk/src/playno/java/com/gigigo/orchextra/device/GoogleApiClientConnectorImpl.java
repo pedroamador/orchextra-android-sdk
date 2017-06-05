@@ -19,13 +19,9 @@
 package com.gigigo.orchextra.device;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-
-import com.gigigo.ggglib.ContextProvider;
+import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.permissions.GoogleApiPermissionChecker;
-import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
-import com.gigigo.orchextra.sdk.features.GooglePlayServicesStatus;
 //import com.google.android.gms.common.ConnectionResult;
 //import com.google.android.gms.common.GoogleApiAvailability;
 //import com.google.android.gms.common.api.GoogleApiClient;
@@ -41,21 +37,20 @@ public class GoogleApiClientConnectorImpl implements GoogleApiClientConnector {
   private OnConnectedListener onConnectedListener;
 
   public GoogleApiClientConnectorImpl(ContextProvider contextProvider,
-                                      GoogleApiPermissionChecker googleApiPermissionChecker,
-                                      OrchextraLogger orchextraLogger) {
+      GoogleApiPermissionChecker googleApiPermissionChecker, OrchextraLogger orchextraLogger) {
     this.contextProvider = contextProvider;
     this.googleApiPermissionChecker = googleApiPermissionChecker;
     this.orchextraLogger = orchextraLogger;
   }
 
-  @Override
-  public void connect() {
-    if (contextProvider.getApplicationContext() != null ) {
+  @Override public void connect() {
+    if (contextProvider.getApplicationContext() != null) {
       onConnected(new Bundle());
     }
   }
-    //@Override
-   public void onConnected(Bundle bundle) {
+
+  //@Override
+  public void onConnected(Bundle bundle) {
     orchextraLogger.log("onConnected");
 
     if (onConnectedListener != null) {
@@ -63,9 +58,7 @@ public class GoogleApiClientConnectorImpl implements GoogleApiClientConnector {
     }
   }
 
-
-
- //TODO gcmtest
+  //TODO gcmtest
   public Object getGoogleApiClient() {
     return null;
   }
@@ -82,12 +75,10 @@ public class GoogleApiClientConnectorImpl implements GoogleApiClientConnector {
 
   //TODO gcmtest
   public boolean isGoogleApiClientAvailable() {
-      return true;
-
+    return true;
   }
 
-  @Override
-  public void setOnConnectedListener(OnConnectedListener onConnectedListener) {
+  @Override public void setOnConnectedListener(OnConnectedListener onConnectedListener) {
     this.onConnectedListener = onConnectedListener;
   }
 }

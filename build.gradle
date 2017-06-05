@@ -106,7 +106,7 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.12'
+  gradleVersion = '2.14.1'
 }
 /* add task clean in before run in project configuration
 task cleanAll(type: Delete) {
