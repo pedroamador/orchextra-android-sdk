@@ -28,7 +28,7 @@ import android.util.Log;
 import com.gigigo.ggglib.device.AndroidSdkVersion;
 import com.gigigo.ggglib.logger.GGGLogImpl;
 import com.gigigo.ggglib.logger.LogLevel;
-import com.gigigo.imagerecognitioninterface.ImageRecognition;
+import com.gigigo.imagerecognition.core.ImageRecognition;
 import com.gigigo.orchextra.BuildConfig;
 import com.gigigo.orchextra.CrmUser;
 import com.gigigo.orchextra.OrchextraLogLevel;

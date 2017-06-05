@@ -18,7 +18,7 @@
 
 package com.gigigo.orchetra.dataprovision.authentication;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.dataprovision.authentication.AuthenticationDataProviderImpl;
 import com.gigigo.orchextra.dataprovision.authentication.datasource.AuthenticationDataSource;
 

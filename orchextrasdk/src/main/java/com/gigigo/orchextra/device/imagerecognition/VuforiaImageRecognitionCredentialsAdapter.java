@@ -17,10 +17,10 @@
  */
 package com.gigigo.orchextra.device.imagerecognition;
 
-import com.gigigo.imagerecognitioninterface.ImageRecognitionCredentials;
+import com.gigigo.imagerecognition.core.ImageRecognitionCredentials;
 import com.gigigo.orchextra.domain.model.entities.VuforiaCredentials;
 
-public class VuforiaImageRecognitionCredentialsAdapter implements ImageRecognitionCredentials{
+public class VuforiaImageRecognitionCredentialsAdapter implements ImageRecognitionCredentials {
 
   private final VuforiaCredentials vuforiaCredentials;
 

@@ -18,14 +18,13 @@
 
 package com.gigigo.orchextra.domain.interactors.authentication;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.abstractions.initialization.OrchextraStatusManager;
 import com.gigigo.orchextra.domain.interactors.base.InteractorResponse;
 import com.gigigo.orchextra.domain.interactors.user.SaveCrmUserInteractor;
 import com.gigigo.orchextra.domain.model.entities.authentication.CrmUser;
 import com.gigigo.orchextra.domain.services.auth.AuthenticationService;
 import com.gigigo.orchextra.domain.services.config.ConfigDomainService;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,90 +36,79 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SaveCrmUserInteractorTest {
+@RunWith(MockitoJUnitRunner.class) public class SaveCrmUserInteractorTest {
 
-    @Mock
-    AuthenticationService authenticationService;
+  @Mock AuthenticationService authenticationService;
 
-    @Mock
-    ConfigDomainService configDomainService;
+  @Mock ConfigDomainService configDomainService;
 
-    @Mock
-    OrchextraStatusManager orchextraStatusManager;
+  @Mock OrchextraStatusManager orchextraStatusManager;
 
-    @Mock
-    BusinessObject<CrmUser> saveUserResponse;
+  @Mock BusinessObject<CrmUser> saveUserResponse;
+  CrmUser crmUser;
+  private SaveCrmUserInteractor interactor;
 
-    private SaveCrmUserInteractor interactor;
+  @Before public void setUp() throws Exception {
+    interactor = new SaveCrmUserInteractor(authenticationService, configDomainService,
+        orchextraStatusManager);
+    crmUser = new CrmUser();
+    crmUser.setCrmId("1111");
+    interactor.setCrmUser(crmUser);
+  }
 
-    CrmUser crmUser;
+  @Test public void shouldRefreshConfigWhenOrchextraIsStatedAndUserIsSaved() throws Exception {
+    interactor.setHasReloadConfig(true);
 
-    @Before
-    public void setUp() throws Exception {
-        interactor = new SaveCrmUserInteractor(authenticationService, configDomainService, orchextraStatusManager);
-        crmUser = new CrmUser();
-        crmUser.setCrmId("1111");
-        interactor.setCrmUser(crmUser);
-    }
+    when(authenticationService.saveUser(crmUser)).thenReturn(saveUserResponse);
+    when(saveUserResponse.isSuccess()).thenReturn(true);
+    when(orchextraStatusManager.isStarted()).thenReturn(true);
+    when(configDomainService.refreshConfig()).thenReturn(any(InteractorResponse.class));
 
-    @Test
-    public void shouldRefreshConfigWhenOrchextraIsStatedAndUserIsSaved() throws Exception {
-        interactor.setHasReloadConfig(true);
+    interactor.call();
 
-        when(authenticationService.saveUser(crmUser)).thenReturn(saveUserResponse);
-        when(saveUserResponse.isSuccess()).thenReturn(true);
-        when(orchextraStatusManager.isStarted()).thenReturn(true);
-        when(configDomainService.refreshConfig()).thenReturn(any(InteractorResponse.class));
+    verify(authenticationService).saveUser(crmUser);
+    verify(saveUserResponse).isSuccess();
+    verify(configDomainService).refreshConfig();
+  }
 
-        interactor.call();
+  @Test public void shouldDoesntRefreshConfigWhenOrchextraIsntStarted() throws Exception {
+    interactor.setHasReloadConfig(true);
 
-        verify(authenticationService).saveUser(crmUser);
-        verify(saveUserResponse).isSuccess();
-        verify(configDomainService).refreshConfig();
-    }
+    when(authenticationService.saveUser(crmUser)).thenReturn(saveUserResponse);
+    when(saveUserResponse.isSuccess()).thenReturn(true);
+    when(orchextraStatusManager.isStarted()).thenReturn(false);
+    when(configDomainService.refreshConfig()).thenReturn(any(InteractorResponse.class));
 
-    @Test
-    public void shouldDoesntRefreshConfigWhenOrchextraIsntStarted() throws Exception {
-        interactor.setHasReloadConfig(true);
+    interactor.call();
 
-        when(authenticationService.saveUser(crmUser)).thenReturn(saveUserResponse);
-        when(saveUserResponse.isSuccess()).thenReturn(true);
-        when(orchextraStatusManager.isStarted()).thenReturn(false);
-        when(configDomainService.refreshConfig()).thenReturn(any(InteractorResponse.class));
+    verify(authenticationService).saveUser(crmUser);
+    verify(saveUserResponse).isSuccess();
+    verify(configDomainService, never()).refreshConfig();
+  }
 
-        interactor.call();
+  @Test public void shouldDoesntRefreshConfigWhenHasReloadConfigIsFalse() throws Exception {
+    interactor.setHasReloadConfig(false);
 
-        verify(authenticationService).saveUser(crmUser);
-        verify(saveUserResponse).isSuccess();
-        verify(configDomainService, never()).refreshConfig();
-    }
+    when(authenticationService.saveUser(crmUser)).thenReturn(saveUserResponse);
+    when(saveUserResponse.isSuccess()).thenReturn(true);
+    when(orchextraStatusManager.isStarted()).thenReturn(true);
+    when(configDomainService.refreshConfig()).thenReturn(any(InteractorResponse.class));
 
-    @Test
-    public void shouldDoesntRefreshConfigWhenHasReloadConfigIsFalse() throws Exception {
-        interactor.setHasReloadConfig(false);
+    interactor.call();
 
-        when(authenticationService.saveUser(crmUser)).thenReturn(saveUserResponse);
-        when(saveUserResponse.isSuccess()).thenReturn(true);
-        when(orchextraStatusManager.isStarted()).thenReturn(true);
-        when(configDomainService.refreshConfig()).thenReturn(any(InteractorResponse.class));
+    verify(authenticationService).saveUser(crmUser);
+    verify(saveUserResponse).isSuccess();
+    verify(configDomainService, never()).refreshConfig();
+  }
 
-        interactor.call();
+  @Test public void shouldDontRefreshConfigWhenAutheticationFails() throws Exception {
+    when(authenticationService.saveUser(crmUser)).thenReturn(saveUserResponse);
+    when(saveUserResponse.isSuccess()).thenReturn(false);
 
-        verify(authenticationService).saveUser(crmUser);
-        verify(saveUserResponse).isSuccess();
-        verify(configDomainService, never()).refreshConfig();
-    }
+    interactor.call();
 
-    @Test
-    public void shouldDontRefreshConfigWhenAutheticationFails() throws Exception {
-        when(authenticationService.saveUser(crmUser)).thenReturn(saveUserResponse);
-        when(saveUserResponse.isSuccess()).thenReturn(false);
-
-        interactor.call();
-
-        verify(authenticationService).saveUser(crmUser);
-        verify(saveUserResponse).isSuccess();
-        verify(configDomainService, never()).refreshConfig();
-    }
+    verify(authenticationService).saveUser(crmUser);
+    verify(saveUserResponse).isSuccess();
+    verify(configDomainService, never()).refreshConfig();
+  }
 }

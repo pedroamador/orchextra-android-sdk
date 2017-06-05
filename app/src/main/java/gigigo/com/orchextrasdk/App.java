@@ -21,13 +21,13 @@ import android.app.Application;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import com.gigigo.imagerecognition.vuforia.ImageRecognitionVuforia;
 import com.gigigo.orchextra.CustomSchemeReceiver;
 import com.gigigo.orchextra.Orchextra;
 import com.gigigo.orchextra.OrchextraBuilder;
 import com.gigigo.orchextra.OrchextraCompletionCallback;
 import com.gigigo.orchextra.OrchextraLogLevel;
 import com.gigigo.orchextra.device.bluetooth.beacons.BeaconBackgroundModeScan;
-import com.gigigo.vuforiaimplementation.ImageRecognitionVuforiaImpl;
 import gigigo.com.orchextrasdk.adonservices.UpdateConfigReceiver;
 import gigigo.com.orchextrasdk.adonservices.UpdateConfigUtility;
 
@@ -45,7 +45,7 @@ public class App extends Application implements OrchextraCompletionCallback, Cus
   public static final String GIGIGO_URL = "http://research.gigigo.com";
   public static final String CUSTOM_SCHEME = "webview://";
 
- // public static MotionServiceUtility mMotionServiceUtility;
+  // public static MotionServiceUtility mMotionServiceUtility;
 
   @Override public void onCreate() {
     super.onCreate();
@@ -58,7 +58,7 @@ public class App extends Application implements OrchextraCompletionCallback, Cus
         .setLogLevel(OrchextraLogLevel.NETWORK)
         .setOrchextraCompletionCallback(this)
         .setNotificationActivityClass(MainActivity.class.toString())
-        .setImageRecognitionModule(new ImageRecognitionVuforiaImpl())
+        .setImageRecognitionModule(new ImageRecognitionVuforia())
         .setBackgroundBeaconScanMode(BeaconBackgroundModeScan.HARDCORE);
     //init Orchextra with builder configuration
     Orchextra.initialize(builder);
@@ -72,7 +72,7 @@ public class App extends Application implements OrchextraCompletionCallback, Cus
     //Orchextra.updateBackgroundPeriodBetweenScan(BackgroundBeaconsRangingTimeType.SEVERE.getLongValue());
 
     //region AdOns
-   // mMotionServiceUtility = new MotionServiceUtility(this);
+    // mMotionServiceUtility = new MotionServiceUtility(this);
 
     //bluetooth //reset BT each 65min is a test, is not c00l, but prevents beaconsscan errors
     // BluetoothResetUtility bluetoothResetUtility = new BluetoothResetUtility(this);
@@ -103,8 +103,7 @@ public class App extends Application implements OrchextraCompletionCallback, Cus
 
   @Override public void onError(String s) {
 
-   // OrchextraBusinessErrors errorCode= (OrchextraBusinessErrors)s;
-
+    // OrchextraBusinessErrors errorCode= (OrchextraBusinessErrors)s;
 
     //OrchextraBusinessErrors {
     //  NO_AUTH_EXPIRED(401),
@@ -113,9 +112,10 @@ public class App extends Application implements OrchextraCompletionCallback, Cus
     //  INTERNAL_SERVER_ERROR(500),
     //  GENERIC_UNKNOWN_ERROR(-999);
 
-
     Log.d("APP", "onError: " + s);
-    System.out.println("onError: " + s+"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    System.out.println("onError: "
+        + s
+        + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
   }
 
   @Override public void onInit(String s) {

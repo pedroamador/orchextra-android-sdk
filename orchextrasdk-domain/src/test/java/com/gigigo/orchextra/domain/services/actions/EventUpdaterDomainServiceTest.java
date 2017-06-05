@@ -1,10 +1,9 @@
 package com.gigigo.orchextra.domain.services.actions;
 
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.dataprovider.ProximityAndGeofencesLocalDataProvider;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofence;
 import com.gigigo.orchextra.domain.model.entities.proximity.OrchextraRegion;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,71 +14,66 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class EventUpdaterDomainServiceTest {
+@RunWith(MockitoJUnitRunner.class) public class EventUpdaterDomainServiceTest {
 
-    @Mock
-    OrchextraRegion mockOrchextraRegion;
+  @Mock OrchextraRegion mockOrchextraRegion;
 
-    @Mock OrchextraGeofence mockOrchextraGeofence;
+  @Mock OrchextraGeofence mockOrchextraGeofence;
 
-    @Mock
-    ProximityAndGeofencesLocalDataProvider mockProximityAndGeofencesLocalDataProvider;
+  @Mock ProximityAndGeofencesLocalDataProvider mockProximityAndGeofencesLocalDataProvider;
 
-    @Mock
-    BusinessObject<OrchextraRegion> mockBoOrchextraRegion;
+  @Mock BusinessObject<OrchextraRegion> mockBoOrchextraRegion;
 
-    @Mock
-    BusinessObject<OrchextraGeofence> mockBoOrchextraGeofence;
+  @Mock BusinessObject<OrchextraGeofence> mockBoOrchextraGeofence;
 
-    private EventUpdaterDomainService eventUpdaterDomainService;
+  private EventUpdaterDomainService eventUpdaterDomainService;
 
-    @Before
-    public void setUp() throws Exception {
-        eventUpdaterDomainService = new EventUpdaterDomainService(mockProximityAndGeofencesLocalDataProvider);
-    }
+  @Before public void setUp() throws Exception {
+    eventUpdaterDomainService =
+        new EventUpdaterDomainService(mockProximityAndGeofencesLocalDataProvider);
+  }
 
-    @Test
-    public void shouldReturnRegionWhenUpdateRegionIsSuccesful() throws Exception {
-        when(mockProximityAndGeofencesLocalDataProvider.updateRegionWithActionId(mockOrchextraRegion)).thenReturn(mockBoOrchextraRegion);
+  @Test public void shouldReturnRegionWhenUpdateRegionIsSuccesful() throws Exception {
+    when(mockProximityAndGeofencesLocalDataProvider.updateRegionWithActionId(
+        mockOrchextraRegion)).thenReturn(mockBoOrchextraRegion);
 
-        when(mockBoOrchextraRegion.isSuccess()).thenReturn(true);
+    when(mockBoOrchextraRegion.isSuccess()).thenReturn(true);
 
-        eventUpdaterDomainService.associateActionToRegionEvent(mockOrchextraRegion);
+    eventUpdaterDomainService.associateActionToRegionEvent(mockOrchextraRegion);
 
-        verify(mockBoOrchextraRegion).getData();
-    }
+    verify(mockBoOrchextraRegion).getData();
+  }
 
-    @Test
-    public void shouldReturnFalseWhenUpdateRegionIsFailed() throws Exception {
-        when(mockProximityAndGeofencesLocalDataProvider.updateRegionWithActionId(mockOrchextraRegion)).thenReturn(mockBoOrchextraRegion);
+  @Test public void shouldReturnFalseWhenUpdateRegionIsFailed() throws Exception {
+    when(mockProximityAndGeofencesLocalDataProvider.updateRegionWithActionId(
+        mockOrchextraRegion)).thenReturn(mockBoOrchextraRegion);
 
-        when(mockBoOrchextraRegion.isSuccess()).thenReturn(false);
+    when(mockBoOrchextraRegion.isSuccess()).thenReturn(false);
 
-        eventUpdaterDomainService.associateActionToRegionEvent(mockOrchextraRegion);
+    eventUpdaterDomainService.associateActionToRegionEvent(mockOrchextraRegion);
 
-        verify(mockBoOrchextraRegion, never()).getData();
-    }
+    verify(mockBoOrchextraRegion, never()).getData();
+  }
 
-    @Test
-    public void shouldReturnGeofenceWhenUpdateGeofenceIsSuccessful() throws Exception {
-        when(mockProximityAndGeofencesLocalDataProvider.updateGeofenceWithActionId(mockOrchextraGeofence)).thenReturn(mockBoOrchextraGeofence);
+  @Test public void shouldReturnGeofenceWhenUpdateGeofenceIsSuccessful() throws Exception {
+    when(mockProximityAndGeofencesLocalDataProvider.updateGeofenceWithActionId(
+        mockOrchextraGeofence)).thenReturn(mockBoOrchextraGeofence);
 
-        when(mockBoOrchextraGeofence.isSuccess()).thenReturn(true);
+    when(mockBoOrchextraGeofence.isSuccess()).thenReturn(true);
 
-        eventUpdaterDomainService.associateActionToGeofenceEvent(mockOrchextraGeofence);
+    eventUpdaterDomainService.associateActionToGeofenceEvent(mockOrchextraGeofence);
 
-        verify(mockBoOrchextraGeofence).getData();
-    }
+    verify(mockBoOrchextraGeofence).getData();
+  }
 
-    @Test
-    public void shouldReturnFalseWhenUpdateGeofenceIsFailed() throws Exception {
-        when(mockProximityAndGeofencesLocalDataProvider.updateGeofenceWithActionId(mockOrchextraGeofence)).thenReturn(mockBoOrchextraGeofence);
+  @Test public void shouldReturnFalseWhenUpdateGeofenceIsFailed() throws Exception {
+    when(mockProximityAndGeofencesLocalDataProvider.updateGeofenceWithActionId(
+        mockOrchextraGeofence)).thenReturn(mockBoOrchextraGeofence);
 
-        when(mockBoOrchextraGeofence.isSuccess()).thenReturn(false);
+    when(mockBoOrchextraGeofence.isSuccess()).thenReturn(false);
 
-        eventUpdaterDomainService.associateActionToGeofenceEvent(mockOrchextraGeofence);
+    eventUpdaterDomainService.associateActionToGeofenceEvent(mockOrchextraGeofence);
 
-        verify(mockBoOrchextraGeofence, never()).getData();
-    }
+    verify(mockBoOrchextraGeofence, never()).getData();
+  }
 }

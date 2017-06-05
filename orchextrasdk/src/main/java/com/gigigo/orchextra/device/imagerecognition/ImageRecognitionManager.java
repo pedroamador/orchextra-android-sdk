@@ -17,7 +17,7 @@
  */
 package com.gigigo.orchextra.device.imagerecognition;
 
-import com.gigigo.imagerecognitioninterface.ImageRecognition;
+import com.gigigo.imagerecognition.core.ImageRecognition;
 
 public interface ImageRecognitionManager {
 

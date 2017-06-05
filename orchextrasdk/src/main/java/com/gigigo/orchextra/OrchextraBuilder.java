@@ -1,8 +1,7 @@
 package com.gigigo.orchextra;
 
 import android.app.Application;
-
-import com.gigigo.imagerecognitioninterface.ImageRecognition;
+import com.gigigo.imagerecognition.core.ImageRecognition;
 import com.gigigo.orchextra.device.bluetooth.beacons.BeaconBackgroundModeScan;
 
 public class OrchextraBuilder {
@@ -16,25 +15,17 @@ public class OrchextraBuilder {
   private String gcmSenderId;
   private String notificationActivityName = "";
   private BeaconBackgroundModeScan bckBeaconMode = BeaconBackgroundModeScan.NORMAL;
+
+  public OrchextraBuilder(Application application) {
+    this.application = application;
+  }
+
   public BeaconBackgroundModeScan getBckBeaconMode() {
     return bckBeaconMode;
   }
 
   public OrchextraBuilder setBackgroundBeaconScanMode(BeaconBackgroundModeScan bckBeaconMode) {
     this.bckBeaconMode = bckBeaconMode;
-    return this;
-  }
-
-  public OrchextraBuilder(Application application) {
-    this.application = application;
-  }
-
-  /**
-   * Callback status when orchextra is initialized
-   */
-  public OrchextraBuilder setOrchextraCompletionCallback(
-      OrchextraCompletionCallback orchextraCompletionCallback) {
-    this.orchextraCompletionCallback = orchextraCompletionCallback;
     return this;
   }
 
@@ -54,17 +45,6 @@ public class OrchextraBuilder {
   }
 
   /**
-   * Include the image recognition module in Orchextra core.
-   * <p/>
-   * <a href="https://github.com/Orchextra/orchextra-android-sdk#image-recognition-integration">For
-   * more info, visit this link</a>.
-   */
-  public OrchextraBuilder setImageRecognitionModule(ImageRecognition imageRecognitionModule) {
-    this.imageRecognitionModule = imageRecognitionModule;
-    return this;
-  }
-
-  /**
    * Set the api key and secret of your project.
    * <p/>
    * You can obtain this credentials from the Orchextra dashboard
@@ -72,11 +52,6 @@ public class OrchextraBuilder {
   public OrchextraBuilder setApiKeyAndSecret(String apiKey, String apiSecret) {
     this.apiKey = apiKey;
     this.apiSecret = apiSecret;
-    return this;
-  }
-
-  public OrchextraBuilder setGcmSenderId(String gcmSenderId) {
-    this.gcmSenderId = gcmSenderId;
     return this;
   }
 
@@ -96,8 +71,28 @@ public class OrchextraBuilder {
     return orchextraCompletionCallback;
   }
 
+  /**
+   * Callback status when orchextra is initialized
+   */
+  public OrchextraBuilder setOrchextraCompletionCallback(
+      OrchextraCompletionCallback orchextraCompletionCallback) {
+    this.orchextraCompletionCallback = orchextraCompletionCallback;
+    return this;
+  }
+
   public ImageRecognition getImageRecognitionModule() {
     return imageRecognitionModule;
+  }
+
+  /**
+   * Include the image recognition module in Orchextra core.
+   * <p/>
+   * <a href="https://github.com/Orchextra/orchextra-android-sdk#image-recognition-integration">For
+   * more info, visit this link</a>.
+   */
+  public OrchextraBuilder setImageRecognitionModule(ImageRecognition imageRecognitionModule) {
+    this.imageRecognitionModule = imageRecognitionModule;
+    return this;
   }
 
   public OrchextraLogLevel getOrchextraLogLevel() {
@@ -106,6 +101,11 @@ public class OrchextraBuilder {
 
   public String getGcmSenderId() {
     return gcmSenderId;
+  }
+
+  public OrchextraBuilder setGcmSenderId(String gcmSenderId) {
+    this.gcmSenderId = gcmSenderId;
+    return this;
   }
 
   public String getNotificationActivityName() {

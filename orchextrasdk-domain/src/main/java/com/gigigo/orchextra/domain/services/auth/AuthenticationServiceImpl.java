@@ -28,8 +28,8 @@ import com.gigigo.orchextra.domain.model.entities.authentication.ClientAuthData;
 import com.gigigo.orchextra.domain.model.entities.authentication.CrmUser;
 import com.gigigo.orchextra.domain.model.entities.authentication.SdkAuthData;
 import com.gigigo.orchextra.domain.model.entities.authentication.Session;
-import com.gigigo.orchextra.domain.model.entities.credentials.ClientAuthCredentials;
 import com.gigigo.orchextra.domain.model.entities.credentials.AuthCredentials;
+import com.gigigo.orchextra.domain.model.entities.credentials.ClientAuthCredentials;
 import com.gigigo.orchextra.domain.model.entities.credentials.SdkAuthCredentials;
 import com.gigigo.orchextra.domain.services.auth.errors.AuthenticationError;
 import com.gigigo.orchextra.domain.services.auth.errors.SdkAuthError;
@@ -86,9 +86,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       AuthCredentials authCredentials =
           new ClientAuthCredentials(interactorResponse.getResult(), deviceDetailsProvider, crmId);
       interactorResponse = authenticateClient(authCredentials, crmId);
-    }
-    else
-    {
+    } else {
       System.out.println("ERROR step 2");
     }
     return interactorResponse;
@@ -96,7 +94,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   private InteractorResponse authenticateSDK() {
 
-    AuthCredentials authCredentials = new SdkAuthCredentials(session.getApiKey(), session.getApiSecret());
+    AuthCredentials authCredentials =
+        new SdkAuthCredentials(session.getApiKey(), session.getApiSecret());
     BusinessObject<SdkAuthData> sdk = authDataProvider.authenticateSdk(authCredentials);
 
     if (!sdk.isSuccess()) {

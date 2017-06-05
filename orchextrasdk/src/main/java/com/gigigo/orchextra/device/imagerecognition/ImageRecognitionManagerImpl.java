@@ -18,7 +18,7 @@
 package com.gigigo.orchextra.device.imagerecognition;
 
 import com.gigigo.ggglib.device.providers.ContextProvider;
-import com.gigigo.imagerecognitioninterface.ImageRecognition;
+import com.gigigo.imagerecognition.core.ImageRecognition;
 import com.gigigo.orchextra.control.controllers.imagerecognition.ImageRecognitionController;
 import com.gigigo.orchextra.control.controllers.imagerecognition.OnImageRecognitionCredentialsReadyListener;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;

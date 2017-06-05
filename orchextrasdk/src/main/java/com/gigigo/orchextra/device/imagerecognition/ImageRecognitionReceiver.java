@@ -21,7 +21,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.gigigo.imagerecognitioninterface.ImageRecognitionConstants;
+import com.gigigo.imagerecognition.core.ImageRecognitionConstants;
 import com.gigigo.orchextra.di.injector.InjectorImpl;
 import com.gigigo.orchextra.sdk.OrchextraManager;
 

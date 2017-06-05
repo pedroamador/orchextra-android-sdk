@@ -18,8 +18,8 @@
 
 package com.gigigo.orchextra.domain.services.auth;
 
-import com.gigigo.gggjavalib.business.model.BusinessError;
-import com.gigigo.gggjavalib.business.model.BusinessObject;
+import com.gigigo.ggglib.core.business.model.BusinessError;
+import com.gigigo.ggglib.core.business.model.BusinessObject;
 import com.gigigo.orchextra.domain.abstractions.device.DeviceDetailsProvider;
 import com.gigigo.orchextra.domain.dataprovider.AuthenticationDataProvider;
 import com.gigigo.orchextra.domain.interactors.base.InteractorError;
@@ -46,29 +46,27 @@ import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 @RunWith(MockitoJUnitRunner.class) public class AuthenticationServiceImplTest {
 
   @Mock AuthenticationDataProvider authDataProvider;
   @Mock DeviceDetailsProvider deviceDetailsProvider;
   @Mock Session session;
   @Mock BusinessObject<CrmUser> crmBusinessObject;
-  @Mock
-  CrmUser crmUser;
+  @Mock CrmUser crmUser;
   @Mock BusinessObject<SdkAuthData> sdk;
   @Mock SdkAuthData sdkAuthData;
   @Mock InteractorError interactorError;
   @Mock BusinessError businessError;
   @Mock BusinessObject<ClientAuthData> clietAuth;
   @Mock ClientAuthData clietAuthData;
-  @Mock
-  CrmUserFieldsValidator crmUserFieldsValidator;
+  @Mock CrmUserFieldsValidator crmUserFieldsValidator;
 
   AuthenticationServiceImpl authenticationService;
 
   @Before public void setUp() {
     authenticationService =
-        new AuthenticationServiceImpl(authDataProvider, deviceDetailsProvider, session, crmUserFieldsValidator);
+        new AuthenticationServiceImpl(authDataProvider, deviceDetailsProvider, session,
+            crmUserFieldsValidator);
     mockshareArrangements();
   }
 
@@ -174,9 +172,8 @@ import static org.mockito.Mockito.when;
     arrangeSuccessSdkAuth();
     arrangeDeviceDetailsProvider();
 
-    when(
-        authDataProvider.authenticateUser(any(AuthCredentials.class), isNull(String.class))).thenReturn(
-        clietAuth);
+    when(authDataProvider.authenticateUser(any(AuthCredentials.class),
+        isNull(String.class))).thenReturn(clietAuth);
 
     when(clietAuth.isSuccess()).thenReturn(false);
     when(clietAuth.getBusinessError()).thenReturn(businessError);

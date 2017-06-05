@@ -17,12 +17,12 @@
  */
 package com.gigigo.orchextra.device.imagerecognition;
 
-import com.gigigo.imagerecognitioninterface.ImageRecognition;
-import com.gigigo.imagerecognitioninterface.ImageRecognitionCredentials;
+import com.gigigo.imagerecognition.core.ImageRecognition;
+import com.gigigo.imagerecognition.core.ImageRecognitionCredentials;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 
-public class ImageRecognitionNullImpl implements ImageRecognition{
+public class ImageRecognitionNullImpl implements ImageRecognition {
 
   private final OrchextraLogger orchextraLogger;
 
