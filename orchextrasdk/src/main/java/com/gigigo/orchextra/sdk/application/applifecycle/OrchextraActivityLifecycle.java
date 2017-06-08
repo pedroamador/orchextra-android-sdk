@@ -33,6 +33,7 @@ import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.AppStatusEventsListener;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.LifeCycleAccessor;
+import com.gigigo.orchextra.domain.model.actions.ActionType;
 import java.util.Iterator;
 import java.util.Stack;
 
@@ -77,7 +78,10 @@ import java.util.Stack;
         && AndroidNotificationBuilder.NOTIFICATION_ACTION_OX.equals(
         NotificationReceiver.mIntent.getAction())) {
       AndroidBasicAction androidBasicAction = getBasicActionChangeShownFromIntent();
-      generateIntentWhenNotificationActivityOpened(activity, androidBasicAction);
+
+      if (!androidBasicAction.getAction().equals(ActionType.NOTIFICATION_PUSH.getStringValue())) {
+        generateIntentWhenNotificationActivityOpened(activity, androidBasicAction);
+      }
     }
   }
 
@@ -115,31 +119,34 @@ import java.util.Stack;
   }
 
   @Override public void onActivityResumed(Activity activity) {
-    if (!ConsistencyUtils.isObjectNull(activityStack)) {
+    try {
+      ConsistencyUtils.checkNotEmpty(activityStack);
       activityStack.peek().setIsPaused(false);
-    } else {
-      orchextraLogger.log("Exception : null activityStack", OrchextraSDKLogLevel.ERROR);
+    } catch (Exception e) {
+      orchextraLogger.log("Exception :" + e.getMessage(), OrchextraSDKLogLevel.ERROR);
     }
   }
 
   @Override public void onActivityPaused(Activity activity) {
-    if (!ConsistencyUtils.isObjectNull(activityStack)) {
+    try {
+      ConsistencyUtils.checkNotEmpty(activityStack);
       activityStack.peek().setIsPaused(true);
-    } else {
-      orchextraLogger.log("Exception : null activityStack", OrchextraSDKLogLevel.ERROR);
+    } catch (Exception e) {
+      orchextraLogger.log("Exception :" + e.getMessage(), OrchextraSDKLogLevel.ERROR);
     }
   }
 
   @Override public void onActivityStopped(Activity activity) {
-    if (!ConsistencyUtils.isObjectNull(activityStack)) {
+    try {
+      ConsistencyUtils.checkNotEmpty(activityStack);
 
       if (activityStack.size() == 1) {
         appStatusEventsListener.onForegroundEnd();
       }
       removeActivityFromStack(activity);
       setBackgroundModeIfNeeded();
-    } else {
-      orchextraLogger.log("Exception : null activityStack", OrchextraSDKLogLevel.ERROR);
+    } catch (Exception e) {
+      orchextraLogger.log("Exception :" + e.getMessage(), OrchextraSDKLogLevel.ERROR);
     }
   }
 
@@ -211,6 +218,7 @@ import java.util.Stack;
           + " Activity Context: "
           + activityStack.get(i).getActivity());
     }
+  }
 
     orchextraLogger.log("STACK Status :: Lifecycle, Is app in Background: " + isInBackground());
 
