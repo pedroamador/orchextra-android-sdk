@@ -30,11 +30,11 @@ import com.gigigo.orchextra.device.geolocation.geofencing.mapper.AndroidGeofence
 import com.gigigo.orchextra.device.geolocation.geofencing.pendingintent.GeofencePendingIntentCreator;
 import com.gigigo.orchextra.device.geolocation.location.RetrieveLastKnownLocation;
 import com.gigigo.orchextra.device.geolocation.location.RetrieveLocationByGpsOrNetworkProvider;
-import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
+import com.gigigo.orchextra.device.permissions.LocationPermission;
 import com.gigigo.orchextra.domain.abstractions.device.GeolocationManager;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.abstractions.geofences.GeofenceRegister;
-import com.gigigo.permissions.interfaces.PermissionChecker;
+import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 import orchextra.javax.inject.Singleton;
@@ -43,13 +43,13 @@ import orchextra.javax.inject.Singleton;
 
   @Singleton @Provides RetrieveLastKnownLocation provideRetrieveLastKnownLocation(
       ContextProvider contextProvider, GoogleApiClientConnector googleApiClientConnector,
-      PermissionChecker permissionChecker, PermissionLocationImp permissionLocationImp) {
+      PermissionChecker permissionChecker, LocationPermission locationPermission) {
 
     RetrieveLocationByGpsOrNetworkProvider retrieveLocationByGpsOrNetworkProvider =
         new RetrieveLocationByGpsOrNetworkProvider(contextProvider.getApplicationContext());
 
     return new RetrieveLastKnownLocation(contextProvider, googleApiClientConnector,
-        retrieveLocationByGpsOrNetworkProvider, permissionChecker, permissionLocationImp);
+        retrieveLocationByGpsOrNetworkProvider, permissionChecker, locationPermission);
   }
 
   @Singleton @Provides AndroidGeocoder provideAndroidGeocoder(ContextProvider contextProvider) {
@@ -80,10 +80,10 @@ import orchextra.javax.inject.Singleton;
   @Singleton @Provides GeofenceDeviceRegister provideGeofenceDeviceRegister(
       ContextProvider contextProvider, GoogleApiClientConnector googleApiClientConnector,
       GeofencePendingIntentCreator geofencePendingIntentCreator,
-      PermissionChecker permissionChecker, PermissionLocationImp permissionLocationImp,
+      PermissionChecker permissionChecker, LocationPermission locationPermission,
       AndroidGeofenceConverter androidGeofenceConverter, OrchextraLogger orchextraLogger) {
     return new GeofenceDeviceRegister(contextProvider, googleApiClientConnector,
-        geofencePendingIntentCreator, permissionChecker, permissionLocationImp,
+        geofencePendingIntentCreator, permissionChecker, locationPermission,
         androidGeofenceConverter, orchextraLogger);
   }
 }

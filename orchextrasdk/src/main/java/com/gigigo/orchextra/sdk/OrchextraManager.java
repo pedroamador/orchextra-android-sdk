@@ -62,6 +62,7 @@ import com.gigigo.orchextra.domain.model.triggers.params.AppRunningModeType;
 import com.gigigo.orchextra.sdk.application.applifecycle.OrchextraActivityLifecycle;
 import com.gigigo.orchextra.sdk.model.CrmUserDomainToCrmUserSdkConverter;
 import com.gigigo.orchextra.sdk.scanner.ScannerManager;
+import com.karumi.dexterox.PermissionManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -519,6 +520,7 @@ public class OrchextraManager implements Observer {
       initDependencyInjection(app.getApplicationContext(), completionCallback,
           notificationActivityClass);
       initLifecyle(app);
+      PermissionManager.initialize(app.getApplicationContext());
       //initialize();
       if (orchextraCompletionCallback != null) {
         if (OrchextraManager.instance != null

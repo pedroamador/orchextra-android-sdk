@@ -19,11 +19,11 @@
 package com.gigigo.orchextra.sdk.application;
 
 import com.gigigo.ggglib.device.providers.ContextProvider;
+import com.gigigo.ggglib.permission.PermissionChecker;
+import com.gigigo.ggglib.permission.listeners.UserPermissionRequestResponseListener;
+import com.gigigo.ggglib.permission.permissions.Permission;
 import com.gigigo.orchextra.domain.abstractions.foreground.ForegroundTasksManager;
 import com.gigigo.orchextra.sdk.OrchextraTasksManager;
-import com.gigigo.permissions.interfaces.Permission;
-import com.gigigo.permissions.interfaces.PermissionChecker;
-import com.gigigo.permissions.interfaces.UserPermissionRequestResponseListener;
 
 public class ForegroundTasksManagerImpl implements ForegroundTasksManager {
 

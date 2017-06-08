@@ -20,18 +20,21 @@ package com.gigigo.orchextra.device.permissions;
 
 import android.Manifest;
 import android.content.Context;
+import com.gigigo.ggglib.permission.permissions.Permission;
 import com.gigigo.orchextra.R;
-import com.gigigo.permissions.interfaces.Permission;
 
-public class PermissionCameraImp implements Permission {
-  Context mContext;
+public class LocationPermission implements Permission {
 
-  public PermissionCameraImp(Context context) {
-    mContext = context;
+  private int numRetries;
+
+  public LocationPermission(Context context) {
+    if (context != null) {
+      numRetries = R.integer.ox_permission_retries_location;
+    }
   }
 
   @Override public String getAndroidPermissionStringType() {
-    return Manifest.permission.CAMERA;
+    return Manifest.permission.ACCESS_FINE_LOCATION;
   }
 
   @Override public int getPermissionSettingsDeniedFeedback() {
@@ -39,22 +42,18 @@ public class PermissionCameraImp implements Permission {
   }
 
   @Override public int getPermissionDeniedFeedback() {
-    return R.string.ox_permission_denied_camera;
+    return R.string.ox_permission_denied_geolocation;
   }
 
   @Override public int getPermissionRationaleTitle() {
-    return R.string.ox_permission_rationale_title_camera;
+    return R.string.ox_permission_rationale_title_location;
   }
 
   @Override public int getPermissionRationaleMessage() {
-    return R.string.ox_permission_rationale_message_camera;
+    return R.string.ox_permission_rationale_message_location;
   }
 
   @Override public int getNumRetry() {
-    if (mContext != null) {
-      return mContext.getResources().getInteger(R.integer.ox_permission_retries_camera);
-    } else {
-      return 0;
-    }
+    return numRetries;
   }
 }

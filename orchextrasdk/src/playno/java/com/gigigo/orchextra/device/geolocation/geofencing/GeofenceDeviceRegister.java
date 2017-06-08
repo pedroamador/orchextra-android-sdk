@@ -23,11 +23,11 @@ import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
 import com.gigigo.orchextra.device.geolocation.geofencing.mapper.AndroidGeofenceConverter;
 import com.gigigo.orchextra.device.geolocation.geofencing.pendingintent.GeofencePendingIntentCreator;
-import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
+import com.gigigo.orchextra.device.permissions.LocationPermission;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofenceUpdates;
-import com.gigigo.permissions.interfaces.PermissionChecker;
-import com.gigigo.permissions.interfaces.UserPermissionRequestResponseListener;
+import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
+import com.gigigo.ggglib.permission.interfaces.UserPermissionRequestResponseListener;
 
 //import com.google.android.gms.common.ConnectionResult;
 //import com.google.android.gms.common.api.ResultCallback;
@@ -41,7 +41,7 @@ public class GeofenceDeviceRegister {//implements ResultCallback<Status> {
   private final GeofencePendingIntentCreator geofencePendingIntentCreator;
   private final GoogleApiClientConnector googleApiClientConnector;
   private final PermissionChecker permissionChecker;
-  private final PermissionLocationImp accessFineLocationPermissionImp;
+  private final LocationPermission accessFineLocationPermissionImp;
   private final AndroidGeofenceConverter androidGeofenceConverter;
   private final OrchextraLogger orchextraLogger;
 
@@ -94,7 +94,7 @@ public class GeofenceDeviceRegister {//implements ResultCallback<Status> {
   public GeofenceDeviceRegister(ContextProvider contextProvider,
       GoogleApiClientConnector googleApiClientConnector,
       GeofencePendingIntentCreator geofencePendingIntentCreator,
-      PermissionChecker permissionChecker, PermissionLocationImp accessFineLocationPermissionImp,
+      PermissionChecker permissionChecker, LocationPermission accessFineLocationPermissionImp,
       AndroidGeofenceConverter androidGeofenceConverter, OrchextraLogger orchextraLogger) {
 
     this.contextProvider = contextProvider;

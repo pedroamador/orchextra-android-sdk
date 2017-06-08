@@ -19,6 +19,8 @@
 package com.gigigo.orchextra.device.bluetooth;
 
 import com.gigigo.ggglib.device.providers.ContextProvider;
+import com.gigigo.ggglib.permission.PermissionChecker;
+import com.gigigo.ggglib.permission.listeners.UserPermissionRequestResponseListener;
 import com.gigigo.orchextra.device.permissions.CoarseLocationPermission;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothAvailability;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothStatus;
@@ -28,13 +30,11 @@ import com.gigigo.orchextra.domain.abstractions.initialization.features.FeatureL
 import com.gigigo.orchextra.domain.abstractions.lifecycle.AppRunningMode;
 import com.gigigo.orchextra.domain.model.triggers.params.AppRunningModeType;
 import com.gigigo.orchextra.sdk.features.BeaconFeature;
-import com.gigigo.permissions.interfaces.Permission;
-import com.gigigo.permissions.interfaces.PermissionChecker;
-import com.gigigo.permissions.interfaces.UserPermissionRequestResponseListener;
 
 public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
 
   private final PermissionChecker permissionChecker;
+  private final CoarseLocationPermission coarseLocationPermission;
   private final BluetoothAvailability bluetoothAvailability;
   private final ContextProvider contextProvider;
   private final AppRunningMode appRunningMode;
@@ -42,10 +42,12 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
   private BluetoothStatusListener bluetoothStatusListener;
 
   public BluetoothStatusInfoImpl(PermissionChecker permissionChecker,
+      CoarseLocationPermission coarseLocationPermission,
       BluetoothAvailability bluetoothAvailability, ContextProvider contextProvider,
       AppRunningMode appRunningMode, FeatureListener featureListener) {
 
     this.permissionChecker = permissionChecker;
+    this.coarseLocationPermission = coarseLocationPermission;
     this.bluetoothAvailability = bluetoothAvailability;
     this.contextProvider = contextProvider;
     this.appRunningMode = appRunningMode;
@@ -71,10 +73,7 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
   }
 
   private void hasBltePermissions() {
-    final Permission permission =
-        new CoarseLocationPermission(this.contextProvider.getApplicationContext());
-
-    boolean allowed = permissionChecker.isGranted(permission);
+    boolean allowed = permissionChecker.isGranted(coarseLocationPermission);
     if (allowed) {
       onPermissionResponse(allowed);
     } else {
@@ -83,7 +82,7 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
           @Override public void onPermissionAllowed(boolean permissionAllowed, int i) {
             onPermissionResponse(permissionAllowed);
           }
-        }, permission); //, contextProvider.getCurrentActivity()
+        }, coarseLocationPermission);
       } else {
         onPermissionResponse(false);
       }

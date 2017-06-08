@@ -20,8 +20,9 @@ package com.gigigo.orchextra.di.modules;
 
 import android.content.Context;
 import com.gigigo.ggglib.device.providers.ContextProvider;
+import com.gigigo.ggglib.permission.PermissionChecker;
 import com.gigigo.orchextra.device.OrchextraLoggerImpl;
-import com.gigigo.orchextra.device.permissions.PermissionCameraImp;
+import com.gigigo.orchextra.device.permissions.CameraPermission;
 import com.gigigo.orchextra.di.modules.control.ControlModule;
 import com.gigigo.orchextra.di.modules.device.DelegateModule;
 import com.gigigo.orchextra.di.modules.device.DeviceModule;
@@ -46,7 +47,6 @@ import com.gigigo.orchextra.sdk.application.applifecycle.OrchextraContextProvide
 import com.gigigo.orchextra.sdk.model.CrmUserDomainToCrmUserSdkConverter;
 import com.gigigo.orchextra.sdk.model.CrmUserGenderConverter;
 import com.gigigo.orchextra.sdk.scanner.ScannerManager;
-import com.gigigo.permissions.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 import orchextra.javax.inject.Singleton;
@@ -134,9 +134,8 @@ import orchextra.javax.inject.Singleton;
   }
 
   @Singleton @Provides ScannerManager provideScannerManager(ContextProvider contextProvider,
-      PermissionChecker androidPermission) {
-    return new ScannerManager(contextProvider, androidPermission,
-        new PermissionCameraImp(contextProvider.getApplicationContext()));
+      PermissionChecker androidPermission, CameraPermission permissionCamera) {
+    return new ScannerManager(contextProvider, androidPermission, permissionCamera);
   }
 
   public void setCustomSchemeReceiver(CustomOrchextraSchemeReceiver customSchemeReceiver) {

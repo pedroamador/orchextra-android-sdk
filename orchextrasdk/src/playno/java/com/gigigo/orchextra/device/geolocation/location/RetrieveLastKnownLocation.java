@@ -22,15 +22,15 @@ import android.location.Location;
 import android.os.Bundle;
 import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
-import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
-import com.gigigo.permissions.interfaces.PermissionChecker;
+import com.gigigo.orchextra.device.permissions.LocationPermission;
+import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
 
 public class RetrieveLastKnownLocation {
 
   private final ContextProvider contextProvider;
   private final GoogleApiClientConnector googleApiClientConnector;
   private final PermissionChecker permissionChecker;
-  private final PermissionLocationImp accessFineLocationPermissionImp;
+  private final LocationPermission accessFineLocationPermissionImp;
   private final RetrieveLocationByGpsOrNetworkProvider retrieveLocationByGpsOrNetworkProvider;
 
   private OnLastKnownLocationListener onLastKnownLocationListener;
@@ -38,7 +38,7 @@ public class RetrieveLastKnownLocation {
   public RetrieveLastKnownLocation(ContextProvider contextProvider,
       GoogleApiClientConnector googleApiClientConnector,
       RetrieveLocationByGpsOrNetworkProvider retrieveLocationByGpsOrNetworkProvider,
-      PermissionChecker permissionChecker, PermissionLocationImp accessFineLocationPermissionImp) {
+      PermissionChecker permissionChecker, LocationPermission accessFineLocationPermissionImp) {
 
     this.contextProvider = contextProvider;
     this.googleApiClientConnector = googleApiClientConnector;

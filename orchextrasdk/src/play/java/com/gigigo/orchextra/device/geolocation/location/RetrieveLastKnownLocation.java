@@ -22,8 +22,8 @@ import android.location.Location;
 import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
 import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
-import com.gigigo.permissions.interfaces.PermissionChecker;
-import com.gigigo.permissions.interfaces.UserPermissionRequestResponseListener;
+import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
+import com.gigigo.ggglib.permission.interfaces.UserPermissionRequestResponseListener;
 import com.google.android.gms.location.LocationServices;
 
 public class RetrieveLastKnownLocation {

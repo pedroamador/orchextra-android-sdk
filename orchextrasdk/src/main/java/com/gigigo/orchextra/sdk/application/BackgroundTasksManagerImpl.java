@@ -20,8 +20,8 @@ package com.gigigo.orchextra.sdk.application;
 
 import com.gigigo.orchextra.domain.abstractions.background.BackgroundTasksManager;
 import com.gigigo.orchextra.sdk.OrchextraTasksManager;
-import com.gigigo.permissions.interfaces.Permission;
-import com.gigigo.permissions.interfaces.PermissionChecker;
+import com.gigigo.ggglib.permission.interfaces.Permission;
+import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
 
 public class BackgroundTasksManagerImpl implements BackgroundTasksManager {
 

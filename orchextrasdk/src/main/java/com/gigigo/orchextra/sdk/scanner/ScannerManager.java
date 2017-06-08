@@ -20,11 +20,11 @@ package com.gigigo.orchextra.sdk.scanner;
 
 import android.content.Intent;
 import com.gigigo.ggglib.device.providers.ContextProvider;
-import com.gigigo.orchextra.device.permissions.PermissionCameraImp;
+import com.gigigo.ggglib.permission.PermissionChecker;
+import com.gigigo.ggglib.permission.listeners.UserPermissionRequestResponseListener;
+import com.gigigo.orchextra.device.permissions.CameraPermission;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.ui.scanner.OxScannerActivity;
-import com.gigigo.permissions.interfaces.PermissionChecker;
-import com.gigigo.permissions.interfaces.UserPermissionRequestResponseListener;
 import orchextra.javax.inject.Inject;
 
 public class ScannerManager {
@@ -32,7 +32,7 @@ public class ScannerManager {
   private final ContextProvider context;
   @Inject OrchextraLogger orchextraLogger;
   PermissionChecker permissionChecker;
-  PermissionCameraImp cameraPermissionImp;
+  CameraPermission cameraPermissionImp;
   private UserPermissionRequestResponseListener cameraPermissionResponseListener =
       new UserPermissionRequestResponseListener() {
         @Override public void onPermissionAllowed(boolean permissionAllowed, int i) {
@@ -43,7 +43,7 @@ public class ScannerManager {
       };
 
   public ScannerManager(ContextProvider context, PermissionChecker permissionChecker1,
-      PermissionCameraImp cameraPermissionImp1) {
+      CameraPermission cameraPermissionImp1) {
     this.context = context;
     this.permissionChecker = permissionChecker1;
     this.cameraPermissionImp = cameraPermissionImp1;

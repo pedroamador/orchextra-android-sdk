@@ -21,11 +21,12 @@ package com.gigigo.orchextra.di.modules.device;
 import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.bluetooth.BluetoothAvailabilityImpl;
 import com.gigigo.orchextra.device.bluetooth.BluetoothStatusInfoImpl;
+import com.gigigo.orchextra.device.permissions.CoarseLocationPermission;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothAvailability;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothStatusInfo;
 import com.gigigo.orchextra.domain.abstractions.initialization.features.FeatureListener;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.AppRunningMode;
-import com.gigigo.permissions.interfaces.PermissionChecker;
+import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 import orchextra.javax.inject.Singleton;
@@ -39,10 +40,10 @@ import org.altbeacon.beacon.BeaconManager;
   }
 
   @Provides @Singleton BluetoothStatusInfo provideBluetoothStatusInfo(
-      BluetoothAvailability bluetoothAvailability, PermissionChecker permissionChecker,
+      BluetoothAvailability bluetoothAvailability, PermissionChecker permissionChecker, CoarseLocationPermission coarseLocationPermission,
       ContextProvider contextProvider, AppRunningMode appRunningMode,
       FeatureListener featureListener) {
-    return new BluetoothStatusInfoImpl(permissionChecker, bluetoothAvailability, contextProvider,
+    return new BluetoothStatusInfoImpl(permissionChecker, coarseLocationPermission, bluetoothAvailability, contextProvider,
         appRunningMode, featureListener);
   }
 }

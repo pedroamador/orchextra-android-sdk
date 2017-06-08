@@ -19,15 +19,12 @@
 package com.gigigo.orchextra.device.permissions;
 
 import android.Manifest;
-import android.content.Context;
 import com.gigigo.orchextra.R;
-import com.gigigo.permissions.interfaces.Permission;
+import com.gigigo.ggglib.permission.interfaces.Permission;
 
 public class CoarseLocationPermission implements Permission {
-  Context mContext;
 
-  public CoarseLocationPermission(Context context) {
-    this.mContext = context;
+  public CoarseLocationPermission() {
   }
 
   @Override public String getAndroidPermissionStringType() {
@@ -51,6 +48,6 @@ public class CoarseLocationPermission implements Permission {
   }
 
   @Override public int getNumRetry() {
-    return mContext.getResources().getInteger(R.integer.ox_permission_retries_coarselocation);
+    return R.integer.ox_permission_retries_coarselocation;
   }
 }

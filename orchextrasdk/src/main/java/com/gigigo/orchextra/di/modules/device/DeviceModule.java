@@ -19,15 +19,18 @@ package com.gigigo.orchextra.di.modules.device;
 
 import com.gigigo.ggglib.core.business.model.BusinessError;
 import com.gigigo.ggglib.device.providers.ContextProvider;
+import com.gigigo.ggglib.permission.PermissionChecker;
+import com.gigigo.ggglib.permission.PermissionCheckerImpl;
 import com.gigigo.orchextra.delegates.ConfigDelegateImpl;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
 import com.gigigo.orchextra.device.GoogleApiClientConnectorImpl;
 import com.gigigo.orchextra.device.information.AndroidDevice;
 import com.gigigo.orchextra.device.information.AndroidInstanceIdProvider;
 import com.gigigo.orchextra.device.information.AndroidSdkVersionAppInfo;
+import com.gigigo.orchextra.device.permissions.CameraPermission;
+import com.gigigo.orchextra.device.permissions.CoarseLocationPermission;
 import com.gigigo.orchextra.device.permissions.GoogleApiPermissionChecker;
-import com.gigigo.orchextra.device.permissions.PermissionCameraImp;
-import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
+import com.gigigo.orchextra.device.permissions.LocationPermission;
 import com.gigigo.orchextra.domain.abstractions.beacons.BeaconScanner;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
@@ -38,8 +41,6 @@ import com.gigigo.orchextra.domain.abstractions.initialization.features.FeatureL
 import com.gigigo.orchextra.sdk.OrchextraTasksManager;
 import com.gigigo.orchextra.sdk.OrchextraTasksManagerImpl;
 import com.gigigo.orchextra.sdk.application.ForegroundTasksManagerImpl;
-import com.gigigo.permissions.PermissionCheckerImpl;
-import com.gigigo.permissions.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 import orchextra.javax.inject.Singleton;
@@ -53,7 +54,7 @@ import orchextra.javax.inject.Singleton;
       OrchextraTasksManager orchextraTasksManager, PermissionChecker permissionChecker,
       ContextProvider contextProvider) {
     return new ForegroundTasksManagerImpl(orchextraTasksManager, permissionChecker, contextProvider,
-        new PermissionLocationImp(contextProvider.getApplicationContext()));
+        new LocationPermission(contextProvider.getApplicationContext()));
   }
 
   @Singleton @Provides OrchextraTasksManager provideOrchextraTasksManager(
@@ -73,13 +74,18 @@ import orchextra.javax.inject.Singleton;
   }
 
   //  @Singleton
-  @Provides PermissionLocationImp providePermissionLocationImp(ContextProvider contextProvider) {
-    return new PermissionLocationImp(contextProvider.getApplicationContext());
+  @Provides CoarseLocationPermission providePermissionCoarseLocation() {
+    return new CoarseLocationPermission();
   }
 
   //  @Singleton
-  @Provides PermissionCameraImp providePermissionCameraImp(ContextProvider contextProvider) {
-    return new PermissionCameraImp(contextProvider.getApplicationContext());
+  @Provides LocationPermission providePermissionLocationImp(ContextProvider contextProvider) {
+    return new LocationPermission(contextProvider.getApplicationContext());
+  }
+
+  //  @Singleton
+  @Provides CameraPermission providePermissionCameraImp(ContextProvider contextProvider) {
+    return new CameraPermission(contextProvider.getApplicationContext());
   }
 
   @Singleton @Provides GoogleApiClientConnector provideGoogleApiClientConnector(

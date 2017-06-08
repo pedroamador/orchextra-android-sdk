@@ -21,12 +21,12 @@ package com.gigigo.orchextra.di.modules.device;
 import com.gigigo.ggglib.device.providers.ContextProvider;
 import com.gigigo.orchextra.device.geolocation.geofencing.AndroidGeofenceIntentServiceHandler;
 import com.gigigo.orchextra.device.geolocation.geofencing.mapper.LocationMapper;
-import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
+import com.gigigo.orchextra.device.permissions.LocationPermission;
 import com.gigigo.orchextra.di.scopes.PerService;
 import com.gigigo.orchextra.domain.abstractions.background.BackgroundTasksManager;
 import com.gigigo.orchextra.sdk.OrchextraTasksManager;
 import com.gigigo.orchextra.sdk.application.BackgroundTasksManagerImpl;
-import com.gigigo.permissions.interfaces.PermissionChecker;
+import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
 import orchextra.dagger.Module;
 import orchextra.dagger.Provides;
 
@@ -37,7 +37,7 @@ import orchextra.dagger.Provides;
       ContextProvider contextProvider) {
 
     return new BackgroundTasksManagerImpl(orchextraTasksManager, permissionChecker,
-        new PermissionLocationImp(contextProvider.getApplicationContext()));
+        new LocationPermission(contextProvider.getApplicationContext()));
   }
 
   @PerService @Provides LocationMapper provideLocationMapper() {
