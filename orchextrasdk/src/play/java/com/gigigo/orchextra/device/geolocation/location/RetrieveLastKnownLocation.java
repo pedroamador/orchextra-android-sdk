@@ -20,10 +20,10 @@ package com.gigigo.orchextra.device.geolocation.location;
 
 import android.location.Location;
 import com.gigigo.ggglib.device.providers.ContextProvider;
+import com.gigigo.ggglib.permission.PermissionWrapper;
+import com.gigigo.ggglib.permission.listeners.UserPermissionRequestResponseListener;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
-import com.gigigo.orchextra.device.permissions.PermissionLocationImp;
-import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
-import com.gigigo.ggglib.permission.interfaces.UserPermissionRequestResponseListener;
+import com.gigigo.orchextra.device.permissions.LocationPermission;
 import com.google.android.gms.location.LocationServices;
 
 public class RetrieveLastKnownLocation {
@@ -31,8 +31,8 @@ public class RetrieveLastKnownLocation {
   private final ContextProvider contextProvider;
   private final GoogleApiClientConnector googleApiClientConnector;
   private final RetrieveLocationByGpsOrNetworkProvider retrieveLocationByGpsOrNetworkProvider;
-  private final PermissionChecker permissionChecker;
-  private final PermissionLocationImp accessFineLocationPermissionImp;
+  private final PermissionWrapper permissionWrapper;
+  private final LocationPermission accessFineLocationPermissionImp;
 
   private OnLastKnownLocationListener onLastKnownLocationListener;
   private GoogleApiClientConnector.OnConnectedListener onConnectedListener =
@@ -43,7 +43,7 @@ public class RetrieveLastKnownLocation {
         }
 
         @Override public void onConnectionFailed() {
-          boolean isGranted = permissionChecker.isGranted(accessFineLocationPermissionImp);
+          boolean isGranted = permissionWrapper.isGranted(accessFineLocationPermissionImp);
           if (isGranted) {
             getNetworkGpsLocation();
           }
@@ -59,12 +59,12 @@ public class RetrieveLastKnownLocation {
   public RetrieveLastKnownLocation(ContextProvider contextProvider,
       GoogleApiClientConnector googleApiClientConnector,
       RetrieveLocationByGpsOrNetworkProvider retrieveLocationByGpsOrNetworkProvider,
-      PermissionChecker permissionChecker, PermissionLocationImp accessFineLocationPermissionImp) {
+      PermissionWrapper permissionWrapper, LocationPermission accessFineLocationPermissionImp) {
 
     this.contextProvider = contextProvider;
     this.googleApiClientConnector = googleApiClientConnector;
     this.retrieveLocationByGpsOrNetworkProvider = retrieveLocationByGpsOrNetworkProvider;
-    this.permissionChecker = permissionChecker;
+    this.permissionWrapper = permissionWrapper;
     this.accessFineLocationPermissionImp = accessFineLocationPermissionImp;
   }
 
@@ -77,12 +77,12 @@ public class RetrieveLastKnownLocation {
   }
 
   public void askPermissionAndGetLastKnownLocation() {
-    boolean isGranted = permissionChecker.isGranted(accessFineLocationPermissionImp);
+    boolean isGranted = permissionWrapper.isGranted(accessFineLocationPermissionImp);
     if (isGranted) {
       getLastKnownLocation();
     } else {
       if (contextProvider.getCurrentActivity() != null) {
-        permissionChecker.askForPermission(userPermissionResponseListener,
+        permissionWrapper.askForPermission(userPermissionResponseListener,
             accessFineLocationPermissionImp); //contextProvider.getCurrentActivity());
       }
     }

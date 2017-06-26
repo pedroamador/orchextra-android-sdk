@@ -24,10 +24,10 @@ import com.gigigo.orchextra.di.modules.domain.DomainModuleProvider;
 import com.gigigo.orchextra.di.qualifiers.BackThread;
 import com.gigigo.orchextra.domain.abstractions.threads.ThreadSpec;
 
-
-public interface ControlModuleProvider extends DomainModuleProvider{
+public interface ControlModuleProvider extends DomainModuleProvider {
   ConfigObservable provideConfigObservable();
+
   GeofenceController provideProximityItemController();
-  @BackThread
-  ThreadSpec provideThreadSpec();
+
+  @BackThread ThreadSpec provideThreadSpec();
 }

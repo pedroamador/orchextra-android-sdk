@@ -115,10 +115,7 @@ dependencies {
   compile rootProject.ext.dependencies.androidSupportV7
   compile 'com.github.Gigigo-Android-Devs:fabmenu:proto'
 
-  //tiene refencia a otra ggglib 104/ahora la de nubo apunta a la 5.2 y sin support
-  compile (rootProject.ext.dependencies.imageRecognitionVuforia) {
-    exclude module: 'gigigo-permissions-library-android'
-  }
+  compile rootProject.ext.dependencies.imageRecognitionVuforia
 
   //flavour dependencies from project, for test(necesary for generate builtsvariants aars)
   play7StagingCompile project(path: ':orchextrasdk', configuration: 'play7Staging')

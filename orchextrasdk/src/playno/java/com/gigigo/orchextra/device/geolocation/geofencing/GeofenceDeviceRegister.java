@@ -20,27 +20,21 @@ package com.gigigo.orchextra.device.geolocation.geofencing;
 
 import android.os.Bundle;
 import com.gigigo.ggglib.device.providers.ContextProvider;
+import com.gigigo.ggglib.permission.PermissionWrapper;
+import com.gigigo.ggglib.permission.listeners.UserPermissionRequestResponseListener;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
 import com.gigigo.orchextra.device.geolocation.geofencing.mapper.AndroidGeofenceConverter;
 import com.gigigo.orchextra.device.geolocation.geofencing.pendingintent.GeofencePendingIntentCreator;
 import com.gigigo.orchextra.device.permissions.LocationPermission;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
 import com.gigigo.orchextra.domain.model.entities.geofences.OrchextraGeofenceUpdates;
-import com.gigigo.ggglib.permission.interfaces.PermissionChecker;
-import com.gigigo.ggglib.permission.interfaces.UserPermissionRequestResponseListener;
-
-//import com.google.android.gms.common.ConnectionResult;
-//import com.google.android.gms.common.api.ResultCallback;
-//import com.google.android.gms.common.api.Status;
-//import com.google.android.gms.location.GeofencingRequest;
-//import com.google.android.gms.location.LocationServices;
 
 public class GeofenceDeviceRegister {//implements ResultCallback<Status> {
 
   private final ContextProvider contextProvider;
   private final GeofencePendingIntentCreator geofencePendingIntentCreator;
   private final GoogleApiClientConnector googleApiClientConnector;
-  private final PermissionChecker permissionChecker;
+  private final PermissionWrapper permissionWrapper;
   private final LocationPermission accessFineLocationPermissionImp;
   private final AndroidGeofenceConverter androidGeofenceConverter;
   private final OrchextraLogger orchextraLogger;
@@ -94,13 +88,13 @@ public class GeofenceDeviceRegister {//implements ResultCallback<Status> {
   public GeofenceDeviceRegister(ContextProvider contextProvider,
       GoogleApiClientConnector googleApiClientConnector,
       GeofencePendingIntentCreator geofencePendingIntentCreator,
-      PermissionChecker permissionChecker, LocationPermission accessFineLocationPermissionImp,
+      PermissionWrapper permissionWrapper, LocationPermission accessFineLocationPermissionImp,
       AndroidGeofenceConverter androidGeofenceConverter, OrchextraLogger orchextraLogger) {
 
     this.contextProvider = contextProvider;
     this.googleApiClientConnector = googleApiClientConnector;
     this.geofencePendingIntentCreator = geofencePendingIntentCreator;
-    this.permissionChecker = permissionChecker;
+    this.permissionWrapper = permissionWrapper;
     this.accessFineLocationPermissionImp = accessFineLocationPermissionImp;
     this.androidGeofenceConverter = androidGeofenceConverter;
     this.orchextraLogger = orchextraLogger;
@@ -114,12 +108,12 @@ public class GeofenceDeviceRegister {//implements ResultCallback<Status> {
   }
 
   private void registerGeofencesOnDevice() {
-    boolean isGranted = permissionChecker.isGranted(accessFineLocationPermissionImp);
+    boolean isGranted = permissionWrapper.isGranted(accessFineLocationPermissionImp);
     if (isGranted) {
       registerGeofence();
     } else {
       if (contextProvider.getCurrentActivity() != null) {
-        permissionChecker.askForPermission(userPermissionResponseListener,
+        permissionWrapper.askForPermission(userPermissionResponseListener,
             accessFineLocationPermissionImp);
       }
     }

@@ -107,11 +107,12 @@ android {
 
   productFlavors {
 
-    play9 {dimension "play"}
-    play10 {dimension "play"}
-    play8 {dimension "play"}
-    play7 {dimension "play"}
-    playno {dimension "play"}
+    play9 { dimension "play" }
+    play10 { dimension "play" }
+    play8 { dimension "play" }
+    play7 { dimension "play" }
+    playno { dimension "play" }
+  }
 
   sourceSets {
     play7 {
@@ -177,16 +178,13 @@ dependencies {
 
   //compile parent.ext.dependencies.loggingInterceptor
   compile parent.ext.dependencies.altBeacon
-  compile(parent.ext.dependencies.barcodescanner)
-          { exclude module: 'support-v4'
-            // com.android.support:support-annotations:23.1.1
-          }
-
-  //compile rootProject.ext.dependencies.gggLibPermissions
-  compile project(':ggglib.permission-debug')
-  compile (rootProject.ext.dependencies.imageRecognitionCore) {
-    exclude module: 'gigigo-permissions-library-android'
+  compile(parent.ext.dependencies.barcodescanner) {
+    exclude module: 'support-v4'
+    // com.android.support:support-annotations:23.1.1
   }
+
+  compile rootProject.ext.dependencies.gggLibPermissions
+  compile rootProject.ext.dependencies.imageRecognitionCore
 
   compile rootProject.ext.modules.orchextraSdkControl
   compile rootProject.ext.modules.orchextraSdkData
@@ -204,7 +202,7 @@ dependencies {
   play7StagingCompile('com.google.android.gms:play-services-location:7.8.0')
   play7StagingCompile('com.google.android.gms:play-services-gcm:7.8.0')
 
-  play10DebugCompile( 'com.google.android.gms:play-services-location:10.0.1')
+  play10DebugCompile('com.google.android.gms:play-services-location:10.0.1')
   play10DebugCompile('com.google.android.gms:play-services-gcm:10.0.1')
 
   play9DebugCompile('com.google.android.gms:play-services-location:9.0.0')
@@ -217,7 +215,7 @@ dependencies {
   play7DebugCompile('com.google.android.gms:play-services-gcm:7.8.0')
 
 
-  play10ReleaseCompile( 'com.google.android.gms:play-services-location:10.0.1')
+  play10ReleaseCompile('com.google.android.gms:play-services-location:10.0.1')
   play10ReleaseCompile('com.google.android.gms:play-services-gcm:10.0.1')
 
   play9ReleaseCompile('com.google.android.gms:play-services-location:9.0.0')

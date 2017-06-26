@@ -19,7 +19,7 @@
 package com.gigigo.orchextra.device.bluetooth;
 
 import com.gigigo.ggglib.device.providers.ContextProvider;
-import com.gigigo.ggglib.permission.PermissionChecker;
+import com.gigigo.ggglib.permission.PermissionWrapper;
 import com.gigigo.ggglib.permission.listeners.UserPermissionRequestResponseListener;
 import com.gigigo.orchextra.device.permissions.CoarseLocationPermission;
 import com.gigigo.orchextra.domain.abstractions.beacons.BluetoothAvailability;
@@ -33,7 +33,7 @@ import com.gigigo.orchextra.sdk.features.BeaconFeature;
 
 public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
 
-  private final PermissionChecker permissionChecker;
+  private final PermissionWrapper permissionWrapper;
   private final CoarseLocationPermission coarseLocationPermission;
   private final BluetoothAvailability bluetoothAvailability;
   private final ContextProvider contextProvider;
@@ -41,12 +41,12 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
   private final FeatureListener featureListener;
   private BluetoothStatusListener bluetoothStatusListener;
 
-  public BluetoothStatusInfoImpl(PermissionChecker permissionChecker,
+  public BluetoothStatusInfoImpl(PermissionWrapper permissionWrapper,
       CoarseLocationPermission coarseLocationPermission,
       BluetoothAvailability bluetoothAvailability, ContextProvider contextProvider,
       AppRunningMode appRunningMode, FeatureListener featureListener) {
 
-    this.permissionChecker = permissionChecker;
+    this.permissionWrapper = permissionWrapper;
     this.coarseLocationPermission = coarseLocationPermission;
     this.bluetoothAvailability = bluetoothAvailability;
     this.contextProvider = contextProvider;
@@ -73,12 +73,12 @@ public class BluetoothStatusInfoImpl implements BluetoothStatusInfo {
   }
 
   private void hasBltePermissions() {
-    boolean allowed = permissionChecker.isGranted(coarseLocationPermission);
+    boolean allowed = permissionWrapper.isGranted(coarseLocationPermission);
     if (allowed) {
       onPermissionResponse(allowed);
     } else {
       if (appRunningMode.getRunningModeType() == AppRunningModeType.FOREGROUND) {
-        permissionChecker.askForPermission(new UserPermissionRequestResponseListener() {
+        permissionWrapper.askForPermission(new UserPermissionRequestResponseListener() {
           @Override public void onPermissionAllowed(boolean permissionAllowed, int i) {
             onPermissionResponse(permissionAllowed);
           }

@@ -36,10 +36,10 @@ allprojects {
 
                     gggLibNetworkRetrofit    : 'com.github.gigigoapps.gigigo-android-network:ggglib.network.retrofit:1.0.9',
 
-                    gggLibPermissions        : 'com.github.Gigigo-Android-Devs:gigigo-permissions-library-android:3.1',
+                    gggLibPermissions        : 'com.github.Gigigo-Android-Devs:gigigo-permissions-library-android:3.4RC',
 
-                    imageRecognitionCore     : 'com.github.Gigigo-Android-Devs.gigigo-imageRecognizer-library-android:imagerecognition.core:2.9',
-                    imageRecognitionVuforia  : 'com.github.Gigigo-Android-Devs.gigigo-imageRecognizer-library-android:imagerecognition.vuforia:2.9']
+                    imageRecognitionCore     : 'com.github.Gigigo-Android-Devs.gigigo-imageRecognizer-library-android:imagerecognition.core:2.10RC',
+                    imageRecognitionVuforia  : 'com.github.Gigigo-Android-Devs.gigigo-imageRecognizer-library-android:imagerecognition.vuforia:2.10RC']
 
     testDependencies = [mockito        : 'org.mockito:mockito-core:1.10.19',
                         junit          : 'junit:junit:4.12',

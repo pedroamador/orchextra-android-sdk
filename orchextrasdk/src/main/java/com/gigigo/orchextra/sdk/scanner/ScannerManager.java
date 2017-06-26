@@ -20,7 +20,7 @@ package com.gigigo.orchextra.sdk.scanner;
 
 import android.content.Intent;
 import com.gigigo.ggglib.device.providers.ContextProvider;
-import com.gigigo.ggglib.permission.PermissionChecker;
+import com.gigigo.ggglib.permission.PermissionWrapper;
 import com.gigigo.ggglib.permission.listeners.UserPermissionRequestResponseListener;
 import com.gigigo.orchextra.device.permissions.CameraPermission;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
@@ -31,7 +31,7 @@ public class ScannerManager {
 
   private final ContextProvider context;
   @Inject OrchextraLogger orchextraLogger;
-  PermissionChecker permissionChecker;
+  PermissionWrapper permissionWrapper;
   CameraPermission cameraPermissionImp;
   private UserPermissionRequestResponseListener cameraPermissionResponseListener =
       new UserPermissionRequestResponseListener() {
@@ -42,10 +42,10 @@ public class ScannerManager {
         }
       };
 
-  public ScannerManager(ContextProvider context, PermissionChecker permissionChecker1,
+  public ScannerManager(ContextProvider context, PermissionWrapper permissionWrapper,
       CameraPermission cameraPermissionImp1) {
     this.context = context;
-    this.permissionChecker = permissionChecker1;
+    this.permissionWrapper = permissionWrapper;
     this.cameraPermissionImp = cameraPermissionImp1;
   }
 
@@ -58,9 +58,9 @@ public class ScannerManager {
   }
 
   private void checkCameraPermission() {
-    boolean isGranted = permissionChecker.isGranted(cameraPermissionImp);
+    boolean isGranted = permissionWrapper.isGranted(cameraPermissionImp);
     if (!isGranted) {
-      permissionChecker.askForPermission(cameraPermissionResponseListener,
+      permissionWrapper.askForPermission(cameraPermissionResponseListener,
           cameraPermissionImp); //(Activity) context.getCurrentActivity());
     } else {
       openActivity();

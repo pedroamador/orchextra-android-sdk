@@ -62,7 +62,6 @@ import com.gigigo.orchextra.domain.model.triggers.params.AppRunningModeType;
 import com.gigigo.orchextra.sdk.application.applifecycle.OrchextraActivityLifecycle;
 import com.gigigo.orchextra.sdk.model.CrmUserDomainToCrmUserSdkConverter;
 import com.gigigo.orchextra.sdk.scanner.ScannerManager;
-import com.karumi.dexterox.PermissionManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -517,10 +516,10 @@ public class OrchextraManager implements Observer {
     orchextraCompletionCallback = completionCallback;
 
     if (AndroidSdkVersion.hasJellyBean18()) {
-      initDependencyInjection(app.getApplicationContext(), completionCallback,
+      initDependencyInjection(app, completionCallback,
           notificationActivityClass);
       initLifecyle(app);
-      PermissionManager.initialize(app.getApplicationContext());
+
       //initialize();
       if (orchextraCompletionCallback != null) {
         if (OrchextraManager.instance != null
@@ -538,12 +537,12 @@ public class OrchextraManager implements Observer {
     }
   }
 
-  private void initDependencyInjection(Context applicationContext,
+  private void initDependencyInjection(Application app,
       OrchextraManagerCompletionCallback orchextraCompletionCallback,
       String notificationActivityClass) {
 
     OrchextraComponent orchextraComponent = DaggerOrchextraComponent.builder()
-        .orchextraModule(new OrchextraModule(applicationContext, orchextraCompletionCallback,
+        .orchextraModule(new OrchextraModule(app, orchextraCompletionCallback,
             notificationActivityClass))
         .build();
 

@@ -19,7 +19,7 @@
 package com.gigigo.orchextra.sdk.application;
 
 import com.gigigo.ggglib.device.providers.ContextProvider;
-import com.gigigo.ggglib.permission.PermissionChecker;
+import com.gigigo.ggglib.permission.PermissionWrapper;
 import com.gigigo.ggglib.permission.listeners.UserPermissionRequestResponseListener;
 import com.gigigo.ggglib.permission.permissions.Permission;
 import com.gigigo.orchextra.domain.abstractions.foreground.ForegroundTasksManager;
@@ -28,7 +28,7 @@ import com.gigigo.orchextra.sdk.OrchextraTasksManager;
 public class ForegroundTasksManagerImpl implements ForegroundTasksManager {
 
   private final OrchextraTasksManager orchextraTasksManager;
-  private final PermissionChecker permissionChecker;
+  private final PermissionWrapper permissionWrapper;
   private final ContextProvider contextProvider;
   private final Permission permission;
   private UserPermissionRequestResponseListener userPermissionRequestResponseListener =
@@ -41,20 +41,20 @@ public class ForegroundTasksManagerImpl implements ForegroundTasksManager {
       };
 
   public ForegroundTasksManagerImpl(OrchextraTasksManager orchextraTasksManager,
-      PermissionChecker permissionChecker, ContextProvider contextProvider,
+      PermissionWrapper permissionWrapper, ContextProvider contextProvider,
       Permission permission1) {
     this.orchextraTasksManager = orchextraTasksManager;
-    this.permissionChecker = permissionChecker;
+    this.permissionWrapper = permissionWrapper;
     this.contextProvider = contextProvider;
     this.permission = permission1;// new PermissionLocationImp(null);
   }
 
   @Override public void startForegroundTasks() {
-    boolean granted = permissionChecker.isGranted(permission);
+    boolean granted = permissionWrapper.isGranted(permission);
     if (granted) {
       orchextraTasksManager.initForegroundTasks(granted);
     } else {
-      permissionChecker.askForPermission(userPermissionRequestResponseListener,
+      permissionWrapper.askForPermission(userPermissionRequestResponseListener,
           permission); //contextProvider.getCurrentActivity());
     }
   }

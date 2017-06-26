@@ -17,10 +17,10 @@
  */
 package com.gigigo.orchextra.di.modules.device;
 
+import android.app.Application;
 import com.gigigo.ggglib.core.business.model.BusinessError;
 import com.gigigo.ggglib.device.providers.ContextProvider;
-import com.gigigo.ggglib.permission.PermissionChecker;
-import com.gigigo.ggglib.permission.PermissionCheckerImpl;
+import com.gigigo.ggglib.permission.PermissionWrapper;
 import com.gigigo.orchextra.delegates.ConfigDelegateImpl;
 import com.gigigo.orchextra.device.GoogleApiClientConnector;
 import com.gigigo.orchextra.device.GoogleApiClientConnectorImpl;
@@ -51,9 +51,9 @@ import orchextra.javax.inject.Singleton;
 }) public class DeviceModule {
 
   @Singleton @Provides ForegroundTasksManager provideBackgroundTasksManager(
-      OrchextraTasksManager orchextraTasksManager, PermissionChecker permissionChecker,
+      OrchextraTasksManager orchextraTasksManager, PermissionWrapper permissionWrapper,
       ContextProvider contextProvider) {
-    return new ForegroundTasksManagerImpl(orchextraTasksManager, permissionChecker, contextProvider,
+    return new ForegroundTasksManagerImpl(orchextraTasksManager, permissionWrapper, contextProvider,
         new LocationPermission(contextProvider.getApplicationContext()));
   }
 
@@ -69,8 +69,8 @@ import orchextra.javax.inject.Singleton;
     return new GoogleApiPermissionChecker(contextProvider.getApplicationContext(), featureListener);
   }
 
-  @Provides PermissionChecker providePermissionChecker(ContextProvider contextProvider) {
-    return new PermissionCheckerImpl(contextProvider.getCurrentActivity());
+  @Provides PermissionWrapper providePermissionWrapper(Application application) {
+    return new PermissionWrapper(application);
   }
 
   //  @Singleton

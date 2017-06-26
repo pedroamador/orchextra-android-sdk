@@ -18,9 +18,10 @@
 
 package com.gigigo.orchextra.di.modules;
 
+import android.app.Application;
 import android.content.Context;
 import com.gigigo.ggglib.device.providers.ContextProvider;
-import com.gigigo.ggglib.permission.PermissionChecker;
+import com.gigigo.ggglib.permission.PermissionWrapper;
 import com.gigigo.orchextra.device.OrchextraLoggerImpl;
 import com.gigigo.orchextra.device.permissions.CameraPermission;
 import com.gigigo.orchextra.di.modules.control.ControlModule;
@@ -58,17 +59,23 @@ import orchextra.javax.inject.Singleton;
     ControlModule.class, DeviceModule.class, DelegateModule.class, UiModule.class
 }) public class OrchextraModule {
 
+  private final Application application;
   private final Context context;
   private final OrchextraManagerCompletionCallback orchextraCompletionCallback;
   private final String notificationActivityClass;
   private CustomSchemeReceiverContainer customSchemeReceiverContainer;
 
-  public OrchextraModule(Context context,
+  public OrchextraModule(Application application,
       OrchextraManagerCompletionCallback orchextraCompletionCallback,
       String notificationActivityClass) {
-    this.context = context;
+    this.application = application;
+    this.context = application.getApplicationContext();
     this.orchextraCompletionCallback = orchextraCompletionCallback;
     this.notificationActivityClass = notificationActivityClass;
+  }
+
+  @Provides @Singleton Application provideApplication() {
+    return this.application;
   }
 
   @Provides @Singleton OrchextraActivityLifecycle provideOrchextraActivityLifecycle(
@@ -134,8 +141,8 @@ import orchextra.javax.inject.Singleton;
   }
 
   @Singleton @Provides ScannerManager provideScannerManager(ContextProvider contextProvider,
-      PermissionChecker androidPermission, CameraPermission permissionCamera) {
-    return new ScannerManager(contextProvider, androidPermission, permissionCamera);
+      PermissionWrapper permissionWrapper, CameraPermission permissionCamera) {
+    return new ScannerManager(contextProvider, permissionWrapper, permissionCamera);
   }
 
   public void setCustomSchemeReceiver(CustomOrchextraSchemeReceiver customSchemeReceiver) {

@@ -22,9 +22,10 @@ import com.gigigo.orchextra.device.actions.ActionRecovery;
 import com.gigigo.orchextra.domain.interactors.actions.ActionDispatcher;
 import com.google.gson.Gson;
 
-
 public interface ActionsModuleProvider {
   ActionRecovery providesActionRecovery();
+
   Gson gson();
+
   ActionDispatcher provideActionDispatcher();
 }

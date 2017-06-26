@@ -30,7 +30,6 @@ import com.gigigo.orchextra.device.notifications.NotificationReceiver;
 import com.gigigo.orchextra.device.notifications.dtos.AndroidBasicAction;
 import com.gigigo.orchextra.device.notifications.dtos.AndroidNotification;
 import com.gigigo.orchextra.domain.abstractions.device.OrchextraLogger;
-import com.gigigo.orchextra.domain.abstractions.device.OrchextraSDKLogLevel;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.AppStatusEventsListener;
 import com.gigigo.orchextra.domain.abstractions.lifecycle.LifeCycleAccessor;
 import com.gigigo.orchextra.domain.model.actions.ActionType;
@@ -119,34 +118,25 @@ import java.util.Stack;
   }
 
   @Override public void onActivityResumed(Activity activity) {
-    try {
-      ConsistencyUtils.checkNotEmpty(activityStack);
+    if (!ConsistencyUtils.isObjectNull(activityStack)) {
       activityStack.peek().setIsPaused(false);
-    } catch (Exception e) {
-      orchextraLogger.log("Exception :" + e.getMessage(), OrchextraSDKLogLevel.ERROR);
     }
   }
 
   @Override public void onActivityPaused(Activity activity) {
-    try {
-      ConsistencyUtils.checkNotEmpty(activityStack);
+    if (!ConsistencyUtils.isObjectNull(activityStack)) {
       activityStack.peek().setIsPaused(true);
-    } catch (Exception e) {
-      orchextraLogger.log("Exception :" + e.getMessage(), OrchextraSDKLogLevel.ERROR);
     }
   }
 
   @Override public void onActivityStopped(Activity activity) {
-    try {
-      ConsistencyUtils.checkNotEmpty(activityStack);
+    if (!ConsistencyUtils.isObjectNull(activityStack)) {
 
       if (activityStack.size() == 1) {
         appStatusEventsListener.onForegroundEnd();
       }
       removeActivityFromStack(activity);
       setBackgroundModeIfNeeded();
-    } catch (Exception e) {
-      orchextraLogger.log("Exception :" + e.getMessage(), OrchextraSDKLogLevel.ERROR);
     }
   }
 
@@ -218,7 +208,6 @@ import java.util.Stack;
           + " Activity Context: "
           + activityStack.get(i).getActivity());
     }
-  }
 
     orchextraLogger.log("STACK Status :: Lifecycle, Is app in Background: " + isInBackground());
 
