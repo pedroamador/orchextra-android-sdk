@@ -31,3 +31,11 @@ proguard-rules.pro
 
 gigigo-utils-suite-modular/
 app/src/main/res/res.rar
+
+# Linux
+*~
+
+# git
+!.gitignore
+!.gitkeep
+
