@@ -3,6 +3,4 @@
 
 # orchextra-android-sdk specific Android stuff
 RUN ( sleep 4 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --force -a --filter \
-    build-tools-24.0.3,android-24
-RUN ( sleep 4 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --force -a --filter \
     build-tools-25.0.0,build-tools-25.0.3,android-25
